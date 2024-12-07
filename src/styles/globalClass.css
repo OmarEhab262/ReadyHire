@@ -11,9 +11,6 @@
 .text_danger {
   color: var(--failed-color);
 }
-.text_blur {
-  color: var(--blur-text-color);
-}
 .text_grey {
   color: var(--grey-color);
 }
@@ -33,9 +30,6 @@
 }
 .bg_grey {
   background-color: var(--grey-color);
-}
-.bg_default {
-  background-color: var(--bg-color);
 }
 
 /* Border Utility Classes */

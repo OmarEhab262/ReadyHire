@@ -1,17 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 :root {
-  --primary-color: #003a74;
-  --secondary-color: #4271ff;
-  --Primary-Mariner: #1d68df;
-  --text-color: #555555;
-  --blur-text-color: "#737373";
-  --grey-color: #f5f5f5;
-  --bg-color: #404c60;
+  --primary-color: #34215e;
+  --secondary-color: #55e6ae;
+  --text-color: #34215e;
+  --gray-color: "#737373";
   --success-color: #00bf36;
   --failed-color: #ff2222;
   --border-color: #ededed;
-  --button-bg-color: linear-gradient(45deg, #1d68df 0%, #23dff8 100%);
   --border_radius: 8px;
   --large-border-radius: 16px;
   --primary-font: "Tajawal", sans-serif;

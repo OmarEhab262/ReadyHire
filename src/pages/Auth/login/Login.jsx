@@ -1,7 +1,15 @@
 import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../../../components/ui/CustomInput";
+import LoginWithGoogle from "../../../components/utils/LoginWithGoogle";
+import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
+import CustomButton from "../../../components/ui/CustomButton";
+import { useState } from "react";
 
 const Login = () => {
+  const [alertMassage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
   const {
     handleSubmit,
     control,
@@ -10,10 +18,16 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log("Submitted Data:", data);
+    setAlertMessage({ message: "Login successful", type: "error" });
   };
+
+  const handleLinkedInLogin = () => {
+    console.log("LinkedIn login clicked");
+  };
+
   return (
     <div>
-      <h1 className="text_success">Login</h1>
+      <h1 className="text_primary bg_secondary">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -25,10 +39,6 @@ const Login = () => {
               {...field}
               label="Username"
               err={errors.username?.message}
-              formData={{
-                data: { username: field.value },
-                errors: { username: errors.username?.message },
-              }}
             />
           )}
         />
@@ -50,18 +60,30 @@ const Login = () => {
               label="Password"
               type="password"
               err={errors.password?.message}
-              formData={{
-                data: { password: field.value },
-                errors: { password: errors.password?.message },
-              }}
             />
           )}
         />
-
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-4">
-          Submit
-        </button>
+        <CustomButton
+          text="Login with Google"
+          type="submit"
+          width="180px"
+          height="40px"
+        />
       </form>
+
+      <div className="mt-4">
+        <LoginWithGoogle />
+        <button
+          onClick={handleLinkedInLogin}
+          className="bg-blue-700 text-white px-4 py-2"
+        >
+          Login with LinkedIn
+        </button>
+      </div>
+      <CustomAlertMessage
+        message={alertMassage.message}
+        type={alertMassage.type}
+      />
     </div>
   );
 };

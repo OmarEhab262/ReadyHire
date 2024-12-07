@@ -3,6 +3,7 @@ import Login from "./pages/Auth/login/Login";
 import NotFound from "./pages/ErrorPages/NotFound";
 import ProtectedRoute from "./pages/Auth/ProtectedRoute";
 import Signup from "./pages/Auth/signup/Signup";
+import { Toaster } from "react-hot-toast";
 
 export default function FormComponent() {
   return (
@@ -20,6 +21,7 @@ export default function FormComponent() {
           }
         />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

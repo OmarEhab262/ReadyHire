@@ -1,14 +1,11 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import PasswordIcon from "../icons/PasswordIcon";
 import CloseEyesIcon from "../icons/CloseEyesIcon";
 
 const CustomInput = forwardRef(
   (
     {
-      setFormData,
-      formData,
       label = "",
       width = "300px",
       err = "",
@@ -23,28 +20,6 @@ const CustomInput = forwardRef(
     ref
   ) => {
     const [inputType, setInputType] = useState(type);
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-
-      if (setFormData) {
-        setFormData((prevState) => ({
-          ...prevState,
-          data: {
-            ...prevState.data,
-            [name]: value,
-          },
-          errors: {
-            ...prevState.errors,
-            [name]: err || "",
-          },
-        }));
-      }
-    };
-
-    useEffect(() => {
-      console.log("form Data ", formData);
-    }, [formData]);
 
     return (
       <div
@@ -72,19 +47,15 @@ const CustomInput = forwardRef(
           ref={ref} // Forward the ref here
           name={name}
           type={inputType}
-          value={formData.data[name] || ""}
           placeholder={placeholder}
-          onChange={handleChange}
           disabled={disabled}
           className={`border p-2 mt-2 rounded ${classNameInput} ${
-            formData.errors[name] ? "border-red-500" : "border-gray-300"
+            err ? "border-red-500" : "border-gray-300"
           }`}
           {...rest} // Pass down other props from React Hook Form
         />
 
-        {formData.errors[name] && (
-          <small className="text-red-500 mt-1">{err}</small>
-        )}
+        {err && <small className="text-red-500 mt-1">{err}</small>}
       </div>
     );
   }
@@ -96,14 +67,11 @@ CustomInput.displayName = "CustomInput";
 CustomInput.propTypes = {
   label: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string,
   err: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
-  setFormData: PropTypes.func,
   disabled: PropTypes.bool,
-  formData: PropTypes.object,
   classNameInput: PropTypes.string,
   classNameContainer: PropTypes.string,
 };
