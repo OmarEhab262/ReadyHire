@@ -8,6 +8,7 @@
   --success-color: #00bf36;
   --failed-color: #ff2222;
   --border-color: #ededed;
+  --loader-color: #674da1;
   --border_radius: 8px;
   --large-border-radius: 16px;
   --primary-font: "Tajawal", sans-serif;
@@ -32,6 +33,7 @@ body {
   /* word-wrap: break-word; */
   hyphens: auto;
   /* word-break: break-all; */
+  box-sizing: border-box;
 }
 html {
   scroll-behavior: smooth;

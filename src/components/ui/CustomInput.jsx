@@ -4,56 +4,68 @@ import PasswordIcon from "../icons/PasswordIcon";
 import CloseEyesIcon from "../icons/CloseEyesIcon";
 
 const CustomInput = forwardRef(
-  (
-    {
-      label = "",
-      width = "300px",
-      err = "",
-      placeholder = "",
-      type = "text",
-      name = "",
-      disabled = false,
-      classNameInput = "",
-      classNameContainer = "",
-      ...rest
-    },
-    ref
-  ) => {
+  ({
+    label = "",
+    width = "300px",
+    err = "",
+    placeholder = "",
+    type = "text",
+    name = "",
+    disabled = false,
+    classNameInput = "",
+    classNameContainer = "",
+    ...rest
+  }) => {
     const [inputType, setInputType] = useState(type);
 
     return (
       <div
-        className={`flex flex-col my-7 mx-2 relative ${classNameContainer}`}
+        className={`flex flex-col my-7  ${classNameContainer}`}
         style={{ width }}
       >
-        <label className="font-semibold text-sm mb-1 relative">
-          {label}
+        <label className="text-sm mb-1 ">
+          <span
+            className={`${
+              err ? "text-red-500 font-bold" : "text-gray-500 font-medium"
+            }`}
+          >
+            {label}
+          </span>
+          {err && <span className="text-red-500"> *</span>}
+        </label>
+        <div className="relative">
+          <input
+            name={name}
+            type={inputType}
+            placeholder={placeholder}
+            disabled={disabled}
+            style={{ width }}
+            className={`border  rounded ${classNameInput} ${
+              err ? "border-red-500" : "border-gray-300"
+            }`}
+            {...rest}
+          />
           {type === "password" && (
-            <div
+            <button
+              type="button"
               onClick={() =>
                 setInputType(inputType === "password" ? "text" : "password")
               }
               aria-label={
                 inputType === "password" ? "Show password" : "Hide password"
               }
-              className="cursor-pointer ml-2 text-sm absolute right-2 top-[50px] transform -translate-y-1/2 rounded-full p-2"
+              className="cursor-pointer ml-2 text-sm absolute right-2 top-3  "
             >
-              {inputType === "password" ? <PasswordIcon /> : <CloseEyesIcon />}
-            </div>
+              <div className="mt-1">
+                {inputType === "password" ? (
+                  <PasswordIcon />
+                ) : (
+                  <CloseEyesIcon />
+                )}
+              </div>
+            </button>
           )}
-        </label>
-
-        <input
-          ref={ref} // Forward the ref here
-          name={name}
-          type={inputType}
-          placeholder={placeholder}
-          disabled={disabled}
-          className={`border p-2 mt-2 rounded ${classNameInput} ${
-            err ? "border-red-500" : "border-gray-300"
-          }`}
-          {...rest} // Pass down other props from React Hook Form
-        />
+        </div>
 
         {err && <small className="text-red-500 mt-1">{err}</small>}
       </div>

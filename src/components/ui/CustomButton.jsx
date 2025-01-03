@@ -1,26 +1,39 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 const CustomButton = ({
   text = "",
   type = "button",
-  width = "200px",
+  width = "100%",
   height = "50px",
   onClick,
-  className = "text_primary bg_secondary border_radius",
-  disabled = false,
-  ...rest
+  className = "",
+  loader = false,
 }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleClick = (e) => {
+    if (loader) return;
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 200); // Duration of the animation
+    if (onClick) onClick(e);
+  };
+
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={className}
-      disabled={disabled}
-      style={{ width, height }}
-      {...rest}
-    >
-      {text}
-    </button>
+    <div style={{ width }} className=" relative">
+      <button
+        type={type}
+        onClick={handleClick}
+        className={`text_primary bg_secondary rounded-md  ${className} ${
+          loader && "cursor-not-allowed"
+        } ${isAnimating && "animate-click"}`}
+        disabled={loader}
+        style={{ width, height }}
+      >
+        {!loader && text}
+      </button>
+      {loader && <div className="loader absolute top-3 left-[50%] "></div>}
+    </div>
   );
 };
 
@@ -31,7 +44,7 @@ CustomButton.propTypes = {
   height: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
+  loader: PropTypes.bool,
 };
 
 export default CustomButton;

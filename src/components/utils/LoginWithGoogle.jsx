@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { gapi } from "gapi-script";
 
 const LoginWithGoogle = () => {
   const clientId =
     "942593425164-dml3ujlqifl0gmfienpm11l2cbn6qrer.apps.googleusercontent.com";
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     const initClient = () => {
@@ -16,6 +17,13 @@ const LoginWithGoogle = () => {
   }, []);
 
   const handleGoogleLogin = () => {
+    if (buttonRef.current) {
+      buttonRef.current.classList.add("animate-click");
+      setTimeout(() => {
+        buttonRef.current.classList.remove("animate-click");
+      }, 500);
+    }
+
     const auth2 = gapi.auth2.getAuthInstance();
     auth2.signIn().then((user) => {
       console.log("Google User:", user.getBasicProfile().getName());
@@ -24,12 +32,14 @@ const LoginWithGoogle = () => {
       console.log("user", user);
     });
   };
+
   return (
     <button
+      ref={buttonRef}
       onClick={handleGoogleLogin}
-      className="bg-red-500 text-white px-4 py-2"
+      className="bg-red-500 text-white px-4 py-2 rounded-md md:w-[45%] w-full"
     >
-      Login with Google
+      Google
     </button>
   );
 };
