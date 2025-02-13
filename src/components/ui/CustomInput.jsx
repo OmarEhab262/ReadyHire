@@ -4,26 +4,29 @@ import PasswordIcon from "../icons/PasswordIcon";
 import CloseEyesIcon from "../icons/CloseEyesIcon";
 
 const CustomInput = forwardRef(
-  ({
-    label = "",
-    width = "300px",
-    err = "",
-    placeholder = "",
-    type = "text",
-    name = "",
-    disabled = false,
-    classNameInput = "",
-    classNameContainer = "",
-    ...rest
-  }) => {
+  (
+    {
+      label = "",
+      width = "300px",
+      err = "",
+      placeholder = "",
+      type = "text",
+      name = "",
+      disabled = false,
+      classNameInput = "",
+      classNameContainer = "",
+      ...rest
+    },
+    ref // 👈 تأكد من تمرير ref هنا
+  ) => {
     const [inputType, setInputType] = useState(type);
 
     return (
       <div
-        className={`flex flex-col my-7  ${classNameContainer}`}
+        className={`flex flex-col my-7 ${classNameContainer}`}
         style={{ width }}
       >
-        <label className="text-sm mb-1 ">
+        <label className="text-sm mb-1">
           <span
             className={`${
               err ? "text-red-500 font-bold" : "text-gray-500 font-medium"
@@ -35,12 +38,13 @@ const CustomInput = forwardRef(
         </label>
         <div className="relative">
           <input
+            ref={ref} // 👈 تمرير ref إلى الـ input
             name={name}
             type={inputType}
             placeholder={placeholder}
             disabled={disabled}
             style={{ width }}
-            className={`border  rounded ${classNameInput} ${
+            className={`border rounded ${classNameInput} ${
               err ? "border-red-500" : "border-gray-300"
             }`}
             {...rest}
@@ -54,7 +58,7 @@ const CustomInput = forwardRef(
               aria-label={
                 inputType === "password" ? "Show password" : "Hide password"
               }
-              className="cursor-pointer ml-2 text-sm absolute right-2 top-3  "
+              className="cursor-pointer ml-2 text-sm absolute right-2 top-3"
             >
               <div className="mt-1">
                 {inputType === "password" ? (
@@ -73,7 +77,6 @@ const CustomInput = forwardRef(
   }
 );
 
-// Add a display name to the component
 CustomInput.displayName = "CustomInput";
 
 CustomInput.propTypes = {

@@ -4,8 +4,10 @@ import LoginWithGoogle from "../../../components/utils/LoginWithGoogle";
 import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import image from "../../../components/images/freepik__upload__29140.png";
 
+import apple from "../../../components/images/apple.svg";
 const Login = () => {
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
@@ -29,26 +31,31 @@ const Login = () => {
     }, 2000);
   };
 
-  const handleLinkedInLogin = () => {
-    console.log("LinkedIn login clicked");
+  const handleAppleLogin = () => {
+    console.log("Apple login clicked");
   };
 
   return (
-    <div>
-      <h1 className="text_primary bg_secondary">Login</h1>
-      <div className="flex px-5 flex-col items-center justify-center h-[70vh] ">
-        <div className=" md:w-fit w-full h-fit  border_secondary !border-2 p-5 rounded-lg">
-          <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+    <div className="px-9">
+      <div className="flex items-center justify-around h-screen ">
+        <div className="absolute top-10 left-10 font-bold text-3xl">
+          READY <span className="text-[var(--secondary-color)]">HIRE</span>
+        </div>
+
+        <div className="md:w-[40%] w-[90%]">
+          <h2 className="text-[40px] font-semibold mb-4">Login</h2>
+          <p className="text-gray-400 text-md">Login to access your account</p>
+          <form className="" onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="username"
+              name="email"
               control={control}
               defaultValue=""
-              rules={{ required: "Username is required" }}
+              rules={{ required: "Email is required" }}
               render={({ field }) => (
                 <CustomInput
                   {...field}
-                  label="Username"
-                  err={errors.username?.message}
+                  label="Email"
+                  err={errors.email?.message}
                   width="100%"
                 />
               )}
@@ -74,6 +81,7 @@ const Login = () => {
                 />
               )}
             />
+
             <div className="flex flex-col items-center gap-3">
               <CustomButton
                 height="40px"
@@ -82,21 +90,39 @@ const Login = () => {
                 width="100%"
                 loader={loader}
               />
-              <div className="flex md:w-[300px] w-full md:flex-row flex-col  flex-wrap items-center justify-between gap-3">
+              <div>
+                <p>
+                  Don’t have an account?{" "}
+                  <Link className="text-blue-600" to="/select-user">
+                    Sign up
+                  </Link>
+                </p>
+              </div>
+              <div className="w-full flex items-center justify-center">
+                <span className="w-[45%] h-0.5 bg-gray-200"></span>
+                <span className="mx-2 text-gray-300">Or</span>
+                <span className="w-[45%] h-0.5 bg-gray-200"></span>
+              </div>
+
+              <div className="flex items-center gap-10">
                 <LoginWithGoogle />
                 <button
-                  onClick={handleLinkedInLogin}
-                  className="bg-blue-700 text-white md:w-[45%] w-full px-4 py-2 rounded-md"
+                  type="button"
+                  onClick={handleAppleLogin}
+                  className="border border-gray-500 w-[150px] flex items-center justify-center p-2 rounded-md pr-2"
                 >
-                  LinkedIn
+                  <img className="w-8 h-8" src={apple} alt="" />
                 </button>
               </div>
             </div>
           </form>
-          <CustomAlertMessage
-            message={alertMassage.message}
-            type={alertMassage.type}
-          />
+        </div>
+        <CustomAlertMessage
+          message={alertMassage.message}
+          type={alertMassage.type}
+        />
+        <div className="md:w-[50%] md:flex hidden  h-screen  flex-col items-center justify-center">
+          <img className="w-fit h-[90%]" src={image} alt="" />
         </div>
       </div>
     </div>

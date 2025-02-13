@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gapi } from "gapi-script";
-
+import google from "../../components/images/google.svg";
 const LoginWithGoogle = () => {
   const clientId =
     "942593425164-dml3ujlqifl0gmfienpm11l2cbn6qrer.apps.googleusercontent.com";
@@ -35,11 +35,12 @@ const LoginWithGoogle = () => {
 
   return (
     <button
+      type="button"
       ref={buttonRef}
       onClick={handleGoogleLogin}
-      className="bg-red-500 text-white px-4 py-2 rounded-md md:w-[45%] w-full"
+      className="border border-gray-500 w-[150px] flex items-center justify-center p-2 rounded-md pr-2"
     >
-      Google
+      <img className="w-8 h-8" src={google} alt="" />
     </button>
   );
 };
