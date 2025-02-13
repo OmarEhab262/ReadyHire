@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const SelectCard = ({ title, icon, setSelected, selected, type }) => {
   const isChecked = selected === type; // Dynamic check condition
-
+  useEffect(() => {
+    localStorage.setItem("type user", selected);
+  }, [selected]);
   return (
     <div
       onClick={() => setSelected(type)}

@@ -1,14 +1,15 @@
 import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../../../components/ui/CustomInput";
-import LoginWithGoogle from "../../../components/utils/LoginWithGoogle";
+import LoginWithGoogle from "../../../utils/LoginWithGoogle";
 import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import image from "../../../components/images/Rectangle 21.png";
+import image from "../../../assets/images/Rectangle 21.png";
 
-import apple from "../../../components/images/apple.svg";
+import apple from "../../../assets/images/apple.svg";
 const Signup = () => {
+  const typeUser = localStorage.getItem("type user");
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
     message: "",
@@ -37,16 +38,40 @@ const Signup = () => {
 
   return (
     <div className="px-9">
-      <div className="flex items-center justify-around h-screen ">
-        <div className="absolute top-10 right-10 font-bold text-3xl">
-          READY <span className="text-[var(--secondary-color)]">HIRE</span>
-        </div>
-
+      <div className="font-bold text-3xl mt-5 ml-5">
+        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      </div>
+      <div className="flex items-center justify-around  ">
         <div className="md:w-[40%] w-[90%] ">
           <h2 className="text-[40px] font-semibold mb-4">Sign up</h2>
           <p className="text-gray-400 text-md mb-3">
-            Let’s get you all st up so you can access your personal account.
+            {typeUser === "seeker" ? (
+              <span>
+                Let’s get you all set up so you can access your job
+                <span className="text_secondary font-semibold mx-1">
+                  seeker
+                </span>
+                account and start exploring opportunities.
+              </span>
+            ) : typeUser === "company" ? (
+              <span>
+                Let’s get you all set up so you can manage your
+                <span className="text_secondary font-semibold mx-1">
+                  company
+                </span>
+                account and connect with top talent.
+              </span>
+            ) : typeUser === "client" ? (
+              <span>
+                Let’s get you all set up so you can access your
+                <span className="text_secondary font-semibold mx-1">
+                  client
+                </span>
+                account and find the services you need.
+              </span>
+            ) : null}
           </p>
+
           <form className="" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex justify-between gap-11 ">
               <Controller
@@ -183,7 +208,7 @@ const Signup = () => {
                 <span className="w-[45%] h-0.5 bg-gray-200"></span>
               </div>
 
-              <div className="flex items-center gap-10">
+              <div className="flex items-center gap-10 mb-10">
                 <LoginWithGoogle />
                 <button
                   type="button"
@@ -200,7 +225,7 @@ const Signup = () => {
           message={alertMassage.message}
           type={alertMassage.type}
         />
-        <div className="md:w-[50%] md:flex hidden  h-screen  flex-col items-center justify-center">
+        <div className="md:w-[50%] md:flex hidden    flex-col items-center justify-center">
           <img className="w-fit h-[90%]" src={image} alt="" />
         </div>
       </div>

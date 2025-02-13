@@ -1,13 +1,13 @@
 import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../../../components/ui/CustomInput";
-import LoginWithGoogle from "../../../components/utils/LoginWithGoogle";
+import LoginWithGoogle from "../../../utils/LoginWithGoogle";
 import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import image from "../../../components/images/freepik__upload__29140.png";
+import image from "../../../assets/images/freepik__upload__29140.png";
 
-import apple from "../../../components/images/apple.svg";
+import apple from "../../../assets/images/apple.svg";
 const Login = () => {
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
@@ -27,7 +27,7 @@ const Login = () => {
     setTimeout(() => {
       setLoader(false);
       setAlertMessage({ message: "Login successful", type: "success" });
-      navigate("/home");
+      navigate("/");
     }, 2000);
   };
 
@@ -37,11 +37,10 @@ const Login = () => {
 
   return (
     <div className="px-9">
-      <div className="flex items-center justify-around h-screen ">
-        <div className="absolute top-10 left-10 font-bold text-3xl">
-          READY <span className="text-[var(--secondary-color)]">HIRE</span>
-        </div>
-
+      <div className="font-bold text-3xl mt-5 ml-5">
+        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      </div>
+      <div className="flex items-center justify-around  ">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Login</h2>
           <p className="text-gray-400 text-md">Login to access your account</p>
@@ -121,7 +120,7 @@ const Login = () => {
           message={alertMassage.message}
           type={alertMassage.type}
         />
-        <div className="md:w-[50%] md:flex hidden  h-screen  flex-col items-center justify-center">
+        <div className="md:w-[50%] md:flex hidden    flex-col items-center justify-center">
           <img className="w-fit h-[90%]" src={image} alt="" />
         </div>
       </div>

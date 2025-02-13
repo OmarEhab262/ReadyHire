@@ -1,26 +1,23 @@
-import image from "../../../components/images/freepik__upload__36608.png";
-import seeker from "../../../components/images/seeker.svg";
-import company from "../../../components/images/company.svg";
-import SelectCard from "../../../components/ui/signup/SelectCard";
+import image from "../../../assets/images/freepik__upload__36608.png";
+import seeker from "../../../assets/images/seeker.svg";
+import company from "../../../assets/images/company.svg";
+import SelectCard from "../../../components/signup/SelectCard";
 import { useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
 const OwnerStageTow = () => {
   const [selected, setSelected] = useState("");
+
   const navigate = useNavigate();
   const handleClick = () => {
-    if (selected === "owner") {
-      navigate("/owner-stage-tow");
-    } else if (selected === "seeker") {
-      navigate("/signup/seeker");
-    }
+    navigate("/signup");
   };
   return (
-    <div>
+    <div className="px-9">
+      <div className="font-bold text-3xl mt-5 ml-5">
+        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      </div>
       <div className="flex items-center justify-around h-screen ">
-        <div className="absolute top-10 left-10 font-bold text-3xl">
-          READY <span className="text-[var(--secondary-color)]">HIRE</span>
-        </div>
         <div className="md:w-[40%] w-[90%]">
           <p className=" text-3xl text-center">
             Great Choice! Now, Are You Representing a Company or Are You an

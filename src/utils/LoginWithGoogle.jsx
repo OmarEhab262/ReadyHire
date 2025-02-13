@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gapi } from "gapi-script";
-import google from "../../components/images/google.svg";
+import google from "../assets/images/google.svg";
 const LoginWithGoogle = () => {
   const clientId =
     "942593425164-dml3ujlqifl0gmfienpm11l2cbn6qrer.apps.googleusercontent.com";

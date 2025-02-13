@@ -1,7 +1,7 @@
-import image from "../../../components/images/freepik__upload__36608.png";
-import seeker from "../../../components/images/seeker.svg";
-import owner from "../../../components/images/owner.svg";
-import SelectCard from "../../../components/ui/signup/SelectCard";
+import image from "../../../assets/images/freepik__upload__36608.png";
+import seeker from "../../../assets/images/seeker.svg";
+import owner from "../../../assets/images/owner.svg";
+import SelectCard from "../../../components/signup/SelectCard";
 import { useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,11 +16,11 @@ const SelectUser = () => {
     }
   };
   return (
-    <div>
+    <div className="px-9">
+      <div className="font-bold text-3xl mt-5 ml-5">
+        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      </div>
       <div className="flex items-center justify-around h-screen ">
-        <div className="absolute top-10 left-10 font-bold text-3xl">
-          READY <span className="text-[var(--secondary-color)]">HIRE</span>
-        </div>
         <div className="md:w-[40%] w-[90%]">
           <p className=" text-3xl text-center">
             Welcome to READY HIRE! Please Select Whether You Are a Job Owner

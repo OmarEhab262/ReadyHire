@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
-import image from "../../images/Verify.png";
-import CustomButton from "../CustomButton";
+import { Link, useNavigate } from "react-router-dom";
+import image from "../../assets/images/Verify.png";
+import CustomButton from "../ui/CustomButton";
+import { useEffect } from "react";
 const VerifyEmail = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/verification-success");
+    }, 5000);
+  }, []);
   return (
     <div>
       <div className="flex justify-center items-center h-screen flex-col">

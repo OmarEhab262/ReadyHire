@@ -1,7 +1,7 @@
 import { forwardRef, useState } from "react";
 import PropTypes from "prop-types";
-import PasswordIcon from "../icons/PasswordIcon";
-import CloseEyesIcon from "../icons/CloseEyesIcon";
+import PasswordIcon from "../../assets/icons/PasswordIcon";
+import CloseEyesIcon from "../../assets/icons/CloseEyesIcon";
 
 const CustomInput = forwardRef(
   (
