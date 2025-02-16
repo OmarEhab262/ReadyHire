@@ -1,7 +1,6 @@
 import { Plus, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
-import { Link } from "react-router-dom";
 
 const UploadPhoto = () => {
   const [file, setFile] = useState(null);
@@ -32,13 +31,13 @@ const UploadPhoto = () => {
   }, [file, preview]);
 
   return (
-    <div className="px-9">
+    <div className="">
       <div className="font-bold text-3xl mt-5 ml-5 font-young">
-        <span className="text_secondary">READY</span> <span>HIRE</span>
+        <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around h-screen text-center">
-        <div className="w-[90%] flex flex-col gap-10">
-          <p className="text-2xl text-gray-500 text-center md:w-[80%] w-[90%] mx-auto">
+      <div className="px-9 min-h-[90vh] flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center w-full max-w-2xl text-center gap-6 mt-6">
+          <p className="text-lg text-gray-500">
             A professional photo helps you build trust with your clients. To
             keep things safe and simple, they&apos;ll pay you through us - which
             is why we need your personal information.
@@ -51,7 +50,7 @@ const UploadPhoto = () => {
               onChange={handleFileChange}
               className="hidden"
             />
-            <div className="w-40 h-40 rounded-full bg-[#F1F2F2] overflow-hidden border_secondary !border-2 flex justify-center items-center mx-auto mb-10">
+            <div className="w-28 h-28 rounded-full bg-[#F1F2F2] overflow-hidden border_secondary border-2 flex justify-center items-center mx-auto mb-6">
               {preview ? (
                 <img
                   src={preview}
@@ -72,16 +71,21 @@ const UploadPhoto = () => {
               onClick={handleUploadClick}
             />
           </div>
-          <div className="md:w-[70%] w-[90%] rounded-full h-2.5 bg-[#5555554b] mx-auto">
+          <div className="w-full max-w-lg rounded-full h-2.5 bg-gray-300">
             <div
-              className="bg-blue-600 h-2.5 rounded-full duration-300 ease-in"
+              className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
           <div className="md:w-[70%] w-[90%] flex justify-between mx-auto">
-            <Link className="" to="/upload-resume">
-              Back
-            </Link>
+            <CustomButton
+              className="border !bg-white border-gray-400 !text-black "
+              type="button"
+              height="40px"
+              width="100px"
+              link="/upload-resume"
+              text="Back"
+            />
             <CustomButton
               height="40px"
               text="Continue"

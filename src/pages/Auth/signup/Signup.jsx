@@ -36,12 +36,12 @@ const Signup = () => {
   };
 
   return (
-    <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+    <div className="">
+      <div className="font-bold text-3xl p-5 font-young">
         <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around min-h-screen ">
-        <div className="md:w-[40%] w-[90%] ">
+      <div className="flex items-center justify-around  ">
+        <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Sign up</h2>
           <p className="text-gray-400 text-md mb-3">
             {typeUser === "seeker" ? (
@@ -212,13 +212,13 @@ const Signup = () => {
                   type="button"
                   icon={<img className="w-8 h-8" src={google} alt="" />}
                   className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
-                  width="150px"
+                  width="120px"
                 />
                 <CustomButton
                   type="button"
                   icon={<img className="w-8 h-8" src={apple} alt="" />}
                   className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
-                  width="150px"
+                  width="120px"
                 />
               </div>
             </div>

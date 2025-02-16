@@ -28,14 +28,16 @@ const UploadResume = () => {
   };
 
   return (
-    <div className="px-9">
+    <div className="">
       <div className="font-bold text-3xl mt-5 ml-5 font-young">
         <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around h-screen text-center">
-        <div className="w-[90%] flex flex-col gap-10">
-          <h1>How would you like to tell us about yourself?</h1>
-          <p className="text-2xl text-gray-500 text-center md:w-[80%] w-[90%] mx-auto">
+      <div className="px-9 md:min-h-[90vh] min-h-[80vh] flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center w-full max-w-2xl text-center gap-6 mt-6">
+          <h1 className="text-3xl font-semibold">
+            How would you like to tell us about yourself?
+          </h1>
+          <p className="text-lg text-gray-500">
             We want to learn about your education, experience, and skills.
             Please make sure your CV is accurate, as your account will be
             created based on the information you provide.
@@ -60,7 +62,7 @@ const UploadResume = () => {
           {file && (
             <p className="text-green-600 text-lg">Selected File: {file.name}</p>
           )}
-          <div className="md:w-[70%] w-[90%] rounded-full h-2.5 bg-[#5555554b] mx-auto">
+          <div className="w-full max-w-lg rounded-full h-2.5 bg-gray-300">
             <div
               className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
