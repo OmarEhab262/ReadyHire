@@ -6,8 +6,8 @@ const Policies = () => {
   return (
     <>
       <div className="px-9">
-        <div className="font-bold text-3xl mt-5 ml-5">
-          READY <span className="text-[var(--secondary-color)]">HIRE</span>
+        <div className="font-bold text-3xl mt-5 ml-5 font-young">
+          <span className="text_secondary ">READY</span> <span>HIRE</span>
         </div>
         <div className="flex justify-center items-center gap-10 p-3 flex-col md:w-[60%] w-[90%] mx-auto">
           <div className="text-center ">

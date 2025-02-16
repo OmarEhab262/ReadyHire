@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const VerificationSuccess = () => {
   const navigate = useNavigate();
+  const userType = localStorage.getItem("type user");
   useEffect(() => {
     setTimeout(() => {
-      navigate("/");
+      if (userType === "seeker") {
+        navigate("/upload-resume");
+      }
     }, 5000);
   }, []);
   return (

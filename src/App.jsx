@@ -14,6 +14,9 @@ import OwnerStageTow from "./pages/Auth/signup/OwnerStageTow";
 import Policies from "./pages/Auth/policies/Policies";
 import VerifyEmail from "./components/signup/VerifyEmail";
 import VerificationSuccess from "./components/signup/VerificationSuccess";
+import UploadResume from "./pages/seeker/create-profile/UploadResume";
+import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
+import Final from "./pages/seeker/create-profile/Final";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -24,6 +27,7 @@ export default function App() {
       <BrowserRouter>
         <ScrollTop />
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -31,11 +35,13 @@ export default function App() {
           <Route path="/owner-stage-tow" element={<OwnerStageTow />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/upload-resume" element={<UploadResume />} />
+          <Route path="/upload-photo-seeker" element={<UploadPhoto />} />
+          <Route path="/final-profile-seeker" element={<Final />} />
           <Route
             path="/verification-success"
             element={<VerificationSuccess />}
           />
-          <Route path="/" element={<Home />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

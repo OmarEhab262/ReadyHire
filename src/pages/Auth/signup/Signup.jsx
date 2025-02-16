@@ -1,12 +1,13 @@
 import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../../../components/ui/CustomInput";
-import LoginWithGoogle from "../../../utils/LoginWithGoogle";
+// import LoginWithGoogle from "../../../utils/LoginWithGoogle";
 import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import image from "../../../assets/images/Rectangle 21.png";
 
+import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
 const Signup = () => {
   const typeUser = localStorage.getItem("type user");
@@ -28,20 +29,18 @@ const Signup = () => {
     setTimeout(() => {
       setLoader(false);
       setAlertMessage({ message: "Login successful", type: "success" });
-      navigate("/verify-email");
+      if (typeUser === "seeker") {
+        navigate("/upload-resume");
+      }
     }, 2000);
-  };
-
-  const handleAppleLogin = () => {
-    console.log("Apple login clicked");
   };
 
   return (
     <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5">
-        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+        <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around  ">
+      <div className="flex items-center justify-around min-h-screen ">
         <div className="md:w-[40%] w-[90%] ">
           <h2 className="text-[40px] font-semibold mb-4">Sign up</h2>
           <p className="text-gray-400 text-md mb-3">
@@ -208,15 +207,19 @@ const Signup = () => {
                 <span className="w-[45%] h-0.5 bg-gray-200"></span>
               </div>
 
-              <div className="flex items-center gap-10 mb-10">
-                <LoginWithGoogle />
-                <button
+              <div className="flex items-center gap-10 mb-10 flex-wrap justify-center">
+                <CustomButton
                   type="button"
-                  onClick={handleAppleLogin}
-                  className="border border-gray-500 w-[150px] flex items-center justify-center p-2 rounded-md pr-2"
-                >
-                  <img className="w-8 h-8" src={apple} alt="" />
-                </button>
+                  icon={<img className="w-8 h-8" src={google} alt="" />}
+                  className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
+                  width="150px"
+                />
+                <CustomButton
+                  type="button"
+                  icon={<img className="w-8 h-8" src={apple} alt="" />}
+                  className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
+                  width="150px"
+                />
               </div>
             </div>
           </form>

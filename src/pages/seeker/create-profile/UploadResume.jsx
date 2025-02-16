@@ -1,0 +1,85 @@
+import { Upload } from "lucide-react";
+import CustomButton from "../../../components/ui/CustomButton";
+import { useState, useRef } from "react";
+
+const UploadResume = () => {
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setProgress(0); // إعادة تعيين شريط التقدم عند اختيار ملف جديد
+
+      // محاكاة تحميل الملف إلى 100%
+      let uploadProgress = 0;
+      const interval = setInterval(() => {
+        uploadProgress += 10;
+        setProgress(uploadProgress);
+        if (uploadProgress >= 33) clearInterval(interval);
+      }, 100);
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  return (
+    <div className="px-9">
+      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+        <span className="text_secondary ">READY</span> <span>HIRE</span>
+      </div>
+      <div className="flex items-center justify-around h-screen text-center">
+        <div className="w-[90%] flex flex-col gap-10">
+          <h1>How would you like to tell us about yourself?</h1>
+          <p className="text-2xl text-gray-500 text-center md:w-[80%] w-[90%] mx-auto">
+            We want to learn about your education, experience, and skills.
+            Please make sure your CV is accurate, as your account will be
+            created based on the information you provide.
+          </p>
+          <div className="flex justify-center md:w-[40%] w-[90%] mx-auto">
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <CustomButton
+              height="40px"
+              text={file ? "Resume Selected" : "Upload Your Resume"}
+              type="button"
+              width="100%"
+              icon={<Upload />}
+              onClick={handleUploadClick}
+            />
+          </div>
+          {file && (
+            <p className="text-green-600 text-lg">Selected File: {file.name}</p>
+          )}
+          <div className="md:w-[70%] w-[90%] rounded-full h-2.5 bg-[#5555554b] mx-auto">
+            <div
+              className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <div className="md:w-[70%] w-[90%] flex justify-end mx-auto">
+            <CustomButton
+              height="40px"
+              text="Continue"
+              type="button"
+              width="100px"
+              link="/upload-photo-seeker"
+              disabled={!file} // تعطيل الزر حتى يتم رفع الملف
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UploadResume;

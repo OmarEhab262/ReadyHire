@@ -17,8 +17,8 @@ const SelectUser = () => {
   };
   return (
     <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5">
-        READY <span className="text-[var(--secondary-color)]">HIRE</span>
+      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+        <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
       <div className="flex items-center justify-around h-screen ">
         <div className="md:w-[40%] w-[90%]">
