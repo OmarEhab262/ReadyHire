@@ -2,74 +2,88 @@ import policies1 from "../../../assets/images/ddddd.svg";
 import policies2 from "../../../assets/images/policies2.svg";
 import policies3 from "../../../assets/images/policies3.svg";
 import Footer from "../../../components/footer/Footer";
+
 const Policies = () => {
   return (
     <>
-      <div className="px-9">
-        <div className="font-bold text-3xl mt-5 ml-5 font-young">
+      <div className="min-h-screen bg-gray-100">
+        <div className="font-bold text-3xl p-5 font-young">
           <span className="text_secondary ">READY</span> <span>HIRE</span>
         </div>
-        <div className="flex justify-center items-center gap-10 p-3 flex-col md:w-[60%] w-[90%] mx-auto">
-          <div className="text-center ">
-            <h1>Privacy Policies</h1>
+
+        <main className="container mx-auto px-6 md:px-16 py-10">
+          <h2 className="text-center text-3xl font-semibold text-gray-800 mb-8">
+            Privacy Policies
+          </h2>
+
+          <div className="space-y-10">
+            {/* Project Privacy Policies */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="flex items-center gap-3 text-xl font-semibold mb-4">
+                <img src={policies1} alt="Project Policies" className="w-8" />
+                Project Privacy Policies
+              </h3>
+              <p className="text-gray-600 leading-loose">
+                <strong>1. Project Classification:</strong> Private projects:
+                The independent freelancer is not allowed to share or post
+                project details on GitHub or any other platform. Public
+                enterprises: The freelancer may showcase completed projects with
+                employer&apos;s consent.
+                <br />
+                <strong>2. Project File Protection:</strong> All uploaded files
+                go through an encryption system. Files can only be accessed by
+                the authorized employer and freelancer. Private enterprise files
+                are downloadable only with employer&apos;s consent and can be
+                password-protected if necessary.
+              </p>
+            </div>
+
+            {/* Personal Data Privacy Policies */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="flex items-center gap-3 text-xl font-semibold mb-4">
+                <img
+                  src={policies2}
+                  alt="Personal Data Policies"
+                  className="w-8"
+                />
+                Personal Data Privacy Policies
+              </h3>
+              <p className="text-gray-600 leading-loose">
+                <strong>3. External Communication Restrictions:</strong>{" "}
+                Employers cannot share contact information to prevent
+                off-platform communication. All interactions must occur through
+                the internal chat system for security.
+                <br />
+                <strong>4. User Data Protection:</strong> All user data is
+                encrypted and never sold or shared with third parties. Users
+                have full control to delete their accounts and associated data
+                upon request.
+              </p>
+            </div>
+
+            {/* Payment and Security Policies */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="flex items-center gap-3 text-xl font-semibold mb-4">
+                <img
+                  src={policies3}
+                  alt="Payment and Security"
+                  className="w-8"
+                />
+                Payment and Security Policies
+              </h3>
+              <p className="text-gray-600 leading-loose">
+                <strong>5. Freelancer & Employer Rights:</strong> Payments are
+                securely held on the platform until project completion. In case
+                of disputes, the platform reviews provided evidence to resolve
+                issues. If the freelancer fails to deliver, a refund may be
+                issued to the employer after review.
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="flex gap-2 text-[30px] font-semibold">
-              <img className="w-[30px]" src={policies1} alt="" />{" "}
-              <span>Project Privacy Policies:</span>
-            </h3>
-            <p className="text-gray-600  leading-loose ">
-              1.Project classification (special vs. general): Private projects:
-              The independent is not allowed to share or post project details on
-              GitHub or any other platform. It should be delivered only via the
-              platform&apos;s platform. Public enterprises: The independent is
-              allowed to participate in the project after completion, both in
-              his personal exhibition and on other platforms, subject to the
-              employer&apos;s consent.
-              <br />
-              2.Project File Protection: All uploaded files pass through an
-              encryption and protection system to ensure they are not leaked.
-              Project files can only be uploaded by the authorized employer and
-              freelancer. Private enterprises can be downloaded only after the
-              employer&apos;s consent, and may be protected by a password if
-              necessary.
-            </p>
-          </div>
-          <div>
-            <h3 className="flex gap-2 text-[30px] font-semibold">
-              <img src={policies2} alt="" className="w-[30px]" />{" "}
-              <span>Personal Data Privacy Policies:</span>
-            </h3>
-            <p className="text-gray-600  leading-loose ">
-              3.Hide External Communication Data: Employers cannot share phone
-              numbers or emails within their profiles to prevent communication
-              outside the platform. The employer and freelancer can communicate
-              only through the internal chat system to ensure security and
-              protect the rights of the parties.
-              <br />
-              4.User Data Protection: All data is encrypted and not sold or
-              shared with third parties. Users can delete their accounts and
-              data completely upon request. necessary.
-            </p>
-          </div>
-          <div>
-            <h3 className="flex gap-2 text-[30px] font-semibold">
-              <img src={policies3} alt="" className="w-[30px]" />{" "}
-              <span>Payment and Security Policies:</span>
-            </h3>
-            <p className="text-gray-600  leading-loose ">
-              Freelancer and Employer&apos;s Rights Guarantee: Upon recruitment,
-              the amount of money is booked on the platform until the project is
-              successfully delivered. In case of dispute, the platform can
-              review the files and communicate with the parties to resolve the
-              problem according to the evidence provided. If the freelancer does
-              not commit to delivery, the amount can be refunded to the employer
-              after reviewing the order.
-            </p>
-          </div>
-        </div>
+        </main>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };

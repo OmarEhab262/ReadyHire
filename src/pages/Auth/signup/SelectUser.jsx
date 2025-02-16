@@ -16,13 +16,13 @@ const SelectUser = () => {
     }
   };
   return (
-    <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+    <div className="">
+      <div className="font-bold text-3xl p-5 font-young">
         <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around h-screen ">
+      <div className="flex items-center justify-around h-[90vh] ">
         <div className="md:w-[40%] w-[90%]">
-          <p className=" text-3xl text-center">
+          <p className=" text-2xl text-center text-gray-500">
             Welcome to READY HIRE! Please Select Whether You Are a Job Owner
             Looking to Hire or a Job Seeker Searching for Opportunities.
           </p>

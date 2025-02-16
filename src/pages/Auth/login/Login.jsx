@@ -32,11 +32,11 @@ const Login = () => {
   };
 
   return (
-    <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
+    <div className="">
+      <div className="font-bold text-3xl p-5 font-young">
         <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around h-screen ">
+      <div className="flex items-center justify-around  ">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Login</h2>
           <p className="text-gray-400 text-md">Login to access your account</p>
@@ -104,13 +104,13 @@ const Login = () => {
                   type="button"
                   icon={<img className="w-8 h-8" src={google} alt="" />}
                   className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
-                  width="150px"
+                  width="120px"
                 />
                 <CustomButton
                   type="button"
                   icon={<img className="w-8 h-8" src={apple} alt="" />}
                   className="!text-[var(--secondary-color)] !bg-white border-gray-500 border"
-                  width="150px"
+                  width="120px"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ const Login = () => {
           type={alertMassage.type}
         />
         <div className="md:w-[50%] md:flex hidden    flex-col items-center justify-center">
-          <img className="w-fit h-[90%]" src={image} alt="" />
+          <img className="w-fit" src={image} alt="" />
         </div>
       </div>
     </div>

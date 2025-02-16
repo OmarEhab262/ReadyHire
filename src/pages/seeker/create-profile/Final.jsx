@@ -1,43 +1,55 @@
 import dd from "../../../assets/images/dd.png";
 import CustomButton from "../../../components/ui/CustomButton";
+
 const Final = () => {
   return (
-    <div className="px-9">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
+    <div className="px-6 min-h-screen flex flex-col">
+      {/* Title */}
+      <div className="font-bold text-3xl mt-6 w-full text-left">
+        <span className="text_secondary">READY</span> <span>HIRE</span>
       </div>
-      <div className="flex items-center justify-around min-h-screen text-center">
-        <div className=" flex flex-col gap-10 justify-center items-center">
-          <div className="md:w-[40%] w-[90%] mx-auto flex justify-center items-center">
-            <img src={dd} alt="" />
+
+      {/* Content Section */}
+      <div className="flex flex-col justify-center items-center flex-grow text-center my-5">
+        <div className="flex flex-col gap-8 items-center w-full max-w-2xl">
+          {/* Profile Image */}
+          <div className="md:w-[50%] w-[90%] flex justify-center">
+            <img src={dd} alt="Profile Ready" className="w-[60%] max-w-sm" />
           </div>
-          <h2>
-            Nice work,{" "}
-            <span className="text_secondary font-semibold">Omar Ehab!</span>{" "}
-            Your profile&apos;s ready.
+
+          {/* Success Message */}
+          <h2 className="text-2xl font-semibold">
+            Nice work, <span className="text_secondary">Omar Ehab!</span> Your
+            profile is ready.
           </h2>
-          <p className="text-2xl text-gray-500 text-center md:w-[80%] w-[90%] mx-auto">
+
+          {/* Description */}
+          <p className="text-lg text-gray-500 w-[90%] md:w-[100%]">
             Congratulations! With thousands of opportunities available, you can
             now apply for jobs that match your skills—whether by bidding on
-            Freelance jobs or taking the required assessments for Full-time and
-            Part-time positions. Let’s complete the final step so you can start
-            applying for jobs. Take the test now!
+            freelance jobs or taking the required assessments for full-time and
+            part-time positions.
+            <br />
+            Let’s complete the final step so you can start applying for jobs.
+            Take the test now!
           </p>
-          <div className="flex md:flex-row flex-col gap-10 my-6 ">
+
+          {/* Action Buttons */}
+          <div className="flex flex-col md:flex-row gap-6 mt-6">
             <CustomButton
               height="40px"
-              text="View my profile"
+              text="View My Profile"
               className="!text-[var(--secondary-color)] !bg-white border_secondary !border-2"
               type="button"
-              width="300px"
-              //   link="/"
+              width="280px"
+              // link="/profile"
             />
             <CustomButton
               height="40px"
-              text="Take Testing Now"
+              text="Take Test Now"
               type="button"
-              width="300px"
-              //   link="/"
+              width="280px"
+              // link="/assessment"
             />
           </div>
         </div>
