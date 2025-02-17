@@ -2,11 +2,13 @@ import dd from "../../../assets/images/dd.png";
 import CustomButton from "../../../components/ui/CustomButton";
 
 const Final = () => {
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const typeUser = localStorage.getItem("type user");
   return (
-    <div className="px-6 min-h-screen flex flex-col">
+    <div className="">
       {/* Title */}
-      <div className="font-bold text-3xl mt-6 w-full text-left">
-        <span className="text_secondary">READY</span> <span>HIRE</span>
+      <div className="font-bold text-3xl p-5 font-young">
+        <span className="text_secondary ">READY</span> <span>HIRE</span>
       </div>
 
       {/* Content Section */}
@@ -19,19 +21,35 @@ const Final = () => {
 
           {/* Success Message */}
           <h2 className="text-2xl font-semibold">
-            Nice work, <span className="text_secondary">Omar Ehab!</span> Your
-            profile is ready.
+            Nice work,{" "}
+            <span className="text_secondary">
+              {user?.firstName} {user?.lastName}!
+            </span>{" "}
+            Your profile is ready.
           </h2>
-
-          {/* Description */}
           <p className="text-lg text-gray-500 w-[90%] md:w-[100%]">
-            Congratulations! With thousands of opportunities available, you can
-            now apply for jobs that match your skills—whether by bidding on
-            freelance jobs or taking the required assessments for full-time and
-            part-time positions.
-            <br />
-            Let’s complete the final step so you can start applying for jobs.
-            Take the test now!
+            {typeUser === "seeker" && (
+              <>
+                Congratulations! With thousands of opportunities available, you
+                can now apply for jobs that match your skills—whether by bidding
+                on freelance jobs or taking the required assessments for
+                full-time and part-time positions.
+                <br />
+                Let’s complete the final step so you can start applying for
+                jobs. Take the test now!
+              </>
+            )}
+            {typeUser === "company" && (
+              <>
+                Congratulations! You’re just one step away from fully
+                registering your company. Once complete, you’ll be able to post
+                job opportunities and hire talent that aligns with your business
+                needs.
+                <br />
+                Let’s finish the registration process and unlock the full
+                potential of your company’s profile!
+              </>
+            )}
           </p>
 
           {/* Action Buttons */}

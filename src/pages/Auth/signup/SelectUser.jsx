@@ -5,6 +5,7 @@ import SelectCard from "../../../components/signup/SelectCard";
 import { useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
+import DefaultNav from "../../../components/nav/DefaultNav";
 const SelectUser = () => {
   const [selected, setSelected] = useState("");
   const navigate = useNavigate();
@@ -17,9 +18,7 @@ const SelectUser = () => {
   };
   return (
     <div className="">
-      <div className="font-bold text-3xl p-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
+      <DefaultNav />
       <div className="flex items-center justify-around h-[90vh] ">
         <div className="md:w-[40%] w-[90%]">
           <p className=" text-2xl text-center text-gray-500">
@@ -51,6 +50,7 @@ const SelectUser = () => {
               text="Next"
               type="submit"
               onClick={handleClick}
+              disabled={!selected}
             />
             <p>
               Already have an account?

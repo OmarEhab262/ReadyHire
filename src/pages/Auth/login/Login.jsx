@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import image from "../../../assets/images/freepik__upload__29140.png";
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
+import DefaultNav from "../../../components/nav/DefaultNav";
 const Login = () => {
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
@@ -33,9 +34,7 @@ const Login = () => {
 
   return (
     <div className="">
-      <div className="font-bold text-3xl p-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
+      <DefaultNav />
       <div className="flex items-center justify-around  ">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Login</h2>

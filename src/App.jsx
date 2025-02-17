@@ -17,6 +17,11 @@ import VerificationSuccess from "./components/signup/VerificationSuccess";
 import UploadResume from "./pages/seeker/create-profile/UploadResume";
 import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
 import Final from "./pages/seeker/create-profile/Final";
+import CompanyProfileSetup from "./pages/company/create-profile/CompanyProfileSetup";
+import CompanyRegistration from "./pages/company/create-profile/CompanyRegistration";
+import BriefDescription from "./pages/company/create-profile/BriefDescription";
+import CommercialRegistration from "./pages/company/create-profile/CommercialRegistration";
+import UploadPhotoCompany from "./pages/company/create-profile/UploadPhotoCompany";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -35,12 +40,32 @@ export default function App() {
           <Route path="/owner-stage-tow" element={<OwnerStageTow />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route
+            path="/verification-success"
+            element={<VerificationSuccess />}
+          />
           <Route path="/upload-resume" element={<UploadResume />} />
           <Route path="/upload-photo-seeker" element={<UploadPhoto />} />
           <Route path="/final-profile-seeker" element={<Final />} />
           <Route
-            path="/verification-success"
-            element={<VerificationSuccess />}
+            path="/company-profile-first"
+            element={<CompanyProfileSetup />}
+          />
+          <Route
+            path="/company-registration"
+            element={<CompanyRegistration />}
+          />
+          <Route
+            path="/company-brief-description"
+            element={<BriefDescription />}
+          />
+          <Route
+            path="/company-commercial-registration"
+            element={<CommercialRegistration />}
+          />
+          <Route
+            path="/company-upload-photo"
+            element={<UploadPhotoCompany />}
           />
         </Routes>
         <Toaster />

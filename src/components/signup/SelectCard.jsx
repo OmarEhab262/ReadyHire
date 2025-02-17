@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 const SelectCard = ({ title, icon, setSelected, selected, type }) => {
   const isChecked = selected === type; // Dynamic check condition
@@ -23,6 +24,13 @@ const SelectCard = ({ title, icon, setSelected, selected, type }) => {
       <h3 className="text-xl font-bold text-center">{title}</h3>
     </div>
   );
+};
+SelectCard.propTypes = {
+  title: PropTypes.string,
+  icon: PropTypes.elementType,
+  setSelected: PropTypes.func,
+  selected: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default SelectCard;
