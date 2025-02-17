@@ -9,6 +9,7 @@ import image from "../../../assets/images/Rectangle 21.png";
 
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
+import DefaultNav from "../../../components/nav/DefaultNav";
 const Signup = () => {
   const typeUser = localStorage.getItem("type user");
   const navigate = useNavigate();
@@ -17,29 +18,35 @@ const Signup = () => {
     type: "",
   });
   const [loader, setLoader] = useState(false);
+
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
-
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      country: "",
+      email: "",
+      password: "",
+      terms: false,
+    },
+  });
   const onSubmit = (data) => {
     setLoader(true);
     console.log("Submitted Data:", data);
+    localStorage.setItem("user", JSON.stringify(data));
     setTimeout(() => {
       setLoader(false);
       setAlertMessage({ message: "Login successful", type: "success" });
-      if (typeUser === "seeker") {
-        navigate("/upload-resume");
-      }
+      navigate("/verify-email");
     }, 2000);
   };
 
   return (
     <div className="">
-      <div className="font-bold text-3xl p-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
+      <DefaultNav />
       <div className="flex items-center justify-around  ">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Sign up</h2>
@@ -121,8 +128,17 @@ const Signup = () => {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
-              rules={{ required: "Email is required" }}
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Invalid email address",
+                  minLength: {
+                    value: 6,
+                    message: "Email must be at least 6 characters",
+                  },
+                },
+              }}
               render={({ field }) => (
                 <CustomInput
                   {...field}
@@ -172,7 +188,7 @@ const Signup = () => {
                       onChange={(e) => field.onChange(e.target.checked)}
                     />
                     <label htmlFor="terms" className="text-gray-600">
-                      I agree to and adhere to Ready Hire&lsquo;s{" "}
+                      I agree to and adhere to Ready Hire&apos;s{" "}
                       <Link
                         to="/policies"
                         className="text-blue-600 cursor-pointer"
