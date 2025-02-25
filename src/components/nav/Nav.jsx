@@ -14,7 +14,7 @@ const Nav = () => {
     ],
     seeker: [
       { name: "Find work", path: "/" },
-      { name: "My Assessments&Proposal", path: "/" },
+      { name: "Evaluation", path: "/" },
       { name: "My Jobs", path: "/my-hires" },
     ],
     company: [
@@ -34,7 +34,7 @@ const Nav = () => {
           <span className="text_secondary">READY</span>{" "}
           <span className="text-black">HIRE</span>
         </div>
-        <ul className="flex justify-around items-center text-lg font-semibold gap-10">
+        <ul className="flex justify-around items-center text-lg gap-10">
           {!userType
             ? links.default.map((link, index) => (
                 <li key={index}>{link.name}</li>
@@ -55,7 +55,7 @@ const Nav = () => {
             <input
               type="text"
               placeholder="Search"
-              className="pl-10 rounded-r-none rounded-l-md border_secondary w-[300px]"
+              className="pl-10 rounded-r-none rounded-l-md border_secondary xl:w-[300px] w-[200px] "
             />
             <button
               className="px-5 rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"
@@ -114,7 +114,7 @@ const Nav = () => {
         >
           <Menu size={30} color="#1971c2" strokeWidth={2} />
         </div>
-        <div className="font-bold text-3xl font-young flex items-center justify-center flex-wrap gap-2">
+        <div className="font-bold text-xl font-young flex items-center justify-center flex-wrap gap-2">
           <span className="text_secondary">READY</span>{" "}
           <span className="text-black">HIRE</span>
         </div>
