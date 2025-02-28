@@ -27,7 +27,7 @@ const CustomButton = ({
     <button
       type={type}
       onClick={handleClick}
-      className={`text_primary bg_secondary rounded-md flex items-center gap-3 justify-center 
+      className={`text_primary bg_secondary rounded-md sm:pt-0 pt-1 flex items-center gap-3 justify-center 
         ${className} 
         ${loader || disabled ? "cursor-not-allowed opacity-50" : ""}
         ${isAnimating ? "animate-click" : ""}`}

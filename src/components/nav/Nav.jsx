@@ -135,7 +135,7 @@ const Nav = () => {
         className={`absolute left-0 w-full bg-white shadow-md p-5 transition-transform duration-300 lg:hidden flex flex-col my-5 transform ${
           isOpen
             ? "-translate-y-5 z-30"
-            : "-translate-y-[300px] -z-10 overflow-hidden"
+            : "-translate-y-[500px] -z-10 overflow-hidden"
         }`}
       >
         {/* {userType ? (
@@ -185,7 +185,7 @@ const Nav = () => {
           <input
             type="text"
             placeholder="Search"
-            className="pl-10 rounded-r-none rounded-l-md border_secondary w-[80%]"
+            className="pl-10 rounded-r-none rounded-l-md border_secondary md:w-[80%] w-[70%]"
           />
           <button
             className="px-5   w-[12%] min-w-[80px] rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"

@@ -68,7 +68,7 @@ const Categories = () => {
     <div className="p-5">
       <div className="head flex flex-wrap gap-5 justify-between p-5 mt-5">
         <div>
-          <h2 className="text_secondary">Explore Categories</h2>
+          <h2 className="text_secondary font-bold mr-3">Explore Categories</h2>
         </div>
         <CustomButton
           height="40px"

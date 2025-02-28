@@ -3,8 +3,8 @@ import CustomButton from "../ui/CustomButton";
 const LandingPage = () => {
   const userType = localStorage.getItem("type user");
   return (
-    <div className="h-[93vh] flex justify-between bg-[#EFF5F1] p-5 ">
-      <div className="md:w-[60%] w-[90%] flex flex-col justify-center md:p-10 p-5">
+    <div className="md:h-[93vh] h-[90vh] flex  justify-between bg-[#EFF5F1] p-5 ">
+      <div className="md:w-[60%] h-full w-[90%] flex flex-col justify-center md:p-10 p-2">
         <h1>
           Welcome to{" "}
           <span className="text_secondary font-bold">Ready Hire</span> Smart

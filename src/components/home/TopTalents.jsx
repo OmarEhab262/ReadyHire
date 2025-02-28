@@ -6,7 +6,7 @@ const TopTalents = () => {
     <div className="p-5">
       <div className="head flex flex-wrap gap-5 justify-between p-5 mt-5">
         <div>
-          <h2 className="text_secondary">
+          <h2 className="text_secondary font-bold mr-3">
             <span className="text-black">Top</span> Talents
           </h2>
         </div>

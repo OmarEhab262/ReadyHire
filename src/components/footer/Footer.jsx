@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-[#EFF5F1] mt-10 py-10">
       <div className="container mx-auto grid md:grid-cols-3 grid-cols-1 gap-8 px-6 md:px-16">
         <div>
-          <h2 className="font-bold text-4xl font-young">
+          <h2 className="font-bold md:text-4xl text-xl  font-young">
             READY <span className="text-[var(--secondary-color)]">HIRE</span>
           </h2>
           <p className="text-gray-600 mt-5 text-lg leading-relaxed">
