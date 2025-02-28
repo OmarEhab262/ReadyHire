@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Bell, ChevronDown, Menu, Search } from "lucide-react";
 import image from "../../assets/images/team-01.png";
 import CustomButton from "../ui/CustomButton";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const [clicked, setClicked] = useState(false);
@@ -9,15 +10,18 @@ const Nav = () => {
   const userType = localStorage.getItem("type user");
   const links = {
     default: [
-      { name: "Hire Talent", path: "/" },
-      { name: "Apply Job", path: "/" },
+      { name: "Hire Talent", path: "/signup" },
+      { name: "Apply Job", path: "/signup" },
     ],
     seeker: [
-      { name: "Find work", path: "/" },
+      { name: "Profile", path: "/" },
+      { name: "Notification", path: "/" },
       { name: "Evaluation", path: "/" },
       { name: "My Jobs", path: "/my-hires" },
     ],
     company: [
+      { name: "Profile", path: "/" },
+      { name: "Notification", path: "/" },
       { name: "Hire Talent", path: "/" },
       { name: "Job Applications", path: "/" },
       { name: "My Hires", path: "/" },
@@ -37,14 +41,20 @@ const Nav = () => {
         <ul className="flex justify-around items-center text-lg gap-10">
           {!userType
             ? links.default.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))
             : userType === "seeker"
             ? links.seeker.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))
             : links.company.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))}
         </ul>
         <div className="flex gap-10 items-center">
@@ -108,27 +118,16 @@ const Nav = () => {
 
       {/* Mobile Navbar */}
       <div className="lg:hidden flex items-center justify-between w-full z-40 relative pt-5 px-5 pb-3  bg-white">
+        <div className="font-bold text-xl font-young flex items-center justify-center flex-wrap gap-2">
+          <span className="text_secondary">READY</span>{" "}
+          <span className="text-black">HIRE</span>
+        </div>
         <div
           onClick={() => setIsOpen(!isOpen)}
           className="w-10 h-10 flex items-center justify-center cursor-pointer"
         >
           <Menu size={30} color="#1971c2" strokeWidth={2} />
         </div>
-        <div className="font-bold text-xl font-young flex items-center justify-center flex-wrap gap-2">
-          <span className="text_secondary">READY</span>{" "}
-          <span className="text-black">HIRE</span>
-        </div>
-
-        {userType ? (
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Bell size={20} fill="#1971c2" color="#1971c2" />
-            </div>
-            <img src={image} className="rounded-full w-8 h-8" alt="" />
-          </div>
-        ) : (
-          ""
-        )}
       </div>
 
       {/* Mobile Menu */}
@@ -139,17 +138,33 @@ const Nav = () => {
             : "-translate-y-[300px] -z-10 overflow-hidden"
         }`}
       >
+        {/* {userType ? (
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 flex items-center justify-center">
+              <Bell size={20} fill="#1971c2" color="#1971c2" />
+            </div>
+            <img src={image} className="rounded-full w-8 h-8" alt="" />
+          </div>
+        ) : (
+          ""
+        )} */}
         <ul className="flex flex-col gap-5 text-lg font-semibold">
           {!userType
             ? links.default.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))
             : userType === "seeker"
             ? links.seeker.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))
             : links.company.map((link, index) => (
-                <li key={index}>{link.name}</li>
+                <li key={index}>
+                  <Link to={link.path}>{link.name}</Link>
+                </li>
               ))}
         </ul>
         {!userType && (
@@ -170,10 +185,10 @@ const Nav = () => {
           <input
             type="text"
             placeholder="Search"
-            className="pl-10 rounded-r-none rounded-l-md border_secondary md:w-[80%] w-[70%]"
+            className="pl-10 rounded-r-none rounded-l-md border_secondary w-[80%]"
           />
           <button
-            className="px-5 md:w-[120px] w-[80px] rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"
+            className="px-5   w-[12%] min-w-[80px] rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"
             onClick={() => setClicked(!clicked)}
           >
             <span
