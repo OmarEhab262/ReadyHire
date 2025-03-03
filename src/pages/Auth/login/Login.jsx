@@ -35,8 +35,8 @@ const Login = () => {
   return (
     <div className="">
       <DefaultNav />
-      <div className="flex items-center justify-around  ">
-        <div className="md:w-[40%] w-[90%]">
+      <div className="flex items-center justify-around h-[90vh]  ">
+        <div className="md:w-[40%] w-[90%] ">
           <h2 className="text-[40px] font-semibold mb-4">Login</h2>
           <p className="text-gray-400 text-md">Login to access your account</p>
           <form className="" onSubmit={handleSubmit(onSubmit)}>
