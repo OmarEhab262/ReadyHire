@@ -47,7 +47,7 @@ const Signup = () => {
   return (
     <div className="">
       <DefaultNav />
-      <div className="flex items-center justify-around  ">
+      <div className="flex items-center justify-around  mt-10 ">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-[40px] font-semibold mb-4">Sign up</h2>
           <p className="text-gray-400 text-md mb-3">
