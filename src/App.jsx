@@ -1,27 +1,29 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import ProtectedRoute from "./pages/Auth/ProtectedRoute";
-import { Toaster } from "react-hot-toast";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 import ScrollTop from "./components/scrollTop/ScrollTop";
 //pages
-import NotFound from "./pages/ErrorPages/NotFound";
-import Login from "./pages/Auth/login/Login";
-import Signup from "./pages/Auth/signup/Signup";
-import Home from "./pages/home/Home";
-import SelectUser from "./pages/Auth/signup/SelectUser";
-import OwnerStageTow from "./pages/Auth/signup/OwnerStageTow";
-import Policies from "./pages/Auth/policies/Policies";
-import VerifyEmail from "./components/signup/VerifyEmail";
 import VerificationSuccess from "./components/signup/VerificationSuccess";
-import UploadResume from "./pages/seeker/create-profile/UploadResume";
-import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
-import Final from "./pages/seeker/create-profile/Final";
-import CompanyProfileSetup from "./pages/company/create-profile/CompanyProfileSetup";
-import CompanyRegistration from "./pages/company/create-profile/CompanyRegistration";
+import VerifyEmail from "./components/signup/VerifyEmail";
+import Login from "./pages/Auth/login/Login";
+import Policies from "./pages/Auth/policies/Policies";
+import OwnerStageTow from "./pages/Auth/signup/OwnerStageTow";
+import SelectUser from "./pages/Auth/signup/SelectUser";
+import Signup from "./pages/Auth/signup/Signup";
 import BriefDescription from "./pages/company/create-profile/BriefDescription";
 import CommercialRegistration from "./pages/company/create-profile/CommercialRegistration";
+import CompanyProfileSetup from "./pages/company/create-profile/CompanyProfileSetup";
+import CompanyRegistration from "./pages/company/create-profile/CompanyRegistration";
 import UploadPhotoCompany from "./pages/company/create-profile/UploadPhotoCompany";
+import NotFound from "./pages/ErrorPages/NotFound";
+import HireTalent from "./pages/hire-talent/HireTalent";
+import Home from "./pages/home/Home";
+import Final from "./pages/seeker/create-profile/Final";
+import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
+import UploadResume from "./pages/seeker/create-profile/UploadResume";
+import ApplyJob from "./pages/apply-job/ApplyJob";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -67,6 +69,8 @@ export default function App() {
             path="/company-upload-photo"
             element={<UploadPhotoCompany />}
           />
+          <Route path="/hire-talent" element={<HireTalent />} />
+          <Route path="/apply-job" element={<ApplyJob />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

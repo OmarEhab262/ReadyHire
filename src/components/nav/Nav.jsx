@@ -10,21 +10,36 @@ const Nav = () => {
   const userType = localStorage.getItem("type user");
   const links = {
     default: [
-      { name: "Hire Talent", path: "/signup" },
-      { name: "Apply Job", path: "/signup" },
+      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Apply Job", path: "/apply-job" },
     ],
     seeker: [
-      { name: "Profile", path: "/" },
-      { name: "Notification", path: "/" },
-      { name: "Evaluation", path: "/" },
+      { name: "Evaluation", path: "/evaluation" },
       { name: "My Jobs", path: "/my-hires" },
     ],
     company: [
-      { name: "Profile", path: "/" },
-      { name: "Notification", path: "/" },
-      { name: "Hire Talent", path: "/" },
-      { name: "Job Applications", path: "/" },
-      { name: "My Hires", path: "/" },
+      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Job Applications", path: "/job-applications" },
+      { name: "My Hires", path: "/my-hires" },
+    ],
+  };
+  const linksMobile = {
+    default: [
+      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Apply Job", path: "/apply-job" },
+    ],
+    seeker: [
+      { name: "Profile", path: "/profile" },
+      { name: "Notification", path: "/notification" },
+      { name: "Evaluation", path: "/evaluation" },
+      { name: "My Jobs", path: "/my-hires" },
+    ],
+    company: [
+      { name: "Profile", path: "/profile" },
+      { name: "Notification", path: "/notification" },
+      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Job Applications", path: "/job-applications" },
+      { name: "My Hires", path: "/my-hires" },
     ],
   };
 
@@ -34,26 +49,53 @@ const Nav = () => {
     >
       {/* Desktop Navbar */}
       <div className="hidden lg:flex justify-between items-center bg-primary">
-        <div className="font-bold text-3xl font-young ">
+        <Link to="/" className="font-bold text-3xl font-young ">
           <span className="text_secondary">READY</span>{" "}
           <span className="text-black">HIRE</span>
-        </div>
+        </Link>
         <ul className="flex justify-around items-center text-lg gap-10">
           {!userType
             ? links.default.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))
             : userType === "seeker"
             ? links.seeker.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))
             : links.company.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
         </ul>
@@ -150,20 +192,47 @@ const Nav = () => {
         )} */}
         <ul className="flex flex-col gap-5 text-lg font-semibold">
           {!userType
-            ? links.default.map((link, index) => (
+            ? linksMobile.default.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))
             : userType === "seeker"
-            ? links.seeker.map((link, index) => (
+            ? linksMobile.seeker.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))
-            : links.company.map((link, index) => (
+            : linksMobile.company.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link
+                    className={`${
+                      location.pathname === link.path
+                        ? "text_secondary font-bold"
+                        : "text-black"
+                    } transition-colors duration-300`}
+                    to={link.path}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
         </ul>
@@ -178,7 +247,7 @@ const Nav = () => {
             />
           </div>
         )}
-        <div className="relative w-full mt-5">
+        <div className="relative w-full mt-5 flex">
           <div className="absolute left-3 top-2">
             <Search size={23} color="#1971c2" />
           </div>
@@ -188,7 +257,7 @@ const Nav = () => {
             className="pl-10 rounded-r-none rounded-l-md border_secondary md:w-[80%] w-[70%]"
           />
           <button
-            className="px-5   w-[12%] min-w-[80px] rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"
+            className="px-5 w-[12%] min-w-[120px] rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary pt-[8.5px]"
             onClick={() => setClicked(!clicked)}
           >
             <span

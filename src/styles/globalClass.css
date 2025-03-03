@@ -157,3 +157,15 @@
   background: rgba(0, 0, 0, 0.185);
   border-radius: 10px;
 }
+
+.fccc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.fccr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

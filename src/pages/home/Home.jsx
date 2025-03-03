@@ -1,18 +1,15 @@
-import Footer from "../../components/footer/Footer";
 import Categories from "../../components/home/Categories";
 import LandingPage from "../../components/home/LandingPage";
 import TopTalents from "../../components/home/TopTalents";
-import Nav from "../../components/nav/Nav";
+import Layout from "../../components/layout/Layout";
 
 const Home = () => {
   return (
-    <div>
-      <Nav />
+    <Layout>
       <LandingPage />
       <Categories />
       <TopTalents />
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
