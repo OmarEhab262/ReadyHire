@@ -8,7 +8,7 @@ import { BadgeDollarSign } from "lucide-react";
 
 const CardJob = () => {
   return (
-    <div className="sm:w-[700px] w-[90%]  shadow-md hover:shadow-lg duration-300 ease-in  p-5 rounded-lg m-5 cursor-pointer">
+    <div className="sm:w-[700px] w-[90%]  shadow-md hover:shadow-lg duration-300 ease-in  p-5 rounded-lg m-5 cursor-pointer bg-white">
       <div className="top flex flex-wrap sm:flex-row flex-col gap-4 sm:items-start !items-center justify-center">
         {/* Profile Image */}
         <div className="w-12 h-12 rounded-full border-[3px] border-blue-500">

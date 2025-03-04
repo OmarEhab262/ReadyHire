@@ -24,6 +24,9 @@ import Final from "./pages/seeker/create-profile/Final";
 import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
 import UploadResume from "./pages/seeker/create-profile/UploadResume";
 import ApplyJob from "./pages/apply-job/ApplyJob";
+import TalentPage from "./pages/talent/TalentPage";
+import Job from "./pages/job/Job";
+import ProfileSeeker from "./pages/seeker/profile/ProfileSeeker";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -71,6 +74,9 @@ export default function App() {
           />
           <Route path="/hire-talent" element={<HireTalent />} />
           <Route path="/apply-job" element={<ApplyJob />} />
+          <Route path="/talent" element={<TalentPage />} />
+          <Route path="/job" element={<Job />} />
+          <Route path="/profile-seeker" element={<ProfileSeeker />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

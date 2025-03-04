@@ -2,8 +2,8 @@ import CustomButton from "../ui/CustomButton";
 
 const StartHiring = () => {
   return (
-    <div className="fccc gap-10 my-10">
-      <h2 className="font-bold mr-3">
+    <div className="fccc gap-10 my-10 px-4">
+      <h2 className="font-bold mr-3 text-center">
         Start hiring now without{" "}
         <span className="text_secondary font-bold">complexity</span> !
       </h2>

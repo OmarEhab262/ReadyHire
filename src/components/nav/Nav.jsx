@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Bell, ChevronDown, Menu, Search } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import image from "../../assets/images/team-01.png";
 import CustomButton from "../ui/CustomButton";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const userType = localStorage.getItem("type user");
   const links = {
@@ -29,7 +29,7 @@ const Nav = () => {
       { name: "Apply Job", path: "/apply-job" },
     ],
     seeker: [
-      { name: "Profile", path: "/profile" },
+      { name: "Profile", path: "/profile-seeker" },
       { name: "Notification", path: "/notification" },
       { name: "Evaluation", path: "/evaluation" },
       { name: "My Jobs", path: "/my-hires" },
@@ -100,7 +100,7 @@ const Nav = () => {
               ))}
         </ul>
         <div className="flex gap-10 items-center">
-          <div className="relative flex items-center justify-center">
+          {/* <div className="relative flex items-center justify-center">
             <div className="absolute left-3">
               <Search size={23} color="#1971c2" />
             </div>
@@ -128,13 +128,15 @@ const Nav = () => {
                 </span>
               </span>
             </button>
-          </div>
+          </div> */}
           {userType ? (
             <div className="flex items-center gap-5">
               <div className="w-10 h-10 flex items-center justify-center">
                 <Bell size={20} fill="#1971c2" color="#1971c2" />
               </div>
-              <img src={image} className="rounded-full w-8 h-8" alt="" />
+              <Link to={userType === "seeker" ? "/profile-seeker" : "/profile"}>
+                <img src={image} className="rounded-full w-8 h-8" alt="" />{" "}
+              </Link>
             </div>
           ) : (
             <>
@@ -160,10 +162,13 @@ const Nav = () => {
 
       {/* Mobile Navbar */}
       <div className="lg:hidden flex items-center justify-between w-full z-40 relative pt-5 px-5 pb-3  bg-white">
-        <div className="font-bold text-xl font-young flex items-center justify-center flex-wrap gap-2">
+        <Link
+          to={"/"}
+          className="font-bold text-xl font-young flex items-center justify-center flex-wrap gap-2"
+        >
           <span className="text_secondary">READY</span>{" "}
           <span className="text-black">HIRE</span>
-        </div>
+        </Link>
         <div
           onClick={() => setIsOpen(!isOpen)}
           className="w-10 h-10 flex items-center justify-center cursor-pointer"
@@ -247,7 +252,7 @@ const Nav = () => {
             />
           </div>
         )}
-        <div className="relative w-full mt-5 flex">
+        {/* <div className="relative w-full mt-5 flex">
           <div className="absolute left-3 top-2">
             <Search size={23} color="#1971c2" />
           </div>
@@ -275,7 +280,7 @@ const Nav = () => {
               </span>
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
     </nav>
   );

@@ -35,12 +35,12 @@ const FindTheBestTalent = () => {
       </div>
       <div className=" w-[90%] flex flex-col  ">
         <div className="flex items-center justify-between flex-wrap w-full">
-          <div className="flex flex-col m-5 items-center gap-2 text-2xl md:w-[450px] hover:shadow-lg transition-all duration-300 shadow-md p-10  rounded-lg bg-white cursor-pointer">
+          <div className="flex text-center flex-col m-5 items-center gap-2 text-xl md:w-[450px] hover:shadow-lg transition-all duration-300 shadow-md p-10  rounded-lg bg-white cursor-pointer">
             If you are looking for a full-time/part-time employee: All
             candidates will be tested through our smart system, sending you
             evaluation results to choose the best.
           </div>
-          <div className="flex flex-col m-5 items-center gap-2 text-2xl  w-[450px] hover:shadow-lg transition-all duration-300 shadow-md p-10  rounded-lg bg-white cursor-pointer">
+          <div className="flex flex-col m-5 text-center items-center gap-2 text-xl  w-[450px] hover:shadow-lg transition-all duration-300 shadow-md p-10  rounded-lg bg-white cursor-pointer">
             If you are looking for an Freelancer for your project: you will
             receive financial and technical proposal from freelancers, and you
             can review their previous work to choose the most suitable for you.{" "}
