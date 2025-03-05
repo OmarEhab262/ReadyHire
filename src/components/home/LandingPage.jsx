@@ -4,7 +4,7 @@ const LandingPage = () => {
   const userType = localStorage.getItem("type user");
   return (
     <div className="md:h-[93vh] h-[90vh] flex  justify-between bg-[#EFF5F1] p-5 ">
-      <div className="md:w-[60%] h-full w-[90%] flex flex-col justify-center md:p-10 p-2">
+      <div className="md:w-[50%] h-full w-[90%] flex flex-col justify-center md:p-10 p-2">
         <h1>
           Welcome to{" "}
           <span className="text_secondary font-bold">Ready Hire</span> Smart
@@ -32,7 +32,7 @@ const LandingPage = () => {
           )}
         </div>
       </div>
-      <div className="md:block hidden w-[40%]">
+      <div className="md:block hidden w-[50%]">
         <img className="w-full h-full" src={image} alt="" />
       </div>
     </div>

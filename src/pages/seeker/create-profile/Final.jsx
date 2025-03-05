@@ -1,4 +1,5 @@
 import dd from "../../../assets/images/dd.png";
+import DefaultNav from "../../../components/nav/DefaultNav";
 import CustomButton from "../../../components/ui/CustomButton";
 
 const Final = () => {
@@ -7,15 +8,13 @@ const Final = () => {
   return (
     <div className="">
       {/* Title */}
-      <div className="font-bold text-3xl p-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
+      <DefaultNav />
 
       {/* Content Section */}
-      <div className="flex flex-col justify-center items-center flex-grow text-center my-5">
+      <div className="flex flex-col justify-center items-center flex-grow text-center my-5 p-5">
         <div className="flex flex-col gap-8 items-center w-full max-w-2xl">
           {/* Profile Image */}
-          <div className="md:w-[50%] w-[90%] flex justify-center">
+          <div className="md:w-[50%] md:flex hidden w-[90%]  justify-center ">
             <img src={dd} alt="Profile Ready" className="w-[60%] max-w-sm" />
           </div>
 
@@ -54,21 +53,44 @@ const Final = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col md:flex-row gap-6 mt-6">
-            <CustomButton
-              height="40px"
-              text="View My Profile"
-              className="!text-[var(--secondary-color)] !bg-white border_secondary !border-2"
-              type="button"
-              width="280px"
-              // link="/profile"
-            />
-            <CustomButton
-              height="40px"
-              text="Take Test Now"
-              type="button"
-              width="280px"
-              // link="/assessment"
-            />
+            {typeUser === "seeker" && (
+              <CustomButton
+                height="40px"
+                text="View My Profile"
+                className="!text-[var(--secondary-color)] !bg-white border_secondary !border-2"
+                type="button"
+                width="280px"
+                link="/profile-seeker"
+              />
+            )}
+            {typeUser === "company" && (
+              <CustomButton
+                height="40px"
+                text="View My Profile"
+                className="!text-[var(--secondary-color)] !bg-white border_secondary !border-2"
+                type="button"
+                width="280px"
+                //  link="/profile-seeker"
+              />
+            )}
+            {typeUser === "seeker" && (
+              <CustomButton
+                height="40px"
+                text="Take Test Now"
+                type="button"
+                width="280px"
+                // link="/assessment"
+              />
+            )}
+            {typeUser === "company" && (
+              <CustomButton
+                height="40px"
+                text="Post a Job Now"
+                type="button"
+                width="280px"
+                // link="/assessment"
+              />
+            )}
           </div>
         </div>
       </div>

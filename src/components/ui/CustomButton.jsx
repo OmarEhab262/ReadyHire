@@ -27,29 +27,22 @@ const CustomButton = ({
     <button
       type={type}
       onClick={handleClick}
-      className={`text_primary bg_secondary rounded-md sm:pt-0 pt-1 flex items-center gap-3 justify-center 
+      className={`text_primary bg_secondary rounded-md flex items-center gap-3 justify-center relative
         ${className} 
         ${loader || disabled ? "cursor-not-allowed opacity-50" : ""}
         ${isAnimating ? "animate-click" : ""}`}
       disabled={loader || disabled}
       style={{ width, height }}
     >
-      {icon && <div>{icon}</div>}
-      {!loader && text}
+      {icon && !loader && <div>{icon}</div>}
+      {loader ? <div className="loader absolute"></div> : text}
     </button>
   );
 
-  return (
-    <div style={{ width }} className="relative">
-      {link && !disabled ? (
-        <Link to={link}>{buttonContent}</Link>
-      ) : (
-        buttonContent
-      )}
-      {loader && (
-        <div className="loader absolute top-3 left-1/2 transform -translate-x-1/2"></div>
-      )}
-    </div>
+  return link && !disabled ? (
+    <Link to={link}>{buttonContent}</Link>
+  ) : (
+    buttonContent
   );
 };
 

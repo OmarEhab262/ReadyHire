@@ -1,8 +1,8 @@
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
+import JobFilter from "../../components/job/JobFilter";
 import Layout from "../../components/layout/Layout";
 import CardJob from "../../components/ui/CardJob";
-import JobFilter from "../../components/job/JobFilter";
 
 const Job = () => {
   const [clicked, setClicked] = useState(false);
@@ -30,22 +30,15 @@ const Job = () => {
             className="pl-10 pr-3 rounded-r-none rounded-l-md border_secondary flex-1 min-w-0"
           />
           <button
-            className="px-5 rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary w-[110px] pt-[8.5px] flex-shrink-0"
+            className="px-5 rounded-r-md bg_secondary text-white p-2 -ml-2 border_secondary  pt-[8.5px] flex-shrink-0"
             onClick={() => setClicked(!clicked)}
           >
             <span
-              className={`flex text-md items-center gap-4 ${
+              className={`flex text-md items-center gap-4 px-3 ${
                 clicked ? "animate-click" : ""
               }`}
             >
               Job{" "}
-              <span
-                className={`transition-transform duration-300 ${
-                  clicked ? "rotate-180" : ""
-                }`}
-              >
-                <ChevronDown />
-              </span>
             </span>
           </button>
         </div>

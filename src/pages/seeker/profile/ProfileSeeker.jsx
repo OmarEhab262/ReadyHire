@@ -2,12 +2,19 @@ import Layout from "../../../components/layout/Layout";
 import image from "../../../assets/images/team-01.png";
 import CustomButton from "../../../components/ui/CustomButton";
 import { CircleGauge, Earth, GraduationCap, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSeeker = () => {
+  const navigate = useNavigate();
+  const logOut = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("type user");
+    navigate("/");
+  };
   return (
     <Layout>
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row gap-6 md:p-10 p-5 justify-between">
+      <div className="flex flex-col md:flex-row gap-6 md:p-10 p-5 justify-between md:items-center">
         {/* Left Section - Profile Info */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
           {/* Profile Image */}
@@ -40,6 +47,14 @@ const ProfileSeeker = () => {
               type="button"
             />
           </div>
+          <CustomButton
+            height="40px"
+            width="320px"
+            className="!bg-red-500 "
+            text="Logout"
+            type="button"
+            onClick={logOut}
+          />
         </div>
 
         {/* Right Section - Skills */}

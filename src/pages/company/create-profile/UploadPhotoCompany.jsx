@@ -1,6 +1,7 @@
 import { Building2, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
+import DefaultNav from "../../../components/nav/DefaultNav";
 
 const UploadPhotoCompany = () => {
   const [file, setFile] = useState(null);
@@ -32,10 +33,8 @@ const UploadPhotoCompany = () => {
 
   return (
     <div className="">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
-      <div className="px-9 min-h-[90vh] flex flex-col justify-center items-center">
+      <DefaultNav />
+      <div className="px-9 min-h-[90vh] flex flex-col justify-center items-center p-5">
         <div className="flex flex-col items-center w-full max-w-2xl text-center gap-6 mt-6">
           <p className="text-lg text-gray-500">
             A professional photo helps establish credibility with your clients.
@@ -93,7 +92,7 @@ const UploadPhotoCompany = () => {
               text="Continue"
               type="button"
               width="100px"
-              link="/final-profile-seeker"
+              link="/final-profile"
               disabled={!file}
             />
           </div>

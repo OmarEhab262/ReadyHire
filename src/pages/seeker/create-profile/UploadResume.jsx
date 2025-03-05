@@ -1,6 +1,7 @@
 import { Upload } from "lucide-react";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState, useRef } from "react";
+import DefaultNav from "../../../components/nav/DefaultNav";
 
 const UploadResume = () => {
   const [file, setFile] = useState(null);
@@ -29,10 +30,8 @@ const UploadResume = () => {
 
   return (
     <div className="">
-      <div className="font-bold text-3xl mt-5 ml-5 font-young">
-        <span className="text_secondary ">READY</span> <span>HIRE</span>
-      </div>
-      <div className="px-9 md:min-h-[90vh] min-h-[80vh] flex flex-col justify-center items-center">
+      <DefaultNav />
+      <div className="px-9 md:min-h-[90vh] min-h-[80vh] flex flex-col justify-center items-center p-5">
         <div className="flex flex-col items-center w-full max-w-2xl text-center gap-6 mt-6">
           <h1 className="text-3xl font-semibold">
             How would you like to tell us about yourself?

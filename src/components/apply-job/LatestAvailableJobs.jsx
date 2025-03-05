@@ -15,6 +15,7 @@ const LatestAvailableJobs = () => {
           text="view more"
           type="button"
           width="150px"
+          link="/job"
         />
       </div>
       <div className="grid grid-cols-1 justify-items-center">

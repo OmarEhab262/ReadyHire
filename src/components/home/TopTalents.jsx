@@ -12,9 +12,10 @@ const TopTalents = () => {
         </div>
         <CustomButton
           height="40px"
-          text="Browse all Jobs"
+          text="Browse all Talents"
           type="button"
           width="150px"
+          link="/talent"
         />
       </div>
       <div className="flex justify-center items-center flex-wrap flex-col">

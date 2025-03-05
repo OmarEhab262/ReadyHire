@@ -1,4 +1,4 @@
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Layout from "../../components/layout/Layout";
 import { useState } from "react";
 import TalentFilter from "../../components/talent/TalentFilter";
@@ -33,18 +33,11 @@ const TalentPage = () => {
             onClick={() => setClicked(!clicked)}
           >
             <span
-              className={`flex text-md items-center gap-4 ${
+              className={`flex text-md items-center gap-4 px-3 ${
                 clicked ? "animate-click" : ""
               }`}
             >
               Talent{" "}
-              <span
-                className={`transition-transform duration-300 ${
-                  clicked ? "rotate-180" : ""
-                }`}
-              >
-                <ChevronDown />
-              </span>
             </span>
           </button>
         </div>

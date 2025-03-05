@@ -61,7 +61,7 @@ const CommercialRegistration = () => {
   return (
     <div className="company-registration-container">
       <DefaultNav />
-      <div className="flex items-center justify-center md:justify-around py-8">
+      <div className="flex items-center justify-center md:justify-around py-8 p-5">
         <div className="md:w-[40%] w-[90%]">
           <h2 className="text-4xl font-semibold mb-4 text-blue-600">
             Commercial Registration Status

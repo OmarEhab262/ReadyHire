@@ -32,26 +32,30 @@ const TalentFilter = () => {
       [option]: !prev[option],
     }));
   };
-
+  const userType = localStorage.getItem("type user");
   return (
     <div className="w-full lg:w-64">
       {/* Sidebar Content (Hidden on Mobile unless Open) */}
       <div className={`p-4 z-50 bg-white shadow-lg rounded-xl `}>
-        <div className="fccr gap-4 my-4">
-          <CustomButton
-            height="30px"
-            text="Talent"
-            type="button"
-            link="/talent"
-          />{" "}
-          <CustomButton
-            height="30px"
-            text="Job"
-            type="button"
-            className="!text-[var(--secondary-color)] !bg-white border_secondary !h-[30px]"
-            link="/job"
-          />
-        </div>
+        {!userType && (
+          <div className="fccr gap-4 my-4">
+            <CustomButton
+              height="30px"
+              text="Talent"
+              type="button"
+              link="/talent"
+              width="100px"
+            />{" "}
+            <CustomButton
+              height="30px"
+              width="100px"
+              text="Job"
+              type="button"
+              className="!text-[var(--secondary-color)] !bg-white border_secondary !h-[30px]"
+              link="/job"
+            />
+          </div>
+        )}
         <h2 className="text-xl font-semibold mb-3">Filter Talent</h2>
 
         {/* Experience Level Filter */}

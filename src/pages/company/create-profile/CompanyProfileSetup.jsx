@@ -6,7 +6,7 @@ const CompanyProfileSetup = () => {
     <>
       {" "}
       <DefaultNav />
-      <div className="flex flex-col items-center justify-center  text-center ">
+      <div className="flex flex-col items-center justify-center  text-center p-5 ">
         <div className="w-[80%] md:w-[30%]">
           {" "}
           <img className="w-fit h-[80%]" src={image} alt="" />

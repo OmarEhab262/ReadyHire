@@ -14,11 +14,12 @@ const Nav = () => {
       { name: "Apply Job", path: "/apply-job" },
     ],
     seeker: [
-      { name: "Evaluation", path: "/evaluation" },
+      { name: "Find work", path: "/job" },
+      { name: "My Assessments&Proposal", path: "/my-assessments" },
       { name: "My Jobs", path: "/my-hires" },
     ],
     company: [
-      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
       { name: "My Hires", path: "/my-hires" },
     ],
@@ -31,13 +32,14 @@ const Nav = () => {
     seeker: [
       { name: "Profile", path: "/profile-seeker" },
       { name: "Notification", path: "/notification" },
-      { name: "Evaluation", path: "/evaluation" },
+      { name: "Find work", path: "/job" },
+      { name: "My Assessments&Proposal", path: "/my-assessments" },
       { name: "My Jobs", path: "/my-hires" },
     ],
     company: [
-      { name: "Profile", path: "/profile" },
+      { name: "Profile", path: "/profile-company" },
       { name: "Notification", path: "/notification" },
-      { name: "Hire Talent", path: "/hire-talent" },
+      { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
       { name: "My Hires", path: "/my-hires" },
     ],
@@ -134,7 +136,11 @@ const Nav = () => {
               <div className="w-10 h-10 flex items-center justify-center">
                 <Bell size={20} fill="#1971c2" color="#1971c2" />
               </div>
-              <Link to={userType === "seeker" ? "/profile-seeker" : "/profile"}>
+              <Link
+                to={
+                  userType === "seeker" ? "/profile-seeker" : "/profile-company"
+                }
+              >
                 <img src={image} className="rounded-full w-8 h-8" alt="" />{" "}
               </Link>
             </div>
