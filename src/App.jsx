@@ -28,6 +28,7 @@ import TalentPage from "./pages/talent/TalentPage";
 import Job from "./pages/job/Job";
 import ProfileSeeker from "./pages/seeker/profile/ProfileSeeker";
 import ProfileCompany from "./pages/company/profile/ProfileCompany";
+import ViewDetailsJobPage from "./pages/apply-job/ViewDetailsJobPage";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -79,6 +80,7 @@ export default function App() {
           <Route path="/job" element={<Job />} />
           <Route path="/profile-seeker" element={<ProfileSeeker />} />
           <Route path="/profile-company" element={<ProfileCompany />} />
+          <Route path="/view-details-job" element={<ViewDetailsJobPage />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
