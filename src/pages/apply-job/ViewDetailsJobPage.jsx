@@ -6,12 +6,12 @@ import CustomButton from "../../components/ui/CustomButton";
 const ViewDetailsJobPage = () => {
   return (
     <Layout>
-      <div className="head p-10 flex justify-between  bg-gray-50 shadow-lg rounded-xl w-[95%] mx-auto">
-        <div className="flex flex-col gap-4">
+      <div className="head md:p-10 p-5 flex flex-wrap gap-5 justify-between  bg-gray-50 shadow-lg rounded-xl w-[95%] mx-auto">
+        <div className="flex flex-col gap-4 ">
           <h2 className="text-3xl font-extrabold text-gray-900">
             UI/UX Designer
           </h2>
-          <div className="flex gap-5 items-center">
+          <div className="flex flex-wrap gap-5 items-center">
             <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg border-2 border-blue-400">
               <img
                 className="w-full h-full object-cover"
