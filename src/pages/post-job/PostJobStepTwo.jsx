@@ -17,7 +17,7 @@ const PostJobStepTwo = ({ onNext, onPrev, formMethods }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-6 bg-white rounded-lg shadow-md space-y-6 w-[70%] mx-auto mt-10"
+      className="p-6 bg-white rounded-lg shadow-md space-y-6  md:w-[70%] mx-auto mt-10"
     >
       {/* Job Description */}
       <div className="my-7">
@@ -44,7 +44,7 @@ const PostJobStepTwo = ({ onNext, onPrev, formMethods }) => {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between mt-4">
+      <div className="flex sm:justify-between justify-center flex-wrap gap-5">
         <CustomButton
           height="45px"
           text="Previous"

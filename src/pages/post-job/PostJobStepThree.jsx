@@ -23,7 +23,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-6 bg-white rounded-lg shadow-md space-y-6 w-[70%] mx-auto mt-10"
+      className="p-6 bg-white rounded-lg shadow-md space-y-6  md:w-[70%] mx-auto mt-10"
     >
       {/* Deadline for Applications */}
       <label className="text-gray-600 font-medium">
@@ -48,8 +48,8 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       )}
 
       {/* Expected Salary & By Negotiation */}
-      <div className="flex gap-5">
-        <div className="w-4/5">
+      <div className="flex gap-5 flex-wrap ">
+        <div className="md:w-[80%] w-full">
           <label className="text-gray-600 font-medium">Expected Salary</label>
           <Controller
             control={control}
@@ -72,7 +72,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
             </small>
           )}
         </div>
-        <div className="flex items-center gap-2 mt-8">
+        <div className="flex items-center gap-2 xl:mt-8 mt-1">
           <input
             type="checkbox"
             {...control.register("byNegotiation")}
@@ -125,7 +125,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       )}
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between mt-4">
+      <div className="flex sm:justify-between justify-center flex-wrap gap-5">
         <CustomButton
           height="45px"
           text="Previous"
