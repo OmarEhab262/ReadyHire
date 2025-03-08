@@ -8,7 +8,7 @@ const TalentPage = () => {
   const [clicked, setClicked] = useState(false);
   return (
     <Layout>
-      <div className="flex flex-col justify-center md:p-10 p-2">
+      <div className="flex flex-col justify-center md:p-10 p-10">
         <h1>
           Find Top <span className="text_secondary font-bold">Talent</span> for
           Your Business

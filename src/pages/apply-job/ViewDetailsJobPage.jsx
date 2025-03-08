@@ -4,6 +4,8 @@ import { Bookmark, MapPin, Share2 } from "lucide-react";
 import CustomButton from "../../components/ui/CustomButton";
 
 const ViewDetailsJobPage = () => {
+  const userType = localStorage.getItem("type user");
+  const isTakenTask = false;
   return (
     <Layout>
       <div className="head md:p-10 p-5 flex flex-wrap gap-5 justify-between  bg-gray-50 shadow-lg rounded-xl w-[95%] mx-auto">
@@ -40,16 +42,29 @@ const ViewDetailsJobPage = () => {
           </div>
         </div>
         <div className="flex gap-4 items-center">
-          <CustomButton
-            height="45px"
-            text="Apply Now"
-            type="button"
-            width="180px"
-            className="bg-blue-500 text-white font-bold"
-          />
-          <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
-            <Bookmark className="text-gray-600" />
-          </div>
+          {!userType ? (
+            <CustomButton
+              height="45px"
+              text="Get Started"
+              type="button"
+              width="180px"
+              className="bg-blue-500 text-white font-bold"
+              link="/select-user"
+            />
+          ) : (
+            <>
+              <CustomButton
+                height="45px"
+                text={isTakenTask ? "Apply Now" : "Take Test First"}
+                type="button"
+                width="180px"
+                className="bg-blue-500 text-white font-bold"
+              />
+              <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
+                <Bookmark className="text-gray-600" />
+              </div>
+            </>
+          )}
           <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
             <Share2 className="text-gray-600" />
           </div>

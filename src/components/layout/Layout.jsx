@@ -4,11 +4,11 @@ import Footer from "../footer/Footer";
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen justify-between">
       <Nav />
       {children}
       <Footer />
-    </>
+    </div>
   );
 };
 

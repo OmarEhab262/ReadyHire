@@ -58,6 +58,7 @@ const ProfileCompany = () => {
             className="!bg-green-500 !text-white font-semibold shadow-md"
             text="Post a Job"
             type="button"
+            link="/post-job"
           />
           <CustomButton
             height="45px"

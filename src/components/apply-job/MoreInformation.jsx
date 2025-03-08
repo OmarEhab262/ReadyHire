@@ -45,8 +45,8 @@ const MoreInformation = () => {
   ];
   return (
     <div className="bg-[#EFF5F1] py-5">
-      <div className="fccc md:w-[60%] w-[90%] mx-auto py-5 ">
-        <h2 className="font-bold mr-3 ">
+      <div className="fccc md:w-[60%] w-[90%] mx-auto p-5 ">
+        <h2 className="font-bold mr-3 text-center ">
           Your job doesn&apos;t just depend on your CV!
         </h2>
         <p className="text-[#555555] text-center text-2xl">
@@ -65,14 +65,14 @@ const MoreInformation = () => {
           {card.map((item) => (
             <div
               key={item.title}
-              className="mx-10 my-10 shadow-lg h-[420px] w-[350px] bg-white rounded-lg p-10"
+              className="mx-10 my-10 shadow-lg h-[450px] w-[350px] bg-white rounded-lg p-10"
             >
               <div className="flex items-center flex-col h-full justify-between">
                 <div className="w-[100px] h-[100px] ">
                   <img className="w-full h-full" src={item.img} alt="" />
                 </div>
                 <div className="w-[90%] h-[2px] bg-gray-500 my-4 "></div>
-                <h3 className="font-bold text-center">{item.title}</h3>
+                <h3 className="font-bold text-2xl text-center">{item.title}</h3>
                 <p className="text-[#555555] text-center">{item.discretion}</p>
               </div>
             </div>
