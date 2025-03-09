@@ -3,7 +3,8 @@ import image from "../../../assets/images/team-01.png";
 import CustomButton from "../../../components/ui/CustomButton";
 import { CircleGauge, Earth, GraduationCap, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 const ProfileSeeker = () => {
   const navigate = useNavigate();
   const logOut = () => {
@@ -11,6 +12,16 @@ const ProfileSeeker = () => {
     localStorage.removeItem("type user");
     navigate("/");
   };
+
+  const [isTakenTask, setIsTakenTask] = useState(
+    Cookies.get("isTakenTask") === "true"
+  );
+
+  // تحديث `isTakenTask` عند تحميل الصفحة
+  useEffect(() => {
+    const checkTakenTask = Cookies.get("isTakenTask");
+    setIsTakenTask(checkTakenTask === "true");
+  }, []);
   return (
     <Layout>
       {/* Header Section */}
@@ -131,16 +142,16 @@ const ProfileSeeker = () => {
             </span>
           </div>
         ))}
-
-        {/* Button Section */}
-        <div className="col-span-1 md:col-span-3 flex justify-center mt-4">
-          <CustomButton
-            height="40px"
-            width="150px"
-            text="Take Testing Now"
-            type="button"
-          />
-        </div>
+        {!isTakenTask && (
+          <div className="col-span-1 md:col-span-3 flex justify-center mt-4">
+            <CustomButton
+              height="40px"
+              width="150px"
+              text="Take Testing Now"
+              type="button"
+            />
+          </div>
+        )}
       </div>
 
       {/* About Me Section */}

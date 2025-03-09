@@ -7,6 +7,8 @@ import ScrollTop from "./components/scrollTop/ScrollTop";
 //pages
 import VerificationSuccess from "./components/signup/VerificationSuccess";
 import VerifyEmail from "./components/signup/VerifyEmail";
+import ApplyJob from "./pages/apply-job/ApplyJob";
+import ViewDetailsJobPage from "./pages/apply-job/ViewDetailsJobPage";
 import Login from "./pages/Auth/login/Login";
 import Policies from "./pages/Auth/policies/Policies";
 import OwnerStageTow from "./pages/Auth/signup/OwnerStageTow";
@@ -17,20 +19,22 @@ import CommercialRegistration from "./pages/company/create-profile/CommercialReg
 import CompanyProfileSetup from "./pages/company/create-profile/CompanyProfileSetup";
 import CompanyRegistration from "./pages/company/create-profile/CompanyRegistration";
 import UploadPhotoCompany from "./pages/company/create-profile/UploadPhotoCompany";
+import ProfileCompany from "./pages/company/profile/ProfileCompany";
+import DoTest from "./pages/do-test/DoTest";
+import InstructionsDoTest from "./pages/do-test/InstructionsDoTest";
+import StartDoTest from "./pages/do-test/StartDoTest";
 import NotFound from "./pages/ErrorPages/NotFound";
 import HireTalent from "./pages/hire-talent/HireTalent";
 import Home from "./pages/home/Home";
+import Job from "./pages/job/Job";
+import PostJob from "./pages/post-job/PostJob";
+import PostJobSuccess from "./pages/post-job/PostJobSuccess";
 import Final from "./pages/seeker/create-profile/Final";
 import UploadPhoto from "./pages/seeker/create-profile/UploadPhoto";
 import UploadResume from "./pages/seeker/create-profile/UploadResume";
-import ApplyJob from "./pages/apply-job/ApplyJob";
-import TalentPage from "./pages/talent/TalentPage";
-import Job from "./pages/job/Job";
 import ProfileSeeker from "./pages/seeker/profile/ProfileSeeker";
-import ProfileCompany from "./pages/company/profile/ProfileCompany";
-import ViewDetailsJobPage from "./pages/apply-job/ViewDetailsJobPage";
-import PostJob from "./pages/post-job/PostJob";
-import PostJobSuccess from "./pages/post-job/PostJobSuccess";
+import TalentPage from "./pages/talent/TalentPage";
+import TestResult from "./pages/do-test/TestResult";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -85,6 +89,13 @@ export default function App() {
           <Route path="/view-details-job" element={<ViewDetailsJobPage />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/post-job-success" element={<PostJobSuccess />} />
+          <Route path="/start-do-test" element={<StartDoTest />} />
+          <Route
+            path="/instructions-do-test"
+            element={<InstructionsDoTest />}
+          />
+          <Route path="/do-test" element={<DoTest />} />
+          <Route path="/results" element={<TestResult />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

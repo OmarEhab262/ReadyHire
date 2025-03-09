@@ -1,11 +1,23 @@
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import Layout from "../../components/layout/Layout";
-import img from "../../assets/images/team-01.png";
-import { Bookmark, MapPin, Share2 } from "lucide-react";
 import CustomButton from "../../components/ui/CustomButton";
+import { Bookmark, MapPin, Share2 } from "lucide-react";
+import img from "../../assets/images/team-01.png";
 
 const ViewDetailsJobPage = () => {
   const userType = localStorage.getItem("type user");
-  const isTakenTask = false;
+
+  // استخدم useState بدلاً من جلب القيمة مباشرة
+  const [isTakenTask, setIsTakenTask] = useState(
+    Cookies.get("isTakenTask") === "true"
+  );
+
+  // تحديث `isTakenTask` عند تحميل الصفحة
+  useEffect(() => {
+    const checkTakenTask = Cookies.get("isTakenTask");
+    setIsTakenTask(checkTakenTask === "true");
+  }, []);
   return (
     <Layout>
       <div className="head md:p-10 p-5 flex flex-wrap gap-5 justify-between  bg-gray-50 shadow-lg rounded-xl w-[95%] mx-auto">
@@ -59,6 +71,7 @@ const ViewDetailsJobPage = () => {
                 type="button"
                 width="180px"
                 className="bg-blue-500 text-white font-bold"
+                link={isTakenTask ? "/" : "/do-test"}
               />
               <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
                 <Bookmark className="text-gray-600" />

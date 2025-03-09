@@ -22,7 +22,7 @@ const StartHiring = () => {
           height="50px"
           text="Sign Up & Post Your First Job for Free"
           type="button"
-          link="/login"
+          link="/select-user"
           className="font-bold md:w-[400px] w-[90%] px-3"
         />
       </div>

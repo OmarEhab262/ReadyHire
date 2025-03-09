@@ -75,6 +75,7 @@ const Categories = () => {
           text="Browse all Jobs"
           type="button"
           width="150px"
+          link="/job"
         />
       </div>
       <div>

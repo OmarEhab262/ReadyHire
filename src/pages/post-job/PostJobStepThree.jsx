@@ -127,6 +127,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       {/* Navigation Buttons */}
       <div className="flex sm:justify-between justify-center flex-wrap gap-5">
         <CustomButton
+          className="!text-[var(--secondary-color)] !bg-white border_secondary"
           height="45px"
           text="Previous"
           type="button"

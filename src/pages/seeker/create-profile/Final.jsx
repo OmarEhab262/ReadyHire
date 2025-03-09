@@ -70,7 +70,7 @@ const Final = () => {
                 className="!text-[var(--secondary-color)] !bg-white border_secondary !border-2"
                 type="button"
                 width="280px"
-                //  link="/profile-seeker"
+                link="/profile-company"
               />
             )}
             {typeUser === "seeker" && (
@@ -79,7 +79,7 @@ const Final = () => {
                 text="Take Test Now"
                 type="button"
                 width="280px"
-                // link="/assessment"
+                link="/do-test"
               />
             )}
             {typeUser === "company" && (
@@ -88,7 +88,7 @@ const Final = () => {
                 text="Post a Job Now"
                 type="button"
                 width="280px"
-                // link="/assessment"
+                link="/post-job"
               />
             )}
           </div>
