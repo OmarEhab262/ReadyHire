@@ -209,7 +209,7 @@ const DoTest = () => {
 
           {/* Navigation */}
           <div className="navigation flex flex-col items-center">
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between gap-4 w-full">
               <CustomButton
                 className="!text-[var(--secondary-color)] !bg-white border_secondary"
                 text="Previous"
