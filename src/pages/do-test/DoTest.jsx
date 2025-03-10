@@ -87,14 +87,15 @@ const DoTest = () => {
     if (
       selectedAnswers[currentQuestion] === questions[currentQuestion].correct
     ) {
-      setScore((prev) => prev + 1);
+      setScore((prevScore) => prevScore + 1);
     }
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
+
+    if (currentQuestion === questions.length - 1) {
+      setTimeout(() => {
+        setIsModalOpen(true);
+      }, 1000); // Wait 1 second before opening the modal
     } else {
-      Cookies.set("score", score, { expires: 1 });
-      Cookies.set("totalQuestions", questions.length, { expires: 1 });
-      navigate("/results");
+      setCurrentQuestion((prev) => prev + 1);
     }
   };
 
@@ -226,11 +227,7 @@ const DoTest = () => {
                 type="button"
                 height="40px"
                 width="150px"
-                onClick={
-                  currentQuestion === questions.length - 1
-                    ? () => setIsModalOpen(true)
-                    : handleNext
-                }
+                onClick={handleNext}
               />
             </div>
 

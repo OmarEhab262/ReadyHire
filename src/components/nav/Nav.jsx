@@ -15,8 +15,8 @@ const Nav = () => {
     ],
     seeker: [
       { name: "Find work", path: "/job" },
-      { name: "My Assessments&Proposal", path: "/my-assessments" },
-      { name: "My Jobs", path: "/my-hires" },
+      { name: "My Assessments&Proposal", path: "/my-proposals" },
+      { name: "My Jobs", path: "/my-jobs" },
     ],
     company: [
       { name: "Hire Talent", path: "/talent" },
@@ -33,8 +33,8 @@ const Nav = () => {
       { name: "Profile", path: "/profile-seeker" },
       { name: "Notification", path: "/notification" },
       { name: "Find work", path: "/job" },
-      { name: "My Assessments&Proposal", path: "/my-assessments" },
-      { name: "My Jobs", path: "/my-hires" },
+      { name: "My Assessments&Proposal", path: "/my-proposals" },
+      { name: "My Jobs", path: "/my-jobs" },
     ],
     company: [
       { name: "Profile", path: "/profile-company" },

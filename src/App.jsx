@@ -35,6 +35,11 @@ import UploadResume from "./pages/seeker/create-profile/UploadResume";
 import ProfileSeeker from "./pages/seeker/profile/ProfileSeeker";
 import TalentPage from "./pages/talent/TalentPage";
 import TestResult from "./pages/do-test/TestResult";
+import NotPassed from "./pages/do-test/NotPassed";
+import TestPassed from "./pages/do-test/TestPassed";
+import MyProposals from "./pages/proposals/MyProposals";
+import MyJobs from "./pages/my-jobs/MyJobs";
+import NeedsModification from "./pages/needs-modification/NeedsModification";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -96,6 +101,11 @@ export default function App() {
           />
           <Route path="/do-test" element={<DoTest />} />
           <Route path="/results" element={<TestResult />} />
+          <Route path="/not-passed" element={<NotPassed />} />
+          <Route path="/test-passed" element={<TestPassed />} />
+          <Route path="/my-proposals" element={<MyProposals />} />
+          <Route path="/my-jobs" element={<MyJobs />} />
+          <Route path="/needs-modification" element={<NeedsModification />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

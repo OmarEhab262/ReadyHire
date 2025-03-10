@@ -51,7 +51,7 @@ const TestResult = () => {
               type="button"
               height="45px"
               width="300px"
-              link="/"
+              link={percentage >= 70 ? "/test-passed" : "/not-passed"}
             />
           </div>
         </div>

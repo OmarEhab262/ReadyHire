@@ -49,9 +49,9 @@ const CardJob = () => {
           <p className="text-gray-500 font-bold">Budget : $100.00</p>
         </div>
       </div>
-      <div className="bot flex gap-2 flex-wrap items-end justify-between mt-2">
+      <div className="bot flex gap-2 flex-wrap items-center justify-between mt-2">
         <p className="text-[#0BBD0B] font-bold">2 hours ago.</p>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap justify-center my-2">
           <CustomButton
             text="View Details"
             type="button"

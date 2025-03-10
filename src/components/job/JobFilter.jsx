@@ -45,9 +45,9 @@ const JobFilter = () => {
   };
   const userType = localStorage.getItem("type user");
   return (
-    <div className="w-full lg:w-64">
+    <div className="w-full ">
       {/* Sidebar Content (Hidden on Mobile unless Open) */}
-      <div className={`p-4 z-50 bg-white shadow-lg rounded-xl `}>
+      <div className={`p-4 z-50  rounded-xl `}>
         {!userType && (
           <div className="fccr gap-4 my-4">
             <CustomButton
@@ -72,7 +72,7 @@ const JobFilter = () => {
         {/* Experience Level Filter */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Experience Level</label>
-          <div className="flex md:flex-col flex-wrap flex-row gap-2 ">
+          <div className="flex flex-col flex-wrap  gap-2 ">
             {["entry", "intermediate", "expert"].map((level) => (
               <label
                 key={level}
@@ -93,7 +93,7 @@ const JobFilter = () => {
         {/* Job Type Filter */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Job Type</label>
-          <div className="flex md:flex-col flex-wrap flex-row gap-2">
+          <div className="flex flex-col flex-wrap  gap-2">
             {[
               { key: "fullTime", label: "Full-Time" },
               { key: "partTime", label: "Part-Time" },
@@ -118,7 +118,7 @@ const JobFilter = () => {
         {/* Client History Filter */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Client History</label>
-          <div className="flex md:flex-col flex-wrap flex-row gap-2">
+          <div className="flex flex-col flex-wrap  gap-2">
             {[
               { key: "hire1_9", label: "1-9 Hires" },
               { key: "hire10Plus", label: "10+ Hires" },

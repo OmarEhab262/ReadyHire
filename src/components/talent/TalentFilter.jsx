@@ -34,9 +34,9 @@ const TalentFilter = () => {
   };
   const userType = localStorage.getItem("type user");
   return (
-    <div className="w-full lg:w-64">
+    <div className="w-full ">
       {/* Sidebar Content (Hidden on Mobile unless Open) */}
-      <div className={`p-4 z-50 bg-white shadow-lg rounded-xl `}>
+      <div className={`p-4 z-50  rounded-xl `}>
         {!userType && (
           <div className="fccr gap-4 my-4">
             <CustomButton
@@ -61,7 +61,7 @@ const TalentFilter = () => {
         {/* Experience Level Filter */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Experience Level</label>
-          <div className="flex md:flex-col flex-wrap flex-row gap-2 ">
+          <div className="flex flex-col flex-wrap  gap-2 ">
             {["entry", "intermediate", "expert"].map((level) => (
               <label
                 key={level}
@@ -82,7 +82,7 @@ const TalentFilter = () => {
         {/* Location Filter */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Location</label>
-          <div className="flex md:flex-col flex-wrap flex-row gap-2">
+          <div className="flex flex-col flex-wrap  gap-2">
             {[
               { key: "nearMe", label: "Near Me" },
               { key: "remote", label: "Remote Job" },
