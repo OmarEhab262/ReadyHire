@@ -6,7 +6,7 @@ function InstructionsDoTest() {
   return (
     <div className="">
       <DefaultNav />
-      <div className="flex justify-center items-center min-h-[90vh]">
+      <div className="flex justify-center items-center min-h-[90vh] m-4">
         {" "}
         <div className="bg-white rounded-lg shadow-xl p-6 max-w-2xl w-full">
           {/* Book Icon */}

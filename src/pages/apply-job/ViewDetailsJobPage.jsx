@@ -71,7 +71,7 @@ const ViewDetailsJobPage = () => {
                 type="button"
                 width="180px"
                 className="bg-blue-500 text-white font-bold"
-                link={isTakenTask ? "/" : "/do-test"}
+                link={isTakenTask ? "/" : "/start-do-test"}
               />
               <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
                 <Bookmark className="text-gray-600" />

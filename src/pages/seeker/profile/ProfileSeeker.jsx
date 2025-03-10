@@ -149,6 +149,7 @@ const ProfileSeeker = () => {
               width="150px"
               text="Take Testing Now"
               type="button"
+              link="/start-do-test"
             />
           </div>
         )}

@@ -79,7 +79,7 @@ const Final = () => {
                 text="Take Test Now"
                 type="button"
                 width="280px"
-                link="/do-test"
+                link="/start-do-test"
               />
             )}
             {typeUser === "company" && (
