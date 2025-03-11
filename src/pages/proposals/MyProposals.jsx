@@ -90,15 +90,15 @@ const MyProposals = () => {
       <div className="min-h-screen flex flex-col bg-gray-100">
         {/* زر فتح الفلاتر في الهاتف */}
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
-          <h2 className="text-2xl font-bold mb-4 text_secondary">
+          <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
             My proposals & Assessments
-          </h2>
+          </h1>
         </div>
         <div className="flex flex-grow flex-col md:flex-row gap-6 p-4">
           <div className="flex md:hidden items-center justify-center p-4 mt-3">
-            <h2 className="text-2xl font-bold mb-4 text_secondary">
+            <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
               My proposals & Assessments
-            </h2>
+            </h1>
           </div>
           {/* القائمة الجانبية للفلاتر - تظهر كـ Drawer في الهاتف */}
           <div

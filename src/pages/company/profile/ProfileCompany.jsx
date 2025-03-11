@@ -50,6 +50,7 @@ const ProfileCompany = () => {
               className="!text-[var(--secondary-color)] !bg-white border_secondary shadow-md"
               text="Settings"
               type="button"
+              link="/account-settings"
             />
           </div>
           <CustomButton

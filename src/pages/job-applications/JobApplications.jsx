@@ -2,7 +2,6 @@ import {
   Briefcase,
   CheckCircle,
   ClipboardList,
-  Edit,
   Filter,
   RefreshCcw,
   Search,
@@ -12,9 +11,8 @@ import {
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
-import { Link } from "react-router-dom";
 
-const MyJobs = () => {
+const JobApplications = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({ response: [], delivery: [] });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -25,66 +23,35 @@ const MyJobs = () => {
       type: "Freelance",
       delivery: "Delivered",
       response: "Accepted",
+      applicants: 25,
     },
     {
       title: "UX Designer",
       type: "Freelance",
       delivery: "In Progress",
       response: "Accepted",
+      applicants: 18,
     },
     {
       title: "Backend Engineer",
       type: "Freelance",
       delivery: "Not Delivered",
       response: "Needs Modification",
+      applicants: 30,
     },
     {
       title: "Data Analyst",
       type: "Freelance",
       delivery: "Delivered",
       response: "Accepted",
+      applicants: 22,
     },
     {
       title: "Marketing Specialist",
       type: "Freelance",
       delivery: "In Progress",
       response: "Needs Modification",
-    },
-    {
-      title: "Software Tester",
-      type: "Freelance",
-      delivery: "Not Delivered",
-      response: "Accepted",
-    },
-    {
-      title: "Project Manager",
-      type: "Freelance",
-      delivery: "Delivered",
-      response: "Needs Modification",
-    },
-    {
-      title: "DevOps Engineer",
-      type: "Freelance",
-      delivery: "In Progress",
-      response: "Accepted",
-    },
-    {
-      title: "Mobile Developer",
-      type: "Freelance",
-      delivery: "Not Delivered",
-      response: "Needs Modification",
-    },
-    {
-      title: "Frontend Developer",
-      type: "Freelance",
-      delivery: "Delivered",
-      response: "Accepted",
-    },
-    {
-      title: "UX Designer",
-      type: "Freelance",
-      delivery: "In Progress",
-      response: "Accepted",
+      applicants: 15,
     },
   ];
 
@@ -112,13 +79,13 @@ const MyJobs = () => {
       <div className="min-h-screen flex flex-col bg-gray-100">
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
           <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-            My Jobs
+            Job Applications
           </h1>
         </div>
         <div className="flex flex-grow flex-col md:flex-row gap-6 p-4">
           <div className="flex md:hidden items-center justify-center p-4 mt-3">
             <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-              My Jobs
+              Job Applications
             </h1>
           </div>
 
@@ -235,6 +202,10 @@ const MyJobs = () => {
                     <th className="border border-gray-200 p-3">
                       Employer Response
                     </th>
+                    <th className="border border-gray-200 p-3">
+                      Number of Applicants
+                    </th>
+                    <th className="border border-gray-200 p-3">View Details</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -257,19 +228,17 @@ const MyJobs = () => {
                         {item.delivery}
                       </td>
                       <td className="border border-gray-200 p-3">
-                        {item.response === "Needs Modification" ? (
-                          <div className="flex justify-center">
-                            <Link
-                              to={`/needs-modification`}
-                              className="flex items-center gap-2 text-center"
-                            >
-                              {item.response}
-                              <Edit className="w-5 h-5 text-blue-500" />
-                            </Link>
-                          </div>
-                        ) : (
-                          item.response
-                        )}
+                        {item.response}
+                      </td>
+                      <td className="border border-gray-200 p-3">
+                        {item.applicants}
+                      </td>
+                      <td className="border border-gray-200 p-3">
+                        <CustomButton
+                          text="View Details"
+                          type="button"
+                          height="30px"
+                        />
                       </td>
                     </tr>
                   ))}
@@ -283,4 +252,4 @@ const MyJobs = () => {
   );
 };
 
-export default MyJobs;
+export default JobApplications;

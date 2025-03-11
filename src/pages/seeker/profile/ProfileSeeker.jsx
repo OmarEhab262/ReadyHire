@@ -56,6 +56,7 @@ const ProfileSeeker = () => {
               className="!text-[var(--secondary-color)] !bg-white border_secondary"
               text="Settings"
               type="button"
+              link="/account-settings"
             />
           </div>
           <CustomButton

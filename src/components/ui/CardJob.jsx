@@ -64,6 +64,7 @@ const CardJob = () => {
             type="button"
             className=" !h-[30px]"
             width="120px"
+            link="/send-proposal"
           />
         </div>
       </div>

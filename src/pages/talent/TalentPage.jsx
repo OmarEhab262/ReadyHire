@@ -3,11 +3,12 @@ import Layout from "../../components/layout/Layout";
 import { useState } from "react";
 import TalentFilter from "../../components/talent/TalentFilter";
 import CardViewProfile from "../../components/ui/CardViewProfile";
+import CustomButton from "../../components/ui/CustomButton";
 
 const TalentPage = () => {
   const [clicked, setClicked] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-
+  const userType = localStorage.getItem("type user");
   return (
     <Layout>
       <div className="flex flex-col items-center text-center p-6 md:p-12">
@@ -45,17 +46,12 @@ const TalentPage = () => {
           </button>
         </div>
       </div>
-
+      {userType === "company" && (
+        <div className="w-full flex justify-center my-5 p-5">
+          <CustomButton text="Post a Job Now" width="400px" link="/post-job" />
+        </div>
+      )}
       {/* زر فتح الفلتر في الشاشات الصغيرة */}
-      <div className="lg:hidden flex justify-end px-4 my-4">
-        <button
-          className="flex items-center gap-2 bg_secondary text-white px-4 py-2 rounded-md shadow-md"
-          onClick={() => setFilterOpen(true)}
-        >
-          <Filter size={20} />
-          Filters
-        </button>
-      </div>
 
       <div className="flex lg:flex-row flex-col gap-8 my-12 px-4 md:px-10">
         {/* Desktop Filter */}
@@ -81,6 +77,16 @@ const TalentPage = () => {
         {/* قسم عرض البروفايلات */}
 
         <div className="lg:w-3/4 w-full bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="lg:hidden flex justify-end px-4 my-4">
+            <button
+              className="flex items-center gap-2 bg_secondary text-white px-4 py-2 rounded-md shadow-md"
+              onClick={() => setFilterOpen(true)}
+            >
+              <Filter size={20} />
+              Filters
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 justify-items-center gap-6 overflow-y-auto max-h-[calc(100vh-150px)]">
             {[...Array(12)].map((_, index) => (
               <CardViewProfile key={index} />

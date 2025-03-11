@@ -40,6 +40,9 @@ import TestPassed from "./pages/do-test/TestPassed";
 import MyProposals from "./pages/proposals/MyProposals";
 import MyJobs from "./pages/my-jobs/MyJobs";
 import NeedsModification from "./pages/needs-modification/NeedsModification";
+import SendProposal from "./pages/send-proposal/SendProposal";
+import JobApplications from "./pages/job-applications/JobApplications";
+import AccountSettings from "./pages/account-settings/AccountSettings";
 
 // Initialize the QueryClient for React Query
 const queryClient = new QueryClient();
@@ -106,6 +109,9 @@ export default function App() {
           <Route path="/my-proposals" element={<MyProposals />} />
           <Route path="/my-jobs" element={<MyJobs />} />
           <Route path="/needs-modification" element={<NeedsModification />} />
+          <Route path="/send-proposal" element={<SendProposal />} />
+          <Route path="/job-applications" element={<JobApplications />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
         </Routes>
         <Toaster />
       </BrowserRouter>

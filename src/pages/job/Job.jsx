@@ -45,17 +45,6 @@ const Job = () => {
         </div>
       </div>
 
-      {/* زر فتح الفلتر في الشاشات الصغيرة */}
-      <div className="lg:hidden flex justify-end px-4 my-4">
-        <button
-          className="flex items-center gap-2 bg_secondary text-white px-4 py-2 rounded-md shadow-md"
-          onClick={() => setFilterOpen(true)}
-        >
-          <Filter size={20} />
-          Filters
-        </button>
-      </div>
-
       <div className="flex lg:flex-row flex-col gap-8 my-12 px-4 md:px-10">
         {/* Desktop Filter */}
         <div className="lg:w-1/4 w-full lg:block hidden p-5 sticky top-0 bg-white shadow-md rounded-lg">
@@ -79,6 +68,16 @@ const Job = () => {
 
         {/* Content Section */}
         <div className="lg:w-3/4 w-full bg-gray-100 p-6 rounded-lg shadow-md">
+          {/* زر فتح الفلتر في الشاشات الصغيرة */}
+          <div className="lg:hidden flex justify-end px-4 my-4">
+            <button
+              className="flex items-center gap-2 bg_secondary text-white px-4 py-2 rounded-md shadow-md"
+              onClick={() => setFilterOpen(true)}
+            >
+              <Filter size={20} />
+              Filters
+            </button>
+          </div>
           <div className="grid grid-cols-1 justify-items-center gap-6 overflow-y-auto max-h-[calc(100vh-150px)]">
             {[...Array(12)].map((_, index) => (
               <CardJob key={index} />
