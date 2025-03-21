@@ -23,7 +23,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-6 bg-white rounded-lg shadow-md space-y-6  md:w-[70%] mx-auto mt-10"
+      className="p-6 bg-white rounded-lg shadow-md space-y-6  md:w-[70%] mx-auto m-10"
     >
       {/* Deadline for Applications */}
       <label className="text-gray-600 font-medium">

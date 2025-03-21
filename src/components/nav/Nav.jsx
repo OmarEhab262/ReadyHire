@@ -15,13 +15,20 @@ const Nav = () => {
     ],
     seeker: [
       { name: "Find work", path: "/job" },
-      { name: "My Assessments&Proposal", path: "/my-proposals" },
+      { name: "My Assessments & Proposal", path: "/my-proposals" },
       { name: "My Jobs", path: "/my-jobs" },
     ],
     company: [
       { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
       { name: "My Hires", path: "/my-hires" },
+      { name: "My Offers", path: "/my-offers" },
+    ],
+    client: [
+      { name: "Hire Talent", path: "/talent" },
+      { name: "Job Applications", path: "/job-applications" },
+      { name: "My Hires", path: "/my-hires" },
+      { name: "My Offers", path: "/my-offers" },
     ],
   };
   const linksMobile = {
@@ -33,7 +40,7 @@ const Nav = () => {
       { name: "Profile", path: "/profile-seeker" },
       { name: "Notification", path: "/notification" },
       { name: "Find work", path: "/job" },
-      { name: "My Assessments&Proposal", path: "/my-proposals" },
+      { name: "My Assessments & Proposal", path: "/my-proposals" },
       { name: "My Jobs", path: "/my-jobs" },
     ],
     company: [
@@ -42,6 +49,15 @@ const Nav = () => {
       { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
       { name: "My Hires", path: "/my-hires" },
+      { name: "My Offers", path: "/my-offers" },
+    ],
+    client: [
+      { name: "Profile", path: "/profile-company" },
+      { name: "Notification", path: "/notification" },
+      { name: "Hire Talent", path: "/talent" },
+      { name: "Job Applications", path: "/job-applications" },
+      { name: "My Hires", path: "/my-hires" },
+      { name: "My Offers", path: "/my-offers" },
     ],
   };
 
@@ -56,50 +72,27 @@ const Nav = () => {
           <span className="text-black">HIRE</span>
         </Link>
         <ul className="flex justify-around items-center text-lg gap-10">
-          {!userType
-            ? links.default.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))
-            : userType === "seeker"
-            ? links.seeker.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))
-            : links.company.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+          {(userType === "seeker"
+            ? links.seeker
+            : userType === "company"
+            ? links.company
+            : userType === "client"
+            ? links.client
+            : links.default
+          ).map((link, index) => (
+            <li key={index}>
+              <Link
+                className={`${
+                  location.pathname === link.path
+                    ? "text_secondary font-bold"
+                    : "text-black"
+                } transition-colors duration-300`}
+                to={link.path}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
         <div className="flex gap-10 items-center">
           {/* <div className="relative flex items-center justify-center">
@@ -202,50 +195,27 @@ const Nav = () => {
           ""
         )} */}
         <ul className="flex flex-col gap-5 text-lg font-semibold">
-          {!userType
-            ? linksMobile.default.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))
-            : userType === "seeker"
-            ? linksMobile.seeker.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))
-            : linksMobile.company.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    className={`${
-                      location.pathname === link.path
-                        ? "text_secondary font-bold"
-                        : "text-black"
-                    } transition-colors duration-300`}
-                    to={link.path}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+          {(userType === "seeker"
+            ? linksMobile.seeker
+            : userType === "company"
+            ? linksMobile.company
+            : userType === "client"
+            ? linksMobile.client
+            : linksMobile.default
+          ).map((link, index) => (
+            <li key={index}>
+              <Link
+                className={`${
+                  location.pathname === link.path
+                    ? "text_secondary font-bold"
+                    : "text-black"
+                } transition-colors duration-300`}
+                to={link.path}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
         {!userType && (
           <div className="flex items-center gap-3 mt-3">

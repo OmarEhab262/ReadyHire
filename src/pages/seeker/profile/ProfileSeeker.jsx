@@ -12,23 +12,68 @@ const ProfileSeeker = () => {
     localStorage.removeItem("type user");
     navigate("/");
   };
-
+  const info = [
+    {
+      icon: <CircleGauge className="text-2xl text-secondary" />,
+      label: "Experience Level",
+      value: "3 Years",
+      bg: "bg-white",
+    },
+    {
+      icon: <Earth className="text-2xl text-secondary" />,
+      label: "Language",
+      value: "Arabic: Native language",
+      bg: "bg-white",
+    },
+    {
+      icon: <GraduationCap className="text-2xl text-secondary" />,
+      label: "Education",
+      value: (
+        <>
+          <p>Okernia University</p>
+          <p>Bachelor of Computers and Information, IT</p>
+        </>
+      ),
+      bg: "bg-white",
+    },
+  ];
+  const skills = [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "TypeScript",
+    "Redux",
+    "Tailwind CSS",
+    "Firebase",
+  ];
   const [isTakenTask, setIsTakenTask] = useState(
     Cookies.get("isTakenTask") === "true"
   );
-
-  // تحديث `isTakenTask` عند تحميل الصفحة
+  const userType = localStorage.getItem("type user");
   useEffect(() => {
     const checkTakenTask = Cookies.get("isTakenTask");
     setIsTakenTask(checkTakenTask === "true");
   }, []);
   return (
     <Layout>
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row gap-6 md:p-10 p-5 justify-between md:items-center">
-        {/* Left Section - Profile Info */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
-          {/* Profile Image */}
+      <div
+        className={`flex flex-col md:flex-row gap-6 md:p-10 p-5 ${
+          userType === "seeker"
+            ? "md:items-start  justify-between"
+            : "md:items-center  justify-center"
+        }`}
+      >
+        <div
+          className={`flex flex-col items-center ${
+            userType === "seeker"
+              ? "md:items-start  justify-between"
+              : "md:items-center  justify-center"
+          } text-center md:text-left gap-4`}
+        >
           <div className="w-28 h-28 p-[2px] rounded-full border_secondary !border-2 overflow-hidden">
             <img
               src={image}
@@ -41,119 +86,94 @@ const ProfileSeeker = () => {
             Web Developer, React Developer, UI/UX Designer
           </p>
           <p className="text-xl text-[#555555]">Kharkiv, Ukraine</p>
-
-          {/* Buttons */}
-          <div className="flex gap-4 my-4">
+          {(userType === "company" || userType === "client") && (
             <CustomButton
               height="40px"
               width="150px"
-              text="Edit Profile"
+              text="Hire Talent"
               type="button"
             />
-            <CustomButton
-              height="40px"
-              width="150px"
-              className="!text-[var(--secondary-color)] !bg-white border_secondary"
-              text="Settings"
-              type="button"
-              link="/account-settings"
-            />
-          </div>
-          <CustomButton
-            height="40px"
-            width="320px"
-            className="!bg-red-500 "
-            text="Logout"
-            type="button"
-            onClick={logOut}
-          />
+          )}
         </div>
-
-        {/* Right Section - Skills */}
-        <div className="flex flex-col items-center md:items-end gap-4 w-full md:w-1/2">
-          <div className="p-2 px-5 bg-gray-200 rounded-xl text-center">
-            Front End Developer
-          </div>
-          <div className="flex items-center gap-4 text-xl text-[#555555]">
-            Skills <Star />
-          </div>
-
-          {/* Skills List */}
-          <div className="flex flex-wrap justify-center md:justify-end gap-3 w-full">
-            {[
-              "HTML",
-              "CSS",
-              "JavaScript",
-              "React",
-              "Node.js",
-              "Express",
-              "MongoDB",
-              "TypeScript",
-              "Redux",
-              "Tailwind CSS",
-              "Firebase",
-            ].map((skill) => (
-              <p
-                key={skill}
-                className="p-2 px-5 bg-blue-200 rounded-xl text-center"
-              >
-                {skill}
-              </p>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Experience, Language, Education Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-100 m-4 p-6 rounded-lg shadow-lg">
-        {[
-          {
-            icon: <CircleGauge className="text-2xl text-secondary" />,
-            label: "Experience Level",
-            value: "3 Years",
-            bg: "bg-white",
-          },
-          {
-            icon: <Earth className="text-2xl text-secondary" />,
-            label: "Language",
-            value: "Arabic: Native language",
-            bg: "bg-white",
-          },
-          {
-            icon: <GraduationCap className="text-2xl text-secondary" />,
-            label: "Education",
-            value: (
-              <>
-                <p>Okernia University</p>
-                <p>Bachelor of Computers and Information, IT</p>
-              </>
-            ),
-            bg: "bg-white",
-          },
-        ].map(({ icon, label, value, bg }, index) => (
-          <div
-            key={index}
-            className={`${bg} p-5 rounded-lg shadow-md flex flex-col items-center`}
-          >
-            <div className="flex items-center gap-3 text-xl text-[#555555]">
-              {icon} <span>{label}</span>
+        {userType === "seeker" && (
+          <div className="flex flex-col items-center md:items-start ">
+            <div className="flex gap-4 my-4 flex-col">
+              <div className="p-2 px-5 bg-gray-200 rounded-xl text-center">
+                Front End Developer
+              </div>
+              <div className="fccr gap-4">
+                <CustomButton
+                  height="40px"
+                  width="150px"
+                  text="Edit Profile"
+                  type="button"
+                />
+                <CustomButton
+                  height="40px"
+                  width="150px"
+                  className="!text-[var(--secondary-color)] !bg-white border_secondary"
+                  text="Settings"
+                  type="button"
+                  link="/account-settings"
+                />
+              </div>
             </div>
-            <span className="text_secondary text-lg font-bold mt-2 text-center">
-              {value}
-            </span>
-          </div>
-        ))}
-        {!isTakenTask && (
-          <div className="col-span-1 md:col-span-3 flex justify-center mt-4">
             <CustomButton
               height="40px"
-              width="150px"
-              text="Take Testing Now"
+              width="320px"
+              className="!bg-red-500 "
+              text="Logout"
               type="button"
-              link="/start-do-test"
+              onClick={logOut}
             />
           </div>
         )}
+      </div>
+
+      <div className="md:p-10 p-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-100 p-6 rounded-lg shadow-lg">
+          {info.map(({ icon, label, value, bg }, index) => (
+            <div
+              key={index}
+              className={`${bg} p-5 rounded-lg shadow-md flex flex-col items-center sm:items-start`}
+            >
+              <div className="flex items-center gap-3 text-xl text-[#555555]">
+                {icon} <span className="text-center sm:text-left">{label}</span>
+              </div>
+              <span className="text_secondary text-lg font-bold mt-2 text-center sm:text-left break-words">
+                {value}
+              </span>
+            </div>
+          ))}
+
+          <div className="bg-white col-span-1 sm:col-span-2 md:col-span-3 p-5 rounded-lg shadow-md flex flex-col gap-5">
+            <div className="flex items-center gap-3 text-xl text-[#555555]">
+              <Star /> <span>Skills</span>
+            </div>
+            <div className="flex flex-wrap gap-3 w-full">
+              {skills.map((skill) => (
+                <p
+                  key={skill}
+                  className="p-2 px-5 bg-blue-100 rounded-xl text-center sm:text-left min-w-0 break-words"
+                >
+                  {skill}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          {!isTakenTask && userType == "seeker" && (
+            <div className="col-span-1 sm:col-span-2 md:col-span-3 flex justify-center mt-4">
+              <CustomButton
+                height="40px"
+                width="150px"
+                text="Take Testing Now"
+                type="button"
+                link="/start-do-test"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* About Me Section */}

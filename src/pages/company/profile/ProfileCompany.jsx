@@ -11,15 +11,24 @@ const ProfileCompany = () => {
     localStorage.removeItem("type user");
     navigate("/");
   };
-
+  const userType = localStorage.getItem("type user");
   return (
     <Layout>
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row gap-6 md:p-10 p-5 justify-between md:items-center bg-white shadow-md rounded-lg">
-        {/* Left Section - Company Info */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
-          {/* Company Logo */}
-          <div className="w-32 h-32 p-[2px] rounded-full border_secondary !border-4 overflow-hidden shadow-lg">
+      <div
+        className={`flex flex-col md:flex-row gap-6 md:p-10 p-5 ${
+          userType
+            ? "md:items-start  justify-between"
+            : "md:items-center  justify-center"
+        }`}
+      >
+        <div
+          className={`flex flex-col items-center ${
+            userType
+              ? "md:items-start  justify-between"
+              : "md:items-center  justify-center"
+          } text-center md:text-left gap-4`}
+        >
+          <div className="w-28 h-28 p-[2px] rounded-full border_secondary !border-2 overflow-hidden">
             <img
               src={image}
               alt="Company Logo"
@@ -33,45 +42,46 @@ const ProfileCompany = () => {
           <p className="text-xl text-gray-600">Industry: IT & Tech</p>
           <p className="text-xl text-gray-600">Year Established: 4/1/2004</p>
           <p className="text-xl text-gray-600">Remote Work: Available</p>
+        </div>
 
-          {/* Buttons */}
-        </div>
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
-          <div className="flex gap-4 my-4">
+        {userType && (
+          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4">
+            <div className="flex gap-4 my-4">
+              <CustomButton
+                height="45px"
+                width="160px"
+                text="Edit Profile"
+                type="button"
+              />
+              <CustomButton
+                height="45px"
+                width="160px"
+                className="!text-[var(--secondary-color)] !bg-white border_secondary shadow-md"
+                text="Settings"
+                type="button"
+                link="/account-settings"
+              />
+            </div>
             <CustomButton
               height="45px"
-              width="160px"
-              text="Edit Profile"
+              width="330px"
+              className="!bg-green-500 !text-white font-semibold shadow-md"
+              text="Post a Job"
               type="button"
+              link="/post-job"
             />
             <CustomButton
               height="45px"
-              width="160px"
-              className="!text-[var(--secondary-color)] !bg-white border_secondary shadow-md"
-              text="Settings"
+              width="330px"
+              className="!bg-red-500 !text-white font-semibold shadow-md flex items-center justify-center gap-2"
+              text="Logout"
               type="button"
-              link="/account-settings"
-            />
+              onClick={logOut}
+            >
+              <LogOut size={20} /> Logout
+            </CustomButton>
           </div>
-          <CustomButton
-            height="45px"
-            width="330px"
-            className="!bg-green-500 !text-white font-semibold shadow-md"
-            text="Post a Job"
-            type="button"
-            link="/post-job"
-          />
-          <CustomButton
-            height="45px"
-            width="330px"
-            className="!bg-red-500 !text-white font-semibold shadow-md flex items-center justify-center gap-2"
-            text="Logout"
-            type="button"
-            onClick={logOut}
-          >
-            <LogOut size={20} /> Logout
-          </CustomButton>
-        </div>
+        )}
       </div>
 
       {/* About Section */}

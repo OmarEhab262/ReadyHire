@@ -1,36 +1,86 @@
-import { Briefcase, Filter, Search, X } from "lucide-react";
+import {
+  Briefcase,
+  CheckCircle,
+  ClipboardList,
+  Filter,
+  RefreshCcw,
+  Search,
+  X,
+  XCircle,
+} from "lucide-react";
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
 
-const JobApplications = () => {
+const MyHires = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({ response: [], delivery: [] });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filter, setFilter] = useState("");
+
   const data = [
-    { title: "Frontend Developer", type: "Proposal", applicants: 25 },
-    { title: "UX Designer", type: "Proposal", applicants: 18 },
-    { title: "Backend Engineer", type: "Proposal", applicants: 30 },
-    { title: "Data Analyst", type: "Proposal", applicants: 22 },
-    { title: "Marketing Specialist", type: "Assessments", applicants: 15 },
+    {
+      title: "Frontend Developer",
+      name: "Omar Ehab",
+      delivery: "Delivered",
+      response: "Accepted",
+    },
+    {
+      title: "UX Designer",
+      name: "Ali Ahmed",
+      delivery: "In Progress",
+      response: "Accepted",
+    },
+    {
+      title: "Backend Engineer",
+      name: "Mahmoud 7sam",
+      delivery: "Not Delivered",
+      response: "Needs Modification",
+    },
+    {
+      title: "Data Analyst",
+      name: "wail Ali",
+      delivery: "Delivered",
+      response: "Accepted",
+    },
+    {
+      title: "Marketing Specialist",
+      name: "Eman Ali",
+      delivery: "In Progress",
+      response: "Needs Modification",
+    },
   ];
 
-  const filteredData = filter
-    ? data.filter((item) => item.type === filter)
-    : data;
+  const toggleFilter = (category, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [category]: prev[category].includes(value)
+        ? prev[category].filter((item) => item !== value)
+        : [...prev[category], value],
+    }));
+  };
+
+  const filteredData = data.filter((item) => {
+    return (
+      (filters.response.length === 0 ||
+        filters.response.includes(item.response)) &&
+      (filters.delivery.length === 0 ||
+        filters.delivery.includes(item.delivery)) &&
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   return (
     <Layout>
       <div className="min-h-screen flex flex-col bg-gray-100">
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
           <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-            Job Applications
+            My Hires
           </h1>
         </div>
         <div className="flex flex-grow flex-col md:flex-row gap-6 p-4">
           <div className="flex md:hidden items-center justify-center p-4 mt-3">
             <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-              Job Applications
+              My Hires
             </h1>
           </div>
 
@@ -51,41 +101,62 @@ const JobApplications = () => {
               Filters
             </h3>
 
-            {/* Filter by Type */}
+            {/* Filter by Employer Response */}
             <div className="mb-6">
               <h4 className="text-xl mb-3 flex items-center gap-2 text-blue-600">
-                <Briefcase className="w-5 h-5" /> Type of Applicants
+                <Briefcase className="w-5 h-5" /> Employer Response
               </h4>
               <div className="space-y-3">
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
-                    type="radio"
-                    name="filter"
+                    type="checkbox"
+                    onChange={() => toggleFilter("response", "Accepted")}
                     className="h-4 w-4"
-                    checked={filter === "Proposal"}
-                    onChange={() => setFilter("Proposal")}
                   />
-                  <span>Proposal</span>
+                  <span>Accepted</span>
                 </label>
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
-                    type="radio"
-                    name="filter"
+                    type="checkbox"
+                    onChange={() =>
+                      toggleFilter("response", "Needs Modification")
+                    }
                     className="h-4 w-4"
-                    checked={filter === "Assessments"}
-                    onChange={() => setFilter("Assessments")}
                   />
-                  <span>Assessments</span>
+                  <span>Needs Modification</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Filter by Delivery Status */}
+            <div>
+              <h4 className="text-xl mb-3 flex items-center gap-2 text-green-600">
+                <ClipboardList className="w-5 h-5" /> Delivery Status
+              </h4>
+              <div className="space-y-3">
+                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleFilter("delivery", "Delivered")}
+                    className="h-4 w-4"
+                  />
+                  <span>Delivered</span>
                 </label>
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
-                    type="radio"
-                    name="filter"
+                    type="checkbox"
+                    onChange={() => toggleFilter("delivery", "In Progress")}
                     className="h-4 w-4"
-                    checked={filter === ""}
-                    onChange={() => setFilter("")}
                   />
-                  <span>All</span>
+                  <span>In Progress</span>
+                </label>
+                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleFilter("delivery", "Not Delivered")}
+                    className="h-4 w-4"
+                  />
+                  <span>Not Delivered</span>
                 </label>
               </div>
             </div>
@@ -119,50 +190,52 @@ const JobApplications = () => {
                 <thead className="bg-gray-100">
                   <tr>
                     <th className="border border-gray-200 p-3">Job Title</th>
+                    <th className="border border-gray-200 p-3">Talent Name</th>
                     <th className="border border-gray-200 p-3">
-                      Type of Applicants
+                      Delivery Status
                     </th>
                     <th className="border border-gray-200 p-3">
-                      Number of Applicants
+                      Employer Response
                     </th>
+
                     <th className="border border-gray-200 p-3">View Details</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredData.map((item, index) => (
-                    <tr key={index} className="text-center">
+                    <tr key={index} className="">
                       <td className="border border-gray-200 p-3">
                         {item.title}
                       </td>
                       <td className="border border-gray-200 p-3">
-                        {item.type}
+                        {item.name}
+                      </td>
+                      <td className="border border-gray-200 p-3 flex items-center gap-2">
+                        {item.delivery === "Delivered" ? (
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                        ) : item.delivery === "In Progress" ? (
+                          <RefreshCcw className="w-5 h-5 text-yellow-500" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-red-500" />
+                        )}
+                        {item.delivery}
                       </td>
                       <td className="border border-gray-200 p-3">
-                        {item.applicants}
+                        {item.response}
                       </td>
+
                       <td className="border border-gray-200 p-3">
                         <CustomButton
                           text="View Details"
                           type="button"
                           height="35px"
-                          width="100px"
-                          className="mx-auto"
-                          link={
-                            item.type === "Proposal"
-                              ? "/view-details-proposal"
-                              : "/view-details-assessment"
-                          }
+                          link="/delivery-job"
                         />
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {filteredData.length === 0 && (
-                <p className="text-center text-gray-500 py-4">
-                  No job applications found.
-                </p>
-              )}
             </div>
           </div>
         </div>
@@ -171,4 +244,4 @@ const JobApplications = () => {
   );
 };
 
-export default JobApplications;
+export default MyHires;

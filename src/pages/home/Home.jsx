@@ -4,11 +4,13 @@ import TopTalents from "../../components/home/TopTalents";
 import Layout from "../../components/layout/Layout";
 
 const Home = () => {
+  const userType = localStorage.getItem("type user");
+
   return (
     <Layout>
       <LandingPage />
-      <Categories />
-      <TopTalents />
+      {userType !== "company" && userType !== "client" && <Categories />}
+      {userType !== "seeker" && <TopTalents />}
     </Layout>
   );
 };
