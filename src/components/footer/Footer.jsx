@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
           <div className="grid grid-cols-2 gap-x-3 sm:gap-x-5 mt-5 max-w-xs sm:max-w-md ">
             {/* App Store Button */}
-            <button className="bg-black p-3 flex items-center gap-2 h-[55px] sm:gap-3 w-full max-w-[200px] rounded-lg text-white transition-all shadow-md hover:opacity-85">
+            <button className="bg-black p-3 flex items-center gap-2 h-[55px] sm:gap-3 w-full max-w-[220px] rounded-lg text-white transition-all shadow-md hover:opacity-85">
               <img
                 src={apple}
                 alt="Apple Logo"
@@ -39,7 +39,7 @@ const Footer = () => {
             </button>
 
             {/* Google Play Button */}
-            <button className="bg-black p-3 flex items-center gap-2 h-[55px] sm:gap-3 w-full max-w-[200px] rounded-lg text-white transition-all shadow-md hover:opacity-85">
+            <button className="bg-black p-3 flex items-center gap-2 h-[55px] sm:gap-3 w-full max-w-[220px] rounded-lg text-white transition-all shadow-md hover:opacity-85">
               <img
                 src={google}
                 alt="Google Logo"
