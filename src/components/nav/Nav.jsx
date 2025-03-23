@@ -230,7 +230,7 @@ const Nav = () => {
       </div>
       {/* Notifications */}
       <div
-        className={`backdrop-blur-md h-[90%] mt-[80px] w-screen fixed top-0 left-0 !z-50 flex justify-end
+        className={`backdrop-blur-md h-[90%] mt-[70px] w-screen fixed top-0 left-0 !z-50 flex justify-end
   transition-opacity duration-300 ${
     openNotifications ? "opacity-100 visible" : "opacity-0 invisible"
   }`}
