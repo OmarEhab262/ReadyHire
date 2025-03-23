@@ -1,6 +1,6 @@
 import { Facebook, Instagram, Linkedin, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import img from "../../assets/icons/Logo/Logo.png";
+import img from "../../assets/icons/Logo/Logo.svg";
 import apple from "../../assets/images/apple.png";
 import google from "../../assets/images/google.png";
 const Footer = () => {
@@ -74,7 +74,7 @@ const Footer = () => {
       <div className="h-[1px] bg-gray-500 w-[99%] rounded-lg my-3"></div>
       <div className="flex justify-between items-center flex-wrap gap-5 mt-5">
         <p className="text-gray-500 text-md text-center">
-          Copyright © 2022. All rights reserved.
+          Copyright © 2025. All rights reserved.
         </p>
         <div>
           <div className="flex gap-4 mt-5">
