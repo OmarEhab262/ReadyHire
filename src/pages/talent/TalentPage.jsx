@@ -124,8 +124,8 @@ const TalentPage = () => {
         </div>
       </div>
       {userType === "company" && (
-        <div className="w-full flex justify-center my-5 p-5">
-          <CustomButton text="Post a Job Now" width="400px" link="/post-job" />
+        <div className="w-[90%] flex justify-center m-5 p-5">
+          <CustomButton text="Post a Job Now" width="300px" link="/post-job" />
         </div>
       )}
       {/* زر فتح الفلتر في الشاشات الصغيرة */}

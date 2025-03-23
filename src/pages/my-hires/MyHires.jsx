@@ -229,6 +229,8 @@ const MyHires = () => {
                           text="View Details"
                           type="button"
                           height="35px"
+                          width="100px"
+                          className="mx-auto"
                           link="/delivery-job"
                         />
                       </td>
