@@ -170,12 +170,14 @@ const Nav = () => {
           <span className="text-black">HIRE</span>
         </Link>
         <div className="flex items-center gap-5">
-          <div
-            className="flex items-center justify-center gap-5 cursor-pointer"
-            onClick={() => setOpenNotifications(!openNotifications)}
-          >
-            <Bell size={20} fill="#1971c2" color="#1971c2" />
-          </div>
+          {userType && (
+            <div
+              className="flex items-center justify-center gap-5 cursor-pointer"
+              onClick={() => setOpenNotifications(!openNotifications)}
+            >
+              <Bell size={20} fill="#1971c2" color="#1971c2" />
+            </div>
+          )}
           <div
             onClick={() => setIsOpen(!isOpen)}
             className="w-10 h-10 flex items-center justify-center cursor-pointer"
