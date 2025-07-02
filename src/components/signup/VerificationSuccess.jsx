@@ -4,17 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const VerificationSuccess = () => {
   const navigate = useNavigate();
-  const userType = localStorage.getItem("type user");
+  // const userType = localStorage.getItem("type user");
   useEffect(() => {
     setTimeout(() => {
-      if (userType === "seeker") {
-        navigate("/upload-resume");
-      }
-      if (userType === "company") {
-        navigate("/company-profile-first");
-      }
+      navigate("/select-user");
     }, 5000);
-  }, [userType, navigate]);
+  }, [navigate]);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 m-5">
       <div className="bg-white p-6 rounded-2xl shadow-md text-center">
@@ -23,7 +18,7 @@ const VerificationSuccess = () => {
           Congratulations! Your account is verified.
         </h1>
         <p className="text-gray-600 mt-2">
-          Redirecting you to your dashboard...
+          Redirecting you to choose your role...
         </p>
 
         <div className="mt-4">
@@ -34,7 +29,6 @@ const VerificationSuccess = () => {
           If you&apos;re not redirected automatically,{" "}
           <span
             onClick={() => window.location.reload()}
-            href="/dashboard"
             className="cursor-pointer text-green-600 font-medium hover:underline"
           >
             Refresh

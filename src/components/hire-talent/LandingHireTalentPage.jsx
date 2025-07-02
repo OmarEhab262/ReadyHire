@@ -22,7 +22,7 @@ const LandingHireTalentPage = () => {
                 text="Start hiring now"
                 type="button"
                 width="150px"
-                link="/select-user"
+                link="/signup"
               />
             </>
           )}

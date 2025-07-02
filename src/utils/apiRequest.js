@@ -6,9 +6,6 @@ const baseURL = import.meta.env.VITE_API_BASE_URL; // Base URL from environment 
 const apiRequest = async (endpoint, method = "GET", bodyData = null) => {
   try {
     const token = Cookies.get("token"); // Get token from js-cookie
-    if (!token) {
-      throw new Error("Token not found");
-    }
 
     const config = {
       url: `${baseURL}${endpoint}`,

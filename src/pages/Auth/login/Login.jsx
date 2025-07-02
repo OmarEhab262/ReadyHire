@@ -9,6 +9,7 @@ import image from "../../../assets/images/freepik__upload__29140.png";
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
 import DefaultNav from "../../../components/nav/DefaultNav";
+// import apiRequest from "../../../utils/apiRequest";
 const Login = () => {
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
@@ -31,6 +32,23 @@ const Login = () => {
       navigate("/");
     }, 2000);
   };
+  // const onSubmit = async (data) => {
+  //   setLoader(true);
+  //   try {
+  //     const response = await apiRequest("Authentication/Login", "POST", data);
+  //     console.log("response", response);
+  //     // localStorage.setItem("user", JSON.stringify(response.user));
+  //     setAlertMessage({ message: "Login successful", type: "success" });
+  //     navigate("/verification-success");
+  //   } catch (error) {
+  //     setAlertMessage({
+  //       message: error.response?.data?.message || "Login failed. Try again.",
+  //       type: "error",
+  //     });
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
 
   return (
     <div className="">
@@ -87,7 +105,7 @@ const Login = () => {
               <div>
                 <p>
                   Don’t have an account?{" "}
-                  <Link className="text-blue-600" to="/select-user">
+                  <Link className="text-blue-600" to="/signup">
                     Sign up
                   </Link>
                 </p>

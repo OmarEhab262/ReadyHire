@@ -10,6 +10,7 @@ import image from "../../../assets/images/Rectangle 21.png";
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
 import DefaultNav from "../../../components/nav/DefaultNav";
+// import apiRequest from "../../../utils/apiRequest";
 const Signup = () => {
   const typeUser = localStorage.getItem("type user");
   const navigate = useNavigate();
@@ -27,23 +28,39 @@ const Signup = () => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      country: "",
+      userName: "",
       email: "",
       password: "",
       terms: false,
     },
   });
-  const onSubmit = (data) => {
-    setLoader(true);
-    console.log("Submitted Data:", data);
-    localStorage.setItem("user", JSON.stringify(data));
-    setTimeout(() => {
-      setLoader(false);
-      setAlertMessage({ message: "Login successful", type: "success" });
-      navigate("/verify-email");
-    }, 2000);
-  };
+  // const onSubmit = async (data) => {
+  //   setLoader(true);
+  //   try {
+  //     const { terms, ...payload } = data;
+  //     payload.role = typeUser;
 
+  //     console.log("terms", terms);
+  //     const response = await apiRequest("auth/signup", "POST", payload);
+
+  //     localStorage.setItem("user", JSON.stringify(response.user));
+  //     setAlertMessage({ message: "Sign up successful", type: "success" });
+  //     navigate("/verification-success");
+  //   } catch (error) {
+  //     setAlertMessage({
+  //       message: error.response?.data?.message || "Signup failed. Try again.",
+  //       type: "error",
+  //     });
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
+
+  const onSubmit = () => {
+    setLoader(true);
+    setAlertMessage({ message: "Sign up successful", type: "success" });
+    navigate("/verification-success");
+  };
   return (
     <div className="">
       <DefaultNav />
@@ -112,16 +129,16 @@ const Signup = () => {
               />
             </div>
             <Controller
-              name="country"
+              name="userName"
               control={control}
               defaultValue=""
-              rules={{ required: "Country is required" }}
+              rules={{ required: "user name is required" }}
               render={({ field }) => (
                 <CustomInput
                   {...field}
                   width="100%"
-                  label="Country"
-                  err={errors.country?.message}
+                  label="User Name"
+                  err={errors.userName?.message}
                 />
               )}
             />

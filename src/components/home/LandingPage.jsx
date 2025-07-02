@@ -26,7 +26,7 @@ const LandingPage = () => {
                 text="Get Started"
                 type="button"
                 width="150px"
-                link="/select-user"
+                link="/signup"
               />
             </>
           )}

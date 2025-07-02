@@ -1,12 +1,18 @@
-import Layout from "../../../components/layout/Layout";
-import image from "../../../assets/images/team-01.png";
-import CustomButton from "../../../components/ui/CustomButton";
-import { CircleGauge, Earth, GraduationCap, Star } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { CircleGauge, Earth, Edit, GraduationCap, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import image from "../../../assets/images/team-01.png";
+import Layout from "../../../components/layout/Layout";
+import FormEdit from "../../../components/profile/FormEdit";
+import CustomButton from "../../../components/ui/CustomButton";
 const ProfileSeeker = () => {
   const navigate = useNavigate();
+  const [edit, setEdit] = useState(false);
+  const [editType, setEditType] = useState("");
+  const [openEditForm, setOpenEditForm] = useState(false);
+  console.log("editType", editType);
+
   const logOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("type user");
@@ -60,6 +66,11 @@ const ProfileSeeker = () => {
   }, []);
   return (
     <Layout>
+      <FormEdit
+        label={editType}
+        open={openEditForm}
+        onClose={() => setOpenEditForm(false)}
+      />
       <div
         className={`flex flex-col md:flex-row gap-6 md:p-10 p-5 ${
           userType === "seeker"
@@ -72,34 +83,74 @@ const ProfileSeeker = () => {
             userType === "seeker"
               ? "md:items-start  justify-between"
               : "md:items-center  justify-center"
-          } text-center md:text-left gap-4`}
+          } text-center md:text-left gap-4 `}
         >
-          <div className="w-28 h-28 p-[2px] rounded-full border_secondary !border-2 overflow-hidden">
-            <img
-              src={image}
-              alt="Profile"
-              className="w-full h-full object-cover rounded-full"
-            />
+          <div className="relative">
+            <div className="w-28 h-28 p-[2px] rounded-full border_secondary !border-2 overflow-hidden">
+              {edit && (
+                <div
+                  className="absolute right-0 cursor-pointer"
+                  onClick={() => {
+                    setEditType("image");
+                    setOpenEditForm(!openEditForm);
+                  }}
+                >
+                  <Edit className="text-2xl text-blue-600  " />
+                </div>
+              )}
+              <img
+                src={image}
+                alt="Profile"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           </div>
-          <h2 className="text-2xl font-bold">Omar Ehab Mahmoud</h2>
-          <p className="text-xl text-[#555555]">
-            Web Developer, React Developer, UI/UX Designer
-          </p>
-          <p className="text-xl text-[#555555]">Kharkiv, Ukraine</p>
-          {(userType === "company" || userType === "client") && (
-            <CustomButton
-              height="40px"
-              width="150px"
-              text="Hire Talent"
-              type="button"
-            />
-          )}
+          <div className="relative">
+            {edit && (
+              <div
+                className="absolute right-0 cursor-pointer"
+                onClick={() => {
+                  setEditType("profile");
+                  setOpenEditForm(!openEditForm);
+                }}
+              >
+                <Edit className="text-2xl text-blue-600  " />
+              </div>
+            )}
+            <h2 className="text-2xl font-bold">Omar Ehab Mahmoud</h2>
+            <p className="text-xl text-[#555555]">
+              Web Developer, React Developer, UI/UX Designer
+            </p>
+            <p className="text-xl text-[#555555]">Kharkiv, Ukraine</p>
+            {(userType === "company" || userType === "client") && (
+              <CustomButton
+                height="40px"
+                width="150px"
+                text="Hire Talent"
+                type="button"
+              />
+            )}
+          </div>
         </div>
         {userType === "seeker" && (
           <div className="flex flex-col items-center md:items-start ">
-            <div className="flex gap-4 my-4 flex-col">
-              <div className="p-2 px-5 bg-gray-200 rounded-xl text-center">
-                Front End Developer
+            <div className="mb-5 relative">
+              {" "}
+              <div className="flex gap-4 my-4 flex-col">
+                {edit && (
+                  <div
+                    className="absolute right-3 top-6 cursor-pointer"
+                    onClick={() => {
+                      setEditType("jobTitle");
+                      setOpenEditForm(!openEditForm);
+                    }}
+                  >
+                    <Edit className="text-2xl text-blue-600  " />
+                  </div>
+                )}
+                <div className="p-2 px-5 bg-gray-200 rounded-xl text-center">
+                  Front End Developer
+                </div>
               </div>
               <div className="fccr gap-4">
                 <CustomButton
@@ -107,6 +158,9 @@ const ProfileSeeker = () => {
                   width="150px"
                   text="Edit Profile"
                   type="button"
+                  onClick={() => {
+                    setEdit(!edit);
+                  }}
                 />
                 <CustomButton
                   height="40px"
@@ -135,8 +189,19 @@ const ProfileSeeker = () => {
           {info.map(({ icon, label, value, bg }, index) => (
             <div
               key={index}
-              className={`${bg} p-5 rounded-lg shadow-md flex flex-col items-center sm:items-start`}
+              className={`${bg} p-5 rounded-lg shadow-md flex flex-col items-center sm:items-start relative `}
             >
+              {edit && (
+                <div
+                  className="absolute right-3 cursor-pointer"
+                  onClick={() => {
+                    setEditType(label);
+                    setOpenEditForm(!openEditForm);
+                  }}
+                >
+                  <Edit className="text-2xl text-blue-600  " />
+                </div>
+              )}
               <div className="flex items-center gap-3 text-xl text-[#555555]">
                 {icon} <span className="text-center sm:text-left">{label}</span>
               </div>
@@ -146,7 +211,18 @@ const ProfileSeeker = () => {
             </div>
           ))}
 
-          <div className="bg-white col-span-1 sm:col-span-2 md:col-span-3 p-5 rounded-lg shadow-md flex flex-col gap-5">
+          <div className="bg-white col-span-1 sm:col-span-2 md:col-span-3 p-5 rounded-lg shadow-md flex flex-col gap-5 relative">
+            {edit && (
+              <div
+                className="absolute right-3 cursor-pointer"
+                onClick={() => {
+                  setEditType("skills");
+                  setOpenEditForm(!openEditForm);
+                }}
+              >
+                <Edit className="text-2xl text-blue-600  " />
+              </div>
+            )}
             <div className="flex items-center gap-3 text-xl text-[#555555]">
               <Star /> <span>Skills</span>
             </div>
@@ -177,8 +253,19 @@ const ProfileSeeker = () => {
       </div>
 
       {/* About Me Section */}
-      <div className="md:p-10 p-5">
-        <div className="bg-gray-100 rounded-xl p-7 shadow-xl">
+      <div className="md:p-10 p-5 ">
+        <div className="bg-gray-100 rounded-xl p-7 shadow-xl relative">
+          {edit && (
+            <div
+              className="absolute right-3 cursor-pointer"
+              onClick={() => {
+                setEditType("about");
+                setOpenEditForm(!openEditForm);
+              }}
+            >
+              <Edit className="text-2xl text-blue-600  " />
+            </div>
+          )}
           <h2 className="text-2xl font-bold text-primary">About Me</h2>
           <p className="text-[#555555] text-lg leading-relaxed mt-2">
             I am a professional Golang backend engineer with over 5+ years of

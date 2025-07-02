@@ -153,7 +153,7 @@ const Nav = () => {
                 className="!text-[var(--secondary-color)] !bg-white border-[var(--secondary-color)] border"
                 type="button"
                 width="100px"
-                link="/select-user"
+                link="/signup"
               />
             </>
           )}

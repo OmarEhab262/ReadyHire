@@ -26,7 +26,7 @@ const CardJob = ({
         position: "top-center",
       });
     } else {
-      window.location.href = "/send-proposal"; // Redirect if userType exists
+      window.location.href = "/start-apply-now"; // Redirect if userType exists
     }
   };
 
