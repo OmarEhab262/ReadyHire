@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
 import CustomButton from "../../components/ui/CustomButton";
+import apiRequest from "../../utils/apiRequest";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CustomAlertMessage from "../../components/ui/CustomAlertMassage";
 
 const jobLocationOptions = ["Remote", "On-Site", "Hybrid"];
 
@@ -12,12 +16,38 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
     watch,
     formState: { errors },
   } = formMethods;
-
+  const [alertMassage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
+  const navigate = useNavigate();
   const isByNegotiation = watch("byNegotiation");
 
-  const onSubmit = (data) => {
-    console.log("Step Three Data:", data);
-    onNext();
+  const onSubmit = async (data) => {
+    try {
+      const company = JSON.parse(localStorage.getItem("company data"));
+      const companyProfileId = company?.id;
+      const localUserrrr = JSON.parse(localStorage.getItem("user"));
+      const localUserrrrId = localUserrrr?.companyProfileId;
+
+      const userId = companyProfileId || localUserrrrId;
+
+      const payload = {
+        ...data,
+        companyProfileId: userId,
+      };
+
+      const response = await apiRequest("Jobs", "POST", payload);
+
+      console.log("response", response);
+      navigate("/");
+    } catch (error) {
+      setAlertMessage({
+        message:
+          error.response?.data?.message || "Job posting failed. Try again.",
+        type: "error",
+      });
+    }
   };
 
   return (
@@ -31,7 +61,7 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       </label>
       <Controller
         control={control}
-        name="applicationDeadline"
+        name="deadlineForApplications"
         rules={{ required: "Application deadline is required" }}
         render={({ field }) => (
           <input
@@ -41,12 +71,11 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
           />
         )}
       />
-      {errors.applicationDeadline && (
+      {errors.deadlineForApplications && (
         <small className="text-red-500">
-          {errors.applicationDeadline.message}
+          {errors.deadlineForApplications.message}
         </small>
       )}
-
       {/* Expected Salary & By Negotiation */}
       <div className="flex gap-5 flex-wrap ">
         <div className="md:w-[80%] w-full">
@@ -81,7 +110,6 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
           <label className="text-gray-600 font-medium">By Negotiation</label>
         </div>
       </div>
-
       {/* Working Hours */}
       <label className="text-gray-600 font-medium">Working Hours</label>
       <Controller
@@ -99,7 +127,6 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       {errors.workingHours && (
         <small className="text-red-500">{errors.workingHours.message}</small>
       )}
-
       {/* Job Location */}
       <label className="text-gray-600 font-medium">Job Location</label>
       <Controller
@@ -123,7 +150,6 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
       {errors.jobLocation && (
         <small className="text-red-500">{errors.jobLocation.message}</small>
       )}
-
       {/* Navigation Buttons */}
       <div className="flex sm:justify-between justify-center flex-wrap gap-5">
         <CustomButton
@@ -139,9 +165,14 @@ const PostJobStepThree = ({ onNext, onPrev, formMethods }) => {
           text="Finish"
           type="submit"
           width="180px"
-          link="/post-job-success"
+          onClick={onNext}
+          // link="/post-job-success"
         />
-      </div>
+      </div>{" "}
+      <CustomAlertMessage
+        message={alertMassage.message}
+        type={alertMassage.type}
+      />
     </form>
   );
 };

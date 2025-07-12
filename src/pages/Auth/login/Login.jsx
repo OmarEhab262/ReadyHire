@@ -9,7 +9,7 @@ import image from "../../../assets/images/freepik__upload__29140.png";
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
 import DefaultNav from "../../../components/nav/DefaultNav";
-// import apiRequest from "../../../utils/apiRequest";
+import apiRequest from "../../../utils/apiRequest";
 const Login = () => {
   const navigate = useNavigate();
   const [alertMassage, setAlertMessage] = useState({
@@ -23,32 +23,47 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    setLoader(true);
-    console.log("Submitted Data:", data);
-    setTimeout(() => {
-      setLoader(false);
-      setAlertMessage({ message: "Login successful", type: "success" });
-      navigate("/");
-    }, 2000);
-  };
-  // const onSubmit = async (data) => {
+  // const onSubmit = (data) => {
   //   setLoader(true);
-  //   try {
-  //     const response = await apiRequest("Authentication/Login", "POST", data);
-  //     console.log("response", response);
-  //     // localStorage.setItem("user", JSON.stringify(response.user));
-  //     setAlertMessage({ message: "Login successful", type: "success" });
-  //     navigate("/verification-success");
-  //   } catch (error) {
-  //     setAlertMessage({
-  //       message: error.response?.data?.message || "Login failed. Try again.",
-  //       type: "error",
-  //     });
-  //   } finally {
+  //   console.log("Submitted Data:", data);
+  //   setTimeout(() => {
   //     setLoader(false);
-  //   }
+  //     setAlertMessage({ message: "Login successful", type: "success" });
+  //     navigate("/");
+  //   }, 2000);
   // };
+  const onSubmit = async (data) => {
+    setLoader(true);
+    try {
+      const response = await apiRequest("Authentication/Login", "POST", data);
+      localStorage.setItem("user", JSON.stringify(response));
+
+      // 🟢 تحقق من الأدوار
+      if (response.roles && response.roles.includes("User")) {
+        localStorage.setItem("type user", "seeker");
+        setTimeout(() => {
+          console.log("response", response);
+          navigate("/profile-seeker");
+        }, 1000);
+      }
+      if (response.roles && response.roles.includes("Admin")) {
+        localStorage.setItem("type user", "company");
+        setTimeout(() => {
+          console.log("response", response);
+          navigate("/profile-company");
+        }, 1000);
+      }
+
+      setAlertMessage({ message: "Login successful", type: "success" });
+    } catch (error) {
+      setAlertMessage({
+        message: error.response?.data?.message || "Login failed. Try again.",
+        type: "error",
+      });
+    } finally {
+      setLoader(false);
+    }
+  };
 
   return (
     <div className="">

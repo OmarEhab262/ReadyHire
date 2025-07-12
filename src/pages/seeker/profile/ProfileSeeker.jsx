@@ -1,65 +1,146 @@
 import Cookies from "js-cookie";
 import { CircleGauge, Earth, Edit, GraduationCap, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import image from "../../../assets/images/team-01.png";
 import Layout from "../../../components/layout/Layout";
 import FormEdit from "../../../components/profile/FormEdit";
 import CustomButton from "../../../components/ui/CustomButton";
+
+import apiRequest from "../../../utils/apiRequest";
+import { replaceImageUrl } from "../../../utils/helpers";
+import { getExperienceDuration } from "../../../utils/getExperienceDuration";
+
 const ProfileSeeker = () => {
+  const { id: paramId } = useParams();
   const navigate = useNavigate();
+
+  const localUser = JSON.parse(localStorage.getItem("userProfiles"));
+  const localUserId = localUser?.id;
+  const localUserrrr = JSON.parse(localStorage.getItem("user"));
+  const localUserrrrId = localUserrrr?.userProfileId;
+
+  const userId = paramId || localUserId || localUserrrrId;
+  // const [editEndpoint, setEditEndpoint] = useState("");
+  const [userProfile, setUserProfile] = useState(null);
+  const [userLanguages, setUserLanguages] = useState([]);
+  const [userOverView, setUserOverView] = useState(null);
   const [edit, setEdit] = useState(false);
   const [editType, setEditType] = useState("");
   const [openEditForm, setOpenEditForm] = useState(false);
+
+  useEffect(() => {
+    if (!userId) {
+      console.error("No user ID found in URL or localStorage.");
+      return;
+    }
+
+    const fetchUserProfile = async () => {
+      try {
+        const userData = await apiRequest(`UserProfiles/${userId}`, "GET");
+        const userLangs = await apiRequest(
+          `UserLanguage/by-profile/${userId}`,
+          "GET"
+        );
+        const userOver = await apiRequest(
+          `UserOverView/by-profile/${userId}`,
+          "GET"
+        );
+
+        const updatedUser = {
+          ...userData,
+          companyImageUrl: userData.userProfilePicture
+            ? replaceImageUrl(userData.userProfilePicture.url)
+            : `${import.meta.env.VITE_API_BASE_URL}/default-image.png`,
+        };
+
+        setUserProfile(updatedUser);
+        setUserLanguages(Array.isArray(userLangs) ? userLangs : []);
+        setUserOverView(userOver || null);
+        localStorage.setItem("userProfile", updatedUser.companyImageUrl);
+
+        console.log("User fetched successfully:", updatedUser);
+        console.log("User Languages fetched successfully:", userLangs);
+        console.log("User Overview fetched successfully:", userOver);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]); // depend only on userId
+
   console.log("editType", editType);
 
   const logOut = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("type user");
-    navigate("/");
+    localStorage.clear(); // Removes ALL keys in localStorage
+    navigate("/"); // Redirect to home page (or login)
   };
+
+  const rawSkills = userProfile?.skills || [];
+  const skills = rawSkills.flatMap((skillObj) =>
+    skillObj.name.split(" ").filter(Boolean)
+  );
+
+  const firstExperience = userProfile?.experiences?.[0];
+  const experienceJobTitle = firstExperience?.jobTitle || "No experience";
+  const experienceDuration = firstExperience
+    ? getExperienceDuration(firstExperience.startDate, firstExperience.endDate)
+    : "N/A";
+
   const info = [
     {
       icon: <CircleGauge className="text-2xl text-secondary" />,
       label: "Experience Level",
-      value: "3 Years",
+      value: `${experienceJobTitle} — ${experienceDuration}`,
       bg: "bg-white",
     },
     {
       icon: <Earth className="text-2xl text-secondary" />,
-      label: "Language",
-      value: "Arabic: Native language",
+      label: "Languages",
+      value:
+        userLanguages.length > 0
+          ? userLanguages.map((lang) => lang.languageType).join(", ")
+          : "Not specified",
       bg: "bg-white",
     },
     {
       icon: <GraduationCap className="text-2xl text-secondary" />,
       label: "Education",
-      value: (
-        <>
-          <p>Okernia University</p>
-          <p>Bachelor of Computers and Information, IT</p>
-        </>
-      ),
+      value:
+        userProfile?.educations?.length > 0 ? (
+          <>
+            {userProfile.educations.map((edu) => (
+              <div key={edu.id} className="mb-2">
+                <p className="font-semibold">
+                  <span className="text-gray-500">University:</span>{" "}
+                  {edu.university || "No university"}
+                </p>
+                <p className="font-semibold">
+                  <span className="text-gray-500">Faculty:</span>{" "}
+                  {edu.faculty || "No faculty"}
+                </p>
+                <p className="font-semibold">
+                  <span className="text-gray-500">Degree:</span>{" "}
+                  {edu.degree || "No degree"}
+                </p>
+              </div>
+            ))}
+          </>
+        ) : (
+          "No education info"
+        ),
       bg: "bg-white",
     },
   ];
-  const skills = [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "React",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "TypeScript",
-    "Redux",
-    "Tailwind CSS",
-    "Firebase",
-  ];
+
   const [isTakenTask, setIsTakenTask] = useState(
     Cookies.get("isTakenTask") === "true"
   );
+
   const userType = localStorage.getItem("type user");
+
   useEffect(() => {
     const checkTakenTask = Cookies.get("isTakenTask");
     setIsTakenTask(checkTakenTask === "true");
@@ -99,7 +180,11 @@ const ProfileSeeker = () => {
                 </div>
               )}
               <img
-                src={image}
+                src={
+                  userProfile?.companyImageUrl
+                    ? replaceImageUrl(userProfile.companyImageUrl)
+                    : image
+                }
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />
@@ -117,11 +202,15 @@ const ProfileSeeker = () => {
                 <Edit className="text-2xl text-blue-600  " />
               </div>
             )}
-            <h2 className="text-2xl font-bold">Omar Ehab Mahmoud</h2>
+            <h2 className="text-2xl font-bold">
+              {userProfile?.firstName} {userProfile?.lastName}{" "}
+            </h2>
             <p className="text-xl text-[#555555]">
-              Web Developer, React Developer, UI/UX Designer
+              {userProfile?.jobTitle || "No job title specified"}
             </p>
-            <p className="text-xl text-[#555555]">Kharkiv, Ukraine</p>
+            <p className="text-xl text-[#555555]">
+              {userProfile?.location || "No location specified"}
+            </p>
             {(userType === "company" || userType === "client") && (
               <CustomButton
                 height="40px"
@@ -149,7 +238,7 @@ const ProfileSeeker = () => {
                   </div>
                 )}
                 <div className="p-2 px-5 bg-gray-200 rounded-xl text-center">
-                  Front End Developer
+                  {userProfile?.jobTitle || "No job title specified"}
                 </div>
               </div>
               <div className="fccr gap-4">
@@ -199,15 +288,15 @@ const ProfileSeeker = () => {
                     setOpenEditForm(!openEditForm);
                   }}
                 >
-                  <Edit className="text-2xl text-blue-600  " />
+                  <Edit className="text-2xl text-blue-600" />
                 </div>
               )}
               <div className="flex items-center gap-3 text-xl text-[#555555]">
                 {icon} <span className="text-center sm:text-left">{label}</span>
               </div>
-              <span className="text_secondary text-lg font-bold mt-2 text-center sm:text-left break-words">
+              <div className="text_secondary text-lg font-bold mt-2 text-center sm:text-left break-words">
                 {value}
-              </span>
+              </div>
             </div>
           ))}
 
@@ -227,9 +316,9 @@ const ProfileSeeker = () => {
               <Star /> <span>Skills</span>
             </div>
             <div className="flex flex-wrap gap-3 w-full">
-              {skills.map((skill) => (
+              {skills.map((skill, index) => (
                 <p
-                  key={skill}
+                  key={index}
                   className="p-2 px-5 bg-blue-100 rounded-xl text-center sm:text-left min-w-0 break-words"
                 >
                   {skill}
@@ -267,42 +356,11 @@ const ProfileSeeker = () => {
             </div>
           )}
           <h2 className="text-2xl font-bold text-primary">About Me</h2>
-          <p className="text-[#555555] text-lg leading-relaxed mt-2">
-            I am a professional Golang backend engineer with over 5+ years of
-            experience building backends for various projects.
+          <p className="text-lg text-gray-700 mt-3">
+            {userOverView?.disciption?.trim()
+              ? userOverView?.disciption
+              : "No overview provided."}
           </p>
-          <ul className="list-disc pl-5 text-[#555555] text-lg space-y-2 mt-3">
-            <li>
-              I&apos;m comfortable with any Go HTTP library, but my favorite is
-              Chi.
-            </li>
-            <li>
-              If data retrieval becomes too complex, I use GraphQL for better
-              performance and ease of use.
-            </li>
-            <li>I love using gRPC for internal service connections.</li>
-            <li>
-              For real-time data communication, I use zishang/socket.io or
-              gorilla/websocket.
-            </li>
-            <li>
-              Typically, I use Kafka for message queuing, but for smaller use
-              cases, I prefer Redis queue.
-            </li>
-            <li>PostgreSQL is my top choice for a database.</li>
-            <li>
-              I can work with Kubernetes as a developer, though not as a DevOps
-              specialist.
-            </li>
-            <li>The ELK stack is my preferred tool for analyzing log data.</li>
-            <li>
-              I am also capable of setting up CI/CD pipelines using GitHub and
-              GitLab.
-            </li>
-            <li>
-              Lastly, I assist frontend developers in integrating backend APIs.
-            </li>
-          </ul>
         </div>
       </div>
     </Layout>

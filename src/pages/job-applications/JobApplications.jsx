@@ -1,27 +1,73 @@
-import { Briefcase, Filter, Search, X } from "lucide-react";
-import { useState } from "react";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
+import apiRequest from "../../utils/apiRequest";
 
 const JobApplications = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filter, setFilter] = useState("");
-  const data = [
-    { title: "Frontend Developer", type: "Proposal", applicants: 25 },
-    { title: "UX Designer", type: "Proposal", applicants: 18 },
-    { title: "Backend Engineer", type: "Proposal", applicants: 30 },
-    { title: "Data Analyst", type: "Proposal", applicants: 22 },
-    { title: "Marketing Specialist", type: "Assessments", applicants: 15 },
-  ];
+  const [titleJobs, setTitleJobs] = useState([]);
+  const [applicantsCount, setApplicantsCount] = useState([]);
 
-  const filteredData = filter
-    ? data.filter((item) => item.type === filter)
-    : data;
+  const company = JSON.parse(localStorage.getItem("company data"));
+  const companyProfileId = company?.id;
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const localUserId = localUser?.companyProfileId;
+  const userId = companyProfileId || localUserId;
+
+  // Merge jobs + counts
+  const mergedData = titleJobs.map((job) => {
+    const countObj = applicantsCount.find((c) => c.jobId === job.jobId);
+    return {
+      jobId: job.jobId,
+      title: job.jobTitle || "Untitled",
+      applicants: countObj?.count ?? 0,
+    };
+  });
+
+  // Search filter
+  const searchedData = mergedData.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  useEffect(() => {
+    const fetchJobsAndApplicants = async () => {
+      try {
+        const jobsData = await apiRequest(
+          `Jobs/TitlesByCompany/${userId}`,
+          "GET"
+        );
+        setTitleJobs(jobsData || []);
+
+        const countList = await Promise.all(
+          jobsData.map(async (job) => {
+            const countData = await apiRequest(
+              `JobApplications/CountByJob/${job.jobId}`,
+              "GET"
+            );
+            return {
+              jobId: job.jobId,
+              count: countData?.numberOfApplicants ?? 0,
+            };
+          })
+        );
+        setApplicantsCount(countList);
+      } catch (error) {
+        console.error("Error fetching jobs or applicants:", error);
+      }
+    };
+
+    if (userId) {
+      fetchJobsAndApplicants();
+    }
+  }, [userId]);
+  if (!userId) {
+    return <p className="text-center p-10">User ID not found.</p>;
+  }
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className=" flex flex-col bg-gray-100">
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
           <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
             Job Applications
@@ -34,64 +80,6 @@ const JobApplications = () => {
             </h1>
           </div>
 
-          {/* Sidebar Filters */}
-          <div
-            className={`fixed md:relative z-20 transition-all duration-300 ease-in-out ${
-              isFilterOpen ? "left-0" : "-left-full"
-            } md:left-0 w-3/4 md:w-1/4 bg-white shadow-xl p-6 h-[100vh] md:h-[500px] overflow-y-auto rounded-lg`}
-          >
-            <button
-              className="md:hidden absolute top-4 right-4 text-gray-500"
-              onClick={() => setIsFilterOpen(false)}
-            >
-              <X className="w-6 h-6" color="red" />
-            </button>
-
-            <h3 className="text-xl font-semibold mb-4 text-gray-700">
-              Filters
-            </h3>
-
-            {/* Filter by Type */}
-            <div className="mb-6">
-              <h4 className="text-xl mb-3 flex items-center gap-2 text-blue-600">
-                <Briefcase className="w-5 h-5" /> Type of Applicants
-              </h4>
-              <div className="space-y-3">
-                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
-                  <input
-                    type="radio"
-                    name="filter"
-                    className="h-4 w-4"
-                    checked={filter === "Proposal"}
-                    onChange={() => setFilter("Proposal")}
-                  />
-                  <span>Proposal</span>
-                </label>
-                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
-                  <input
-                    type="radio"
-                    name="filter"
-                    className="h-4 w-4"
-                    checked={filter === "Assessments"}
-                    onChange={() => setFilter("Assessments")}
-                  />
-                  <span>Assessments</span>
-                </label>
-                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
-                  <input
-                    type="radio"
-                    name="filter"
-                    className="h-4 w-4"
-                    checked={filter === ""}
-                    onChange={() => setFilter("")}
-                  />
-                  <span>All</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Main Table */}
           <div className="flex-grow flex flex-col">
             <div className="flex items-center gap-4 mb-6">
               <div className="relative w-full flex-1">
@@ -104,14 +92,6 @@ const JobApplications = () => {
                   className="w-full p-3 pl-12 pr-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 outline-none transition-all"
                 />
               </div>
-              <div className="flex md:hidden items-center gap-4">
-                <CustomButton
-                  width="60px"
-                  height="40px"
-                  onClick={() => setIsFilterOpen(true)}
-                  icon={<Filter className="w-5 h-5" />}
-                />
-              </div>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-lg flex-grow overflow-auto">
@@ -120,22 +100,16 @@ const JobApplications = () => {
                   <tr>
                     <th className="border border-gray-200 p-3">Job Title</th>
                     <th className="border border-gray-200 p-3">
-                      Type of Applicants
-                    </th>
-                    <th className="border border-gray-200 p-3">
                       Number of Applicants
                     </th>
                     <th className="border border-gray-200 p-3">View Details</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item, index) => (
-                    <tr key={index} className="text-center">
+                  {searchedData.map((item) => (
+                    <tr key={item.jobId} className="text-center">
                       <td className="border border-gray-200 p-3">
                         {item.title}
-                      </td>
-                      <td className="border border-gray-200 p-3">
-                        {item.type}
                       </td>
                       <td className="border border-gray-200 p-3">
                         {item.applicants}
@@ -147,18 +121,21 @@ const JobApplications = () => {
                           height="35px"
                           width="100px"
                           className="mx-auto"
-                          link={
-                            item.type === "Proposal"
-                              ? "/view-details-proposal"
-                              : "/view-details-assessment"
+                          onClick={() =>
+                            localStorage.setItem(
+                              "jobId",
+                              JSON.stringify(item.jobId)
+                            )
                           }
+                          link={"/view-details-proposal"}
                         />
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {filteredData.length === 0 && (
+
+              {searchedData.length === 0 && (
                 <p className="text-center text-gray-500 py-4">
                   No job applications found.
                 </p>

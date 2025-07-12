@@ -4,8 +4,13 @@ import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
 import { Bookmark, MapPin, Share2 } from "lucide-react";
 import img from "../../assets/images/team-01.png";
+import { useParams } from "react-router-dom";
+import apiRequest from "../../utils/apiRequest";
 
 const ViewDetailsJobPage = () => {
+  const { id } = useParams();
+  const [job, setJob] = useState([]);
+  console.log("Job ID:", id);
   const userType = localStorage.getItem("type user");
 
   // استخدم useState بدلاً من جلب القيمة مباشرة
@@ -18,36 +23,70 @@ const ViewDetailsJobPage = () => {
     const checkTakenTask = Cookies.get("isTakenTask");
     setIsTakenTask(checkTakenTask === "true");
   }, []);
+
+  const getBaseDomain = () => {
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    return baseUrl.endsWith("/api/") ? baseUrl.replace("/api/", "") : baseUrl;
+  };
+
+  const replaceImageUrl = (originalUrl) => {
+    if (!originalUrl) return "";
+    const oldDomainRegex = /^https:\/\/[^/]+/;
+    const newBaseDomain = getBaseDomain();
+    return originalUrl.replace(oldDomainRegex, newBaseDomain);
+  };
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const jobsData = await apiRequest(`Jobs/${id}`, "GET");
+        const updatedJob = {
+          ...jobsData,
+          companyImageUrl: replaceImageUrl(jobsData.companyImageUrl),
+        };
+        setJob(updatedJob);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchJob();
+  }, [id]);
+
   return (
     <Layout>
       <div className="head md:p-10 p-5 flex flex-wrap gap-5 justify-between  bg-gray-50 shadow-lg rounded-xl w-[95%] mx-auto">
         <div className="flex flex-col gap-4 ">
           <h2 className="text-3xl font-extrabold text-gray-900">
-            UI/UX Designer
+            {job.jobTitle || "Job Title Not Available"}
           </h2>
           <div className="flex flex-wrap gap-5 items-center">
             <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg border-2 border-blue-400">
               <img
                 className="w-full h-full object-cover"
-                src={img}
+                src={job.companyImageUrl || img}
                 alt="Company Logo"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-xl font-bold text-gray-800">Google Tec</h3>
+              <h3 className="text-xl font-bold text-gray-800">
+                {job.companyName || "Company Name Not Available"}
+              </h3>
               <div className="flex items-center text-gray-600 text-lg">
                 <MapPin size={20} className="text-blue-500" />{" "}
-                <span className="ml-2">Kharkiv, Ukraine</span>
+                <span className="ml-2">
+                  {job.companyLocation || "Location Not Available"}
+                </span>
               </div>
               <div className="flex gap-3 text-sm font-medium">
                 <span className="bg-blue-200 text-blue-900 px-3 py-1 rounded-lg shadow-sm">
-                  Full time
+                  {job.jobType || "Job Type Not Available"}
                 </span>
                 <span className="bg-green-200 text-green-900 px-3 py-1 rounded-lg shadow-sm">
-                  Remote
+                  {job.jobLocation || "Salary Not Available"}
                 </span>
                 <span className="bg-purple-200 text-purple-900 px-3 py-1 rounded-lg shadow-sm">
-                  2-4 years
+                  {job.experienceLevel || "Category Not Available"}
                 </span>
               </div>
             </div>
@@ -71,7 +110,7 @@ const ViewDetailsJobPage = () => {
                 type="button"
                 width="180px"
                 className="bg-blue-500 text-white font-bold"
-                link={isTakenTask ? "/start-apply-now" : "/"}
+                link={isTakenTask ? "/start-apply-now" : "/start-do-test"}
               />
               <div className="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 transition-all">
                 <Bookmark className="text-gray-600" />
@@ -89,29 +128,10 @@ const ViewDetailsJobPage = () => {
             About Us
           </h3>
           <p className="text-gray-700 mt-3 leading-relaxed">
-            We are a leading tech company specializing in innovative solutions
-            and cutting-edge design. Our mission is to create seamless digital
-            experiences that enhance user engagement and satisfaction. Lorem,
-            ipsum dolor sit amet consectetur adipisicing elit. Praesentium,
-            veniam ex? Exercitationem, aspernatur autem mollitia cum consequatur
-            eaque porro temporibus?
+            {job.jobDescription || "Job Description Not Available"}
           </p>
         </section>
-        <section className="p-6 bg-gray-50 rounded-lg shadow-md col-span-2">
-          <h3 className="text-2xl font-bold text-gray-900 border-b pb-3">
-            Qualification
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 mt-3 leading-relaxed space-y-2">
-            <li>
-              Bachelor’s degree in Design, Computer Science, or a related field.
-            </li>
-            <li>2-4 years of experience in UI/UX design.</li>
-            <li>Proficiency in Figma, Adobe XD, and other design tools.</li>
-            <li>
-              Strong understanding of responsive and adaptive design principles.
-            </li>
-          </ul>
-        </section>
+
         <section className="p-6 bg-gray-50 rounded-lg shadow-md  md:col-span-1 col-span-2">
           <h3 className="text-2xl font-bold text-gray-900 border-b pb-3">
             Responsibility
@@ -134,12 +154,11 @@ const ViewDetailsJobPage = () => {
             Skills
           </h3>
           <ul className="list-disc pl-6 text-gray-700 mt-3 leading-relaxed space-y-2">
-            <li>Strong knowledge of UX principles and best practices.</li>
-            <li>Experience with wireframing, prototyping, and user testing.</li>
-            <li>Excellent problem-solving and communication skills.</li>
-            <li>
-              Ability to work collaboratively in a fast-paced environment.
-            </li>
+            {job.skills && job.skills.length > 0 ? (
+              job.skills.map((skill, index) => <li key={index}>{skill}</li>)
+            ) : (
+              <li>No skills listed</li>
+            )}
           </ul>
         </section>
       </div>

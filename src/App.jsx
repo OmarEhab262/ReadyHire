@@ -53,6 +53,13 @@ import StartApplyNow from "./pages/apply-now/StartApplyNow";
 import InstructionsApplyNow from "./pages/apply-now/InstructionsApplyNow";
 import StartAssessments from "./pages/apply-now/StartAssessments";
 import ThankYouPage from "./pages/apply-now/ThankYouPage";
+import UserProfiles from "./pages/seeker/create-profile/UserProfiles";
+import MakeQuestions from "./pages/post-job/MakeQuestions";
+import SkillsForm from "./pages/seeker/create-profile/SkillsForm";
+import JobOffers from "./pages/job-offers/JobOffers";
+import OverallScore from "./pages/seeker/create-profile/OverallScore";
+import DeliveryJobPage from "./pages/my-jobs/DeliveryJobPage";
+import ProfileCompanyForJob from "./pages/job-offers/ProfileCompanyForJob";
 
 export default function App() {
   return (
@@ -92,9 +99,11 @@ export default function App() {
         <Route path="/apply-job" element={<ApplyJob />} />
         <Route path="/talent" element={<TalentPage />} />
         <Route path="/job" element={<Job />} />
+        <Route path="/profile/:id" element={<ProfileSeeker />} />
         <Route path="/profile-seeker" element={<ProfileSeeker />} />
+
         <Route path="/profile-company" element={<ProfileCompany />} />
-        <Route path="/view-details-job" element={<ViewDetailsJobPage />} />
+        <Route path="/view-details-job/:id" element={<ViewDetailsJobPage />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/post-job-success" element={<PostJobSuccess />} />
         <Route path="/start-do-test" element={<StartDoTest />} />
@@ -121,6 +130,11 @@ export default function App() {
         <Route path="/delivery-job" element={<DeliveryJob />} />
         <Route path="/need-modification" element={<NeedModification />} />
         <Route path="/my-offers" element={<MyOffers />} />
+        <Route
+          path="/profile-company-for-Job"
+          element={<ProfileCompanyForJob />}
+        />
+        <Route path="/job-offers" element={<JobOffers />} />
         <Route path="/negotiate" element={<Negotiate />} />
         <Route path="/start-apply-now" element={<StartApplyNow />} />
         <Route
@@ -129,6 +143,11 @@ export default function App() {
         />
         <Route path="/start-assessments" element={<StartAssessments />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/user-profiles" element={<UserProfiles />} />
+        <Route path="/skills-form" element={<SkillsForm />} />
+        <Route path="/make-questions" element={<MakeQuestions />} />
+        <Route path="/overall-score" element={<OverallScore />} />
+        <Route path="/delivery-job-page" element={<DeliveryJobPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>

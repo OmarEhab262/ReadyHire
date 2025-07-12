@@ -58,7 +58,7 @@ const ViewDetailsAssessments = () => {
           <h1 className="text-4xl font-bold text_secondary">
             Developer Frontend Senior
           </h1>
-          <h2 className="text-3xl font-bold ">Assessments</h2>
+          {/* <h2 className="text-3xl font-bold ">Assessments</h2> */}
         </div>
 
         {/* قائمة الفرز */}
@@ -100,7 +100,7 @@ const ViewDetailsAssessments = () => {
               <tr>
                 <th className="border border-gray-200 p-3">Applicants</th>
                 <th className="border border-gray-200 p-3">Match ratio</th>
-                <th className="border border-gray-200 p-3">Assessments</th>
+                {/* <th className="border border-gray-200 p-3">Assessments</th> */}
                 <th className="border border-gray-200 p-3">CV</th>
                 <th className="border border-gray-200 p-3">View Profile</th>
                 <th className="border border-gray-200 p-3">Accept</th>
@@ -123,11 +123,11 @@ const ViewDetailsAssessments = () => {
                   <td className="border border-gray-200 p-3">
                     {item.match_ratio}%
                   </td>
-                  <td className="border border-gray-200 p-3">
+                  {/* <td className="border border-gray-200 p-3">
                     <div className="flex items-center justify-center gap-2">
                       <File /> View
                     </div>
-                  </td>
+                  </td> */}
                   <td className="border border-gray-200 p-3">
                     <div className="flex items-center justify-center gap-2">
                       <File /> View

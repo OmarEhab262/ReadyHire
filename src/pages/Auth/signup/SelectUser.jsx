@@ -1,88 +1,67 @@
-import image from "../../../assets/images/freepik__upload__36608.png";
-import seeker from "../../../assets/images/seeker.svg";
-import owner from "../../../assets/images/owner.svg";
-import SelectCard from "../../../components/signup/SelectCard";
 import { useState } from "react";
-import CustomButton from "../../../components/ui/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
+import image from "../../../assets/images/freepik__upload__36608.png";
+import owner from "../../../assets/images/owner.svg";
+import seeker from "../../../assets/images/seeker.svg";
 import DefaultNav from "../../../components/nav/DefaultNav";
-// import apiRequest from "../../../utils/apiRequest";
+import SelectCard from "../../../components/signup/SelectCard";
 import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
+import CustomButton from "../../../components/ui/CustomButton";
+import apiRequest from "../../../utils/apiRequest";
 const SelectUser = () => {
   const [selected, setSelected] = useState("");
-  // const [loader, setLoader] = useState(false);
   const [alertMassage, setAlertMessage] = useState({
     message: "",
     type: "",
   });
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const navigate = useNavigate();
-  const handleClick = () => {
-    if (selected === "company") {
-      navigate("/company-profile-first");
+
+  const onSubmit = async () => {
+    try {
+      const userId = user?.userId;
+
+      if (!userId) {
+        throw new Error("No user ID found in localStorage.");
+      }
+
+      const payload = {
+        userId: userId,
+        role: selected === "company" ? "Admin" : "User",
+      };
+
+      if (selected === "company") {
+        const response = await apiRequest(
+          "Authentication/AddRole",
+          "POST",
+          payload
+        );
+
+        console.log("response", response);
+      } else {
+        navigate("/user-profiles");
+      }
+
+      setAlertMessage({ message: "Add role successfully", type: "success" });
+
+      setTimeout(() => {
+        if (selected === "company") {
+          navigate("/company-profile-first");
+        } else {
+          navigate("/user-profiles");
+        }
+      }, 2000);
+    } catch (error) {
       setAlertMessage({
-        message: "You have selected Job Owner",
-        type: "success",
-      });
-    } else if (selected === "seeker") {
-      navigate("/upload-resume");
-      setAlertMessage({
-        message: "You have selected Job Seeker",
-        type: "success",
+        message:
+          error?.response?.data?.message ||
+          error.message ||
+          "Add role failed. Try again.",
+        type: "error",
       });
     }
   };
-
-  // const onSubmit = async (data) => {
-  //   setLoader(true);
-  //   try {
-  //     // Destructure role to avoid sending it to the backend directly
-  //     const { role, ...payload } = data;
-
-  //     // Set role explicitly based on selected type
-  //     if (selected === "company") {
-  //       payload.role = "Admin";
-  //     } else if (selected === "seeker") {
-  //       payload.role = "User";
-  //     } else {
-  //       throw new Error("Invalid user type selected.");
-  //     }
-
-  //     // Make API request
-  //     const response = await apiRequest(
-  //       "Authentication/AddRole",
-  //       "POST",
-  //       payload
-  //     );
-
-  //     // Store user data safely
-  //     if (response && response.user) {
-  //       localStorage.setItem("user", JSON.stringify(response.user));
-  //     }
-
-  //     // Show success message
-  //     setAlertMessage({ message: "Add role successfully", type: "success" });
-
-  //     // Navigate based on selected type
-  //     setTimeout(() => {
-  //       if (selected === "company") {
-  //         navigate("/company-profile-first");
-  //       } else {
-  //         navigate("/upload-resume");
-  //       }
-  //     }, 5000);
-  //   } catch (error) {
-  //     // Graceful error handling
-  //     setAlertMessage({
-  //       message:
-  //         error?.response?.data?.message ||
-  //         error.message ||
-  //         "Add role is failed. Try again.",
-  //       type: "error",
-  //     });
-  //   } finally {
-  //     setLoader(false);
-  //   }
-  // };
 
   return (
     <div className="">
@@ -116,10 +95,11 @@ const SelectUser = () => {
             <CustomButton
               height="40px"
               text="Next"
-              type="submit"
-              onClick={handleClick}
+              type="button"
+              onClick={onSubmit}
               disabled={!selected}
             />
+
             <p>
               Already have an account?
               <Link className="text-blue-600" to="/login">

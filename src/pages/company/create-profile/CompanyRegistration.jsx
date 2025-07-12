@@ -4,12 +4,17 @@ import { useNavigate } from "react-router-dom";
 import DefaultNav from "../../../components/nav/DefaultNav";
 import CustomButton from "../../../components/ui/CustomButton";
 import CustomInput from "../../../components/ui/CustomInput";
+import apiRequest from "../../../utils/apiRequest";
+import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 
 const CompanyRegistration = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(1);
-
   const [loader, setLoader] = useState(false);
+  const [alertMessage, setAlertMessage] = useState({ message: "", type: "" });
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.userId || user?.UserId;
 
   const {
     handleSubmit,
@@ -18,38 +23,60 @@ const CompanyRegistration = () => {
   } = useForm({
     defaultValues: {
       companyName: "",
-      jobTitle: "",
+      responsiblePersonJobTitle: "",
       industry: "",
       officialContactMethods: "",
       location: "",
       yearEstablished: "",
-      terms: false,
+      applicationUserId: userId,
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    if (!userId) {
+      setAlertMessage({
+        message: "User ID is missing",
+        type: "error",
+      });
+      return;
+    }
+
     setLoader(true);
     console.log("Submitted Data:", data);
-    localStorage.setItem("company data", JSON.stringify(data));
-    setProgress(0); // Reset progress on new submission
 
-    // Simulate file upload progress
-    let uploadProgress = 1;
-    const interval = setInterval(() => {
-      uploadProgress += 10;
-      setProgress(uploadProgress);
+    try {
+      const response = await apiRequest("CompanyProfiles", "POST", data);
 
-      if (uploadProgress >= 26) {
-        clearInterval(interval); // Stop the progress when it reaches 100%
-      }
-    }, 500); // Adjust time interval for the progress
+      console.log("Response:", response);
+      setAlertMessage({
+        message: "Company profile uploaded successfully",
+        type: "success",
+      });
+      localStorage.setItem("company data", JSON.stringify(response));
 
-    // Simulate successful registration and navigate after some delay
-    setTimeout(() => {
+      let uploadProgress = 1;
+      const interval = setInterval(() => {
+        uploadProgress += 10;
+        setProgress(uploadProgress);
+        if (uploadProgress >= 26) clearInterval(interval);
+      }, 500);
+
+      // Navigate بعد اكتمال العملية
+      setTimeout(() => {
+        setLoader(false);
+        navigate("/company-brief-description");
+      }, 3000);
+    } catch (error) {
+      console.error(error);
       setLoader(false);
-      navigate("/company-brief-description");
-    }, 3000); // Adjust delay time to simulate finalizing the registration
+      setAlertMessage({
+        message:
+          error.response?.data?.message || "Company profile upload failed.",
+        type: "error",
+      });
+    }
   };
+
   return (
     <div className="company-registration-container">
       <DefaultNav />
@@ -82,7 +109,7 @@ const CompanyRegistration = () => {
             />
 
             <Controller
-              name="jobTitle"
+              name="responsiblePersonJobTitle"
               control={control}
               defaultValue=""
               rules={{ required: "Job title is required" }}
@@ -90,7 +117,7 @@ const CompanyRegistration = () => {
                 <CustomInput
                   {...field}
                   label="Job Title of the Responsible Person"
-                  err={errors.jobTitle?.message}
+                  err={errors.responsiblePersonJobTitle?.message}
                   width="100%"
                   placeholder="e.g. CEO, HR Manager, etc."
                 />
@@ -186,6 +213,10 @@ const CompanyRegistration = () => {
           </form>
         </div>
       </div>
+      <CustomAlertMessage
+        message={alertMessage.message}
+        type={alertMessage.type}
+      />
     </div>
   );
 };

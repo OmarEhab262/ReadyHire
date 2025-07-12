@@ -8,19 +8,30 @@ import PostJobStepThree from "./PostJobStepThree";
 const PostJob = () => {
   const [step, setStep] = useState(1);
 
-  // 🔹 Move form state to PostJob to persist data across steps
+  // ✅ اجلب بيانات الشركة بشكل آمن
+  const company = JSON.parse(localStorage.getItem("company data"));
+  const companyProfileId = company?.id;
+  const localUserrrr = JSON.parse(localStorage.getItem("user"));
+  const localUserrrrId = localUserrrr?.companyProfileId;
+
+  const userId = companyProfileId || localUserrrrId;
+
+  console.log("companyProfileId:", userId);
+
   const formMethods = useForm({
     defaultValues: {
       jobTitle: "",
       jobCategory: "",
       jobType: "",
+      jobDescription: "",
       experienceLevel: "",
       skills: [],
-      applicationDeadline: "",
+      deadlineForApplications: "",
       expectedSalary: "",
       byNegotiation: false,
       workingHours: "",
       jobLocation: "",
+      companyProfileId: userId || "",
     },
   });
 
@@ -34,16 +45,16 @@ const PostJob = () => {
       )}
       {step === 2 && (
         <PostJobStepTwo
+          formMethods={formMethods}
           onNext={nextStep}
           onPrev={prevStep}
-          formMethods={formMethods}
         />
       )}
       {step === 3 && (
         <PostJobStepThree
+          formMethods={formMethods}
           onNext={nextStep}
           onPrev={prevStep}
-          formMethods={formMethods}
         />
       )}
     </Layout>

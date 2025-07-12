@@ -1,10 +1,29 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import img from "../../assets/images/5124556 1.png";
 import CustomButton from "../../components/ui/CustomButton";
+import { toast } from "react-hot-toast";
 
 const NeedModification = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleSend = () => {
+    if (!message.trim()) {
+      toast.error("Please write your modification request first.");
+      return;
+    }
+
+    toast.success("Your message has been sent successfully!", {
+      duration: 3000,
+      position: "top-center",
+    });
+
+    setTimeout(() => {
+      navigate("/my-hires");
+    }, 1000);
+  };
 
   return (
     <Layout>
@@ -27,41 +46,19 @@ const NeedModification = () => {
               className="border border-gray-300 p-4 w-full h-40 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-secondary transition"
               required
               placeholder="Write your message here..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
 
-            <CustomButton
-              text="Send Message"
-              onClick={() => setIsModalOpen(true)}
-            />
+            <CustomButton text="Send Message" onClick={handleSend} />
           </div>
 
           {/* Right Section (Image) */}
-          <div className="md:w-[40%] md:block hidden  justify-center">
+          <div className="md:w-[40%] md:block hidden justify-center">
             <img src={img} alt="Contact Us" className="max-w-full h-auto" />
           </div>
         </div>
       </div>
-
-      {/* Modal Overlay */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          {/* Modal Content */}
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
-            <h2 className="text-2xl font-semibold text-gray-700">
-              Your message has been successfully sent!
-            </h2>
-            <p className="text-gray-600 mt-2">
-              We will see it soon and we will respond to you via email.
-            </p>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="bg_secondary text-white px-6 py-2 mt-5 rounded-lg hover:bg-secondary-dark transition-all shadow-md"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 };

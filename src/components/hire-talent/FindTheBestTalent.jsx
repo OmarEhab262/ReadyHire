@@ -62,7 +62,7 @@ const FindTheBestTalent = () => {
         text="Start Hiring Now"
         type="button"
         width="300px"
-        link="/select-user"
+        link="/signup"
       />
       <div className="text-center text-gray-500 text-2xl p-3 md:w-[70%]">
         ✅ Note: Test assessments are available only to candidates for full-time

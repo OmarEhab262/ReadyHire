@@ -20,34 +20,33 @@ const MyHires = () => {
   const data = [
     {
       title: "Frontend Developer",
-      name: "Omar Ehab",
+      name: "Ali Zain",
       delivery: "Delivered",
-      response: "Accepted",
     },
-    {
-      title: "UX Designer",
-      name: "Ali Ahmed",
-      delivery: "In Progress",
-      response: "Accepted",
-    },
-    {
-      title: "Backend Engineer",
-      name: "Mahmoud 7sam",
-      delivery: "Not Delivered",
-      response: "Needs Modification",
-    },
-    {
-      title: "Data Analyst",
-      name: "wail Ali",
-      delivery: "Delivered",
-      response: "Accepted",
-    },
-    {
-      title: "Marketing Specialist",
-      name: "Eman Ali",
-      delivery: "In Progress",
-      response: "Needs Modification",
-    },
+    // {
+    //   title: "UX Designer",
+    //   name: "Ali Ahmed",
+    //   delivery: "In Progress",
+    //   response: "Accepted",
+    // },
+    // {
+    //   title: "Backend Engineer",
+    //   name: "Mahmoud 7sam",
+    //   delivery: "Not Delivered",
+    //   response: "Needs Modification",
+    // },
+    // {
+    //   title: "Data Analyst",
+    //   name: "wail Ali",
+    //   delivery: "Delivered",
+    //   response: "Accepted",
+    // },
+    // {
+    //   title: "Marketing Specialist",
+    //   name: "Eman Ali",
+    //   delivery: "In Progress",
+    //   response: "Needs Modification",
+    // },
   ];
 
   const toggleFilter = (category, value) => {
@@ -194,9 +193,9 @@ const MyHires = () => {
                     <th className="border border-gray-200 p-3">
                       Delivery Status
                     </th>
-                    <th className="border border-gray-200 p-3">
+                    {/* <th className="border border-gray-200 p-3">
                       Employer Response
-                    </th>
+                    </th> */}
 
                     <th className="border border-gray-200 p-3">View Details</th>
                   </tr>
@@ -204,13 +203,13 @@ const MyHires = () => {
                 <tbody>
                   {filteredData.map((item, index) => (
                     <tr key={index} className="">
-                      <td className="border border-gray-200 p-3">
+                      <td className="border border-gray-200 p-3 text-center">
                         {item.title}
                       </td>
-                      <td className="border border-gray-200 p-3">
+                      <td className="border border-gray-200 p-3 text-center">
                         {item.name}
                       </td>
-                      <td className="border border-gray-200 p-3 flex items-center gap-2">
+                      <td className="flex items-center justify-center border-gray-200 p-3 flex items-center gap-2">
                         {item.delivery === "Delivered" ? (
                           <CheckCircle className="w-5 h-5 text-green-500" />
                         ) : item.delivery === "In Progress" ? (
@@ -220,9 +219,9 @@ const MyHires = () => {
                         )}
                         {item.delivery}
                       </td>
-                      <td className="border border-gray-200 p-3">
+                      {/* <td className="border border-gray-200 p-3">
                         {item.response}
-                      </td>
+                      </td> */}
 
                       <td className="border border-gray-200 p-3">
                         <CustomButton

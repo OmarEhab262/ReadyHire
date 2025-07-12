@@ -8,65 +8,46 @@ import {
   X,
   XCircle,
 } from "lucide-react";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
+import apiRequest from "../../utils/apiRequest";
 
 const MyProposals = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({ type: [], status: [] });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [proposals, setProposals] = useState([]);
 
-  const data = [
-    {
-      title: "Senior Frontend Developer",
-      type: "Proposal",
-      status: "Under Review",
-      submitted: "March 5, 2025",
-    },
-    {
-      title: "Lead UX Designer",
-      type: "Assessments",
-      status: "Was Accepted",
-      submitted: "March 2, 2025",
-    },
-    {
-      title: "Backend Engineer - API Specialist",
-      type: "Proposal",
-      status: "Was Rejected",
-      submitted: "March 1, 2025",
-    },
-    {
-      title: "Junior Frontend Developer",
-      type: "Proposal",
-      status: "Was Accepted",
-      submitted: "March 5, 2025",
-    },
-    {
-      title: "React Frontend Developer",
-      type: "Proposal",
-      status: "Was Accepted",
-      submitted: "March 5, 2025",
-    },
-    {
-      title: "Frontend Developer (UI Focus)",
-      type: "Proposal",
-      status: "Was Accepted",
-      submitted: "March 5, 2025",
-    },
-    {
-      title: "UX Researcher",
-      type: "Assessments",
-      status: "Was Accepted",
-      submitted: "March 2, 2025",
-    },
-    {
-      title: "Backend Engineer - Database Expert",
-      type: "Proposal",
-      status: "Was Rejected",
-      submitted: "March 1, 2025",
-    },
-  ];
+  const localUser = JSON.parse(localStorage.getItem("company data"));
+  const localUserId = localUser?.id;
+  const localUserrrr = JSON.parse(localStorage.getItem("user"));
+  const localUserrrrId = localUserrrr?.userProfileId;
+
+  const userId = localUserId || localUserrrrId;
+
+  useEffect(() => {
+    if (!userId) {
+      console.error("No user ID found in URL or localStorage.");
+      return;
+    }
+
+    const fetchUserProfile = async () => {
+      try {
+        const JobApplications = await apiRequest(
+          `JobApplications/ByUserProfile/${userId}`,
+          "GET"
+        );
+        console.log("User fetched successfully:", JobApplications);
+        setProposals(JobApplications);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]);
 
   const toggleFilter = (category, value) => {
     setFilters((prev) => ({
@@ -77,18 +58,20 @@ const MyProposals = () => {
     }));
   };
 
-  const filteredData = data.filter((item) => {
+  const filteredData = proposals.filter((item) => {
+    // احسب الحالة: لو فاضية تعتبر Pending
+    const itemStatus = item.status ? item.status : "Pending";
+
     return (
       (filters.type.length === 0 || filters.type.includes(item.type)) &&
-      (filters.status.length === 0 || filters.status.includes(item.status)) &&
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      (filters.status.length === 0 || filters.status.includes(itemStatus)) &&
+      item.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col bg-gray-100">
-        {/* زر فتح الفلاتر في الهاتف */}
+      <div className="flex flex-col bg-gray-100">
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
           <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
             My proposals & Assessments
@@ -100,13 +83,13 @@ const MyProposals = () => {
               My proposals & Assessments
             </h1>
           </div>
-          {/* القائمة الجانبية للفلاتر - تظهر كـ Drawer في الهاتف */}
+
+          {/* Filters Sidebar */}
           <div
             className={`fixed md:relative z-20 transition-all duration-300 ease-in-out ${
               isFilterOpen ? "left-0" : "-left-full"
             } md:left-0 w-3/4 md:w-1/4 bg-white shadow-xl p-6 h-[100vh] md:h-[500px] overflow-y-auto rounded-lg`}
           >
-            {/* زر الإغلاق في الهاتف */}
             <button
               className="md:hidden absolute top-4 right-4 text-gray-500"
               onClick={() => setIsFilterOpen(false)}
@@ -118,32 +101,40 @@ const MyProposals = () => {
               Filters
             </h3>
 
-            {/* تصفية حسب النوع */}
+            {/* Type Filter */}
             <div className="mb-6">
               <h4 className="text-xl mb-3 flex items-center gap-2 text-blue-600">
-                <Briefcase className="w-5 h-5 " /> Type
+                <Briefcase className="w-5 h-5" /> Type
               </h4>
               <div className="space-y-3">
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
                     type="checkbox"
-                    onChange={() => toggleFilter("type", "Proposal")}
+                    onChange={() => toggleFilter("type", "Full Time")}
                     className="h-4 w-4"
                   />
-                  <span>Proposal</span>
+                  <span>Full Time</span>
                 </label>
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
                     type="checkbox"
-                    onChange={() => toggleFilter("type", "Assessments")}
+                    onChange={() => toggleFilter("type", "Part Time")}
                     className="h-4 w-4"
                   />
-                  <span>Assessments</span>
+                  <span>Part Time</span>
+                </label>
+                <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleFilter("type", "Freelance")}
+                    className="h-4 w-4"
+                  />
+                  <span>Freelance</span>
                 </label>
               </div>
             </div>
 
-            {/* تصفية حسب الحالة */}
+            {/* Status Filter */}
             <div>
               <h4 className="text-xl mb-3 flex items-center gap-2 text-green-600">
                 <ClipboardList className="w-5 h-5" /> Status
@@ -152,36 +143,35 @@ const MyProposals = () => {
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
                     type="checkbox"
-                    onChange={() => toggleFilter("status", "Was Accepted")}
+                    onChange={() => toggleFilter("status", "Accepted")}
                     className="h-4 w-4"
                   />
-                  <span>Was Accepted</span>
+                  <span>Accepted</span>
                 </label>
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
                     type="checkbox"
-                    onChange={() => toggleFilter("status", "Was Rejected")}
+                    onChange={() => toggleFilter("status", "Rejected")}
                     className="h-4 w-4"
                   />
-                  <span>Was Rejected</span>
+                  <span>Rejected</span>
                 </label>
                 <label className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer">
                   <input
                     type="checkbox"
-                    onChange={() => toggleFilter("status", "Under Review")}
+                    onChange={() => toggleFilter("status", "Pending")}
                     className="h-4 w-4"
                   />
-                  <span>Under Review</span>
+                  <span>Pending</span>
                 </label>
               </div>
             </div>
           </div>
 
           <div className="flex-grow flex flex-col">
-            <div className=" flex flex-col">
-              <div className="flex  items-center gap-4 mb-6">
-                {/* مربع البحث */}
-                <div className="relative w-full md:max-w-full lg:max-w-full flex-1">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-full flex-1">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
@@ -192,7 +182,6 @@ const MyProposals = () => {
                   />
                 </div>
 
-                {/* زر الفلتر يظهر فقط في الشاشات الصغيرة */}
                 <div className="flex md:hidden items-center gap-4">
                   <CustomButton
                     width="60px"
@@ -204,7 +193,7 @@ const MyProposals = () => {
               </div>
             </div>
 
-            {/* الجدول */}
+            {/* Table */}
             <div className="bg-white p-6 rounded-lg shadow-lg flex-grow overflow-auto">
               <table className="w-full min-w-[600px] border-collapse border border-gray-200">
                 <thead className="bg-gray-100">
@@ -216,42 +205,30 @@ const MyProposals = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.length > 0 ? (
-                    filteredData.map((item, index) => (
-                      <tr key={index} className="text-center">
-                        <td className="border border-gray-200 p-3">
-                          {item.title}
-                        </td>
-                        <td className="border border-gray-200 p-3">
-                          {item.type}
-                        </td>
-                        <td className="border border-gray-200 p-3">
-                          {item.status === "Was Accepted" && (
-                            <CheckCircle className="w-5 h-5 text-green-500 inline mr-2" />
-                          )}
-                          {item.status === "Was Rejected" && (
-                            <XCircle className="w-5 h-5 text-red-500 inline mr-2" />
-                          )}
-                          {item.status === "Under Review" && (
-                            <RefreshCcw className="w-5 h-5 text-yellow-500 inline mr-2" />
-                          )}
-                          {item.status}
-                        </td>
-                        <td className="border border-gray-200 p-3">
-                          {item.submitted}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan={4}
-                        className="text-center py-4 text-gray-500"
-                      >
-                        No matching results found.
-                      </td>
-                    </tr>
-                  )}
+                  <tr className="text-center">
+                    <td className="border border-gray-200 p-3">
+                      Frontend React Developer
+                    </td>
+                    <td className="border border-gray-200 p-3">Full Time</td>
+                    <td className="border border-gray-200 p-3">
+                      <div className="flex items-center justify-center text-green-600">
+                        <CheckCircle className="w-5 h-5 mr-1" /> Accepted
+                      </div>
+                    </td>
+                    <td className="border border-gray-200 p-3">7/10/2025</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-200 p-3">
+                      Frontend React Developer
+                    </td>
+                    <td className="border border-gray-200 p-3">Freelance</td>
+                    <td className="border border-gray-200 p-3">
+                      <div className="flex items-center justify-center text-green-600">
+                        <CheckCircle className="w-5 h-5 mr-1" /> Accepted
+                      </div>
+                    </td>
+                    <td className="border border-gray-200 p-3">7/10/2025</td>
+                  </tr>
                 </tbody>
               </table>
             </div>

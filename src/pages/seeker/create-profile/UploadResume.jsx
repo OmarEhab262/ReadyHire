@@ -2,12 +2,22 @@ import { Upload } from "lucide-react";
 import CustomButton from "../../../components/ui/CustomButton";
 import { useState, useRef } from "react";
 import DefaultNav from "../../../components/nav/DefaultNav";
+import apiRequest from "../../../utils/apiRequest";
+import { useNavigate } from "react-router-dom";
+import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 
 const UploadResume = () => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
-
+  const [loader, setLoader] = useState(false);
+  const userProfiles = JSON.parse(localStorage.getItem("userProfiles"));
+  const UserProfileId = userProfiles?.id;
+  const [alertMassage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
+  const navigate = useNavigate();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -26,6 +36,44 @@ const UploadResume = () => {
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
+  };
+
+  const onSubmit = async () => {
+    setLoader(true);
+    try {
+      if (!file) {
+        setAlertMessage({
+          message: "Please select a file before submitting.",
+          type: "error",
+        });
+        return;
+      }
+
+      if (!UserProfileId) {
+        setAlertMessage({
+          message: "UserProfileId not found in localStorage.",
+          type: "error",
+        });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("CvFile", file);
+      formData.append("UserProfileId", UserProfileId);
+
+      const response = await apiRequest("UserCv", "POST", formData);
+
+      console.log("Response:", response);
+      setAlertMessage({ message: "CV uploaded successfully", type: "success" });
+      navigate("/upload-photo-seeker");
+    } catch (error) {
+      setAlertMessage({
+        message: error.response?.data?.message || "CV upload failed.",
+        type: "error",
+      });
+    } finally {
+      setLoader(false);
+    }
   };
 
   return (
@@ -73,12 +121,17 @@ const UploadResume = () => {
               text="Continue"
               type="button"
               width="100px"
-              link="/upload-photo-seeker"
+              onClick={onSubmit}
+              loader={loader}
               disabled={!file} // تعطيل الزر حتى يتم رفع الملف
             />
           </div>
         </div>
       </div>
+      <CustomAlertMessage
+        message={alertMassage.message}
+        type={alertMassage.type}
+      />
     </div>
   );
 };

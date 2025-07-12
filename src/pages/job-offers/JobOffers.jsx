@@ -2,39 +2,33 @@ import { Briefcase, Filter, Search, X } from "lucide-react";
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import CustomButton from "../../components/ui/CustomButton";
-import { Link } from "react-router-dom";
 
-const MyOffers = () => {
+const JobOffers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [typeFilters, setTypeFilters] = useState([]);
   const [statusFilters, setStatusFilters] = useState([]);
 
   const data = [
-    // {
-    //   Talent: "Omar Ehab",
-    //   title: "Full sack",
-    //   type: "Freelance",
-    //   Status: "Accept",
-    // },
     {
       Talent: "Omar Ehab",
-      title: "Full sack",
+      title: "NexaTech Solutions",
       type: "Full-Time",
       Status: "Accept",
     },
     // {
     //   Talent: "Omar Ehab",
-    //   title: "Frontend Developer",
-    //   type: "Freelance",
-    //   Status: "Reject",
+    //   title: "WE",
+    //   type: "Full-Time",
+    //   Status: "Under Review",
+    // },
+    // {
+    //   Talent: "Omar Ehab",
+    //   title: "Microsoft",
+    //   type: "Part-Time",
+    //   Status: "Negotiate",
     // },
   ];
-  const statusColors = {
-    Accept: "bg-green-500",
-    "Under Review": "bg-yellow-500",
-    Reject: "bg-red-500",
-  };
 
   const toggleFilter = (filterType, value) => {
     if (filterType === "type") {
@@ -65,17 +59,17 @@ const MyOffers = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className=" flex flex-col bg-gray-100">
         <div className="md:flex hidden items-center justify-center p-4 mt-3">
           <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-            My Offers
+            Job Offers
           </h1>
         </div>
 
         <div className="flex flex-grow flex-col md:flex-row gap-6 p-4">
           <div className="flex md:hidden items-center justify-center p-4 mt-3">
             <h1 className="text-3xl md:text-5xl font-bold text_secondary text-center my-3">
-              My Offers
+              Job Offers
             </h1>
           </div>
 
@@ -116,27 +110,6 @@ const MyOffers = () => {
                 </label>
               ))}
             </div>
-
-            {/* Filter by Status */}
-            <div className="mb-6">
-              <h4 className="text-xl mb-3 flex items-center gap-2 text-blue-600">
-                <Filter className="w-5 h-5" /> Status
-              </h4>
-              {["Accept", "Under Review", "Reject"].map((status) => (
-                <label
-                  key={status}
-                  className="flex items-center space-x-2 bg-gray-100 p-2 rounded-md cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4"
-                    checked={statusFilters.includes(status)}
-                    onChange={() => toggleFilter("status", status)}
-                  />
-                  <span>{status}</span>
-                </label>
-              ))}
-            </div>
           </div>
 
           {/* Main Table */}
@@ -166,10 +139,9 @@ const MyOffers = () => {
               <table className="w-full min-w-[600px] border-collapse border border-gray-200">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="border border-gray-200 p-3">Talent</th>
-                    <th className="border border-gray-200 p-3">Job Title</th>
+                    <th className="border border-gray-200 p-3">Company Name</th>
                     <th className="border border-gray-200 p-3">Type</th>
-                    <th className="border border-gray-200 p-3">Status</th>
+                    <th className="border border-gray-200 p-3">View Details</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -177,31 +149,18 @@ const MyOffers = () => {
                     filteredData.map((item, index) => (
                       <tr key={index} className="text-center">
                         <td className="border border-gray-200 p-3">
-                          {item.Talent}
-                        </td>
-                        <td className="border border-gray-200 p-3">
                           {item.title}
                         </td>
                         <td className="border border-gray-200 p-3">
                           {item.type}
                         </td>
-                        <td className="border border-gray-200 p-3 rounded-lg text-white">
-                          {item.Status === "Negotiate" ? (
-                            <Link
-                              to="/negotiate"
-                              className=" w-full block rounded-md py-1 px-4 text-white bg-blue-400 hover:bg-blue-500 transition"
-                            >
-                              Negotiate
-                            </Link>
-                          ) : (
-                            <div
-                              className={`rounded-md py-2 px-4 text-white ${
-                                statusColors[item.Status] || "bg-gray-500"
-                              }`}
-                            >
-                              {item.Status}
-                            </div>
-                          )}
+                        <td className="border border-gray-200 p-3 rounded-lg text-white ">
+                          <CustomButton
+                            className="!w-[90%] mx-auto"
+                            onClick={() => setIsFilterOpen(true)}
+                            text="View Details"
+                            link="/profile-company-for-Job"
+                          />
                         </td>
                       </tr>
                     ))
@@ -225,4 +184,4 @@ const MyOffers = () => {
   );
 };
 
-export default MyOffers;
+export default JobOffers;

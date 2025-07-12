@@ -2,13 +2,22 @@ import { Plus, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
 import DefaultNav from "../../../components/nav/DefaultNav";
+import apiRequest from "../../../utils/apiRequest";
+import { useNavigate } from "react-router-dom";
+import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 
 const UploadPhoto = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [progress, setProgress] = useState(33);
   const fileInputRef = useRef(null);
-
+  const [loader, setLoader] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [alertMassage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
+  const navigate = useNavigate();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -30,6 +39,47 @@ const UploadPhoto = () => {
       if (preview) URL.revokeObjectURL(preview);
     };
   }, [file, preview]);
+
+  const onSubmit = async () => {
+    setLoader(true);
+    const userId = user?.userId || user?.UserId;
+    console.log("userId:", userId);
+
+    if (!userId) {
+      setAlertMessage({
+        message: "User ID is missing",
+        type: "error",
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("UserId", userId);
+    formData.append("Image", file);
+
+    try {
+      const response = await apiRequest(
+        "UserProfilePic/AddUserProfilePicture",
+        "POST",
+        formData
+      );
+
+      console.log("Response:", response);
+      setAlertMessage({
+        message: "Photo uploaded successfully",
+        type: "success",
+      });
+      navigate("/overall-score");
+    } catch (error) {
+      console.error(error);
+      setAlertMessage({
+        message: error.response?.data?.message || "Photo upload failed.",
+        type: "error",
+      });
+    } finally {
+      setLoader(false);
+    }
+  };
 
   return (
     <div className="">
@@ -90,12 +140,17 @@ const UploadPhoto = () => {
               text="Continue"
               type="button"
               width="100px"
-              link="/final-profile"
+              onClick={onSubmit}
+              loader={loader}
               disabled={!file}
             />
           </div>
         </div>
       </div>
+      <CustomAlertMessage
+        message={alertMassage.message}
+        type={alertMassage.type}
+      />
     </div>
   );
 };

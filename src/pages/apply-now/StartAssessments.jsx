@@ -9,67 +9,93 @@ import Cookies from "js-cookie";
 import CameraRecorder from "../../components/camera-recorder/CameraRecorder";
 import ConfirmationModal from "../do-test/ConfirmationModal";
 import LoadingOverlay from "./LoadingOverlay";
+import apiRequest from "../../utils/apiRequest";
+
 const StartAssessments = () => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const questions = [
-    {
-      id: 1,
-      question:
-        "Which of the following is a popular programming language for developing multimedia webpages?",
-      options: ["JavaScript", "COBOL", "Python", "Java"],
-      correct: "JavaScript",
-    },
-    {
-      id: 2,
-      question: "What does HTML stand for?",
-      options: [
-        "Hyper Text Markup Language",
-        "High Tech Machine Learning",
-        "Home Tool Markup Language",
-        "Hyperlink and Text Markup Language",
-      ],
-      correct: "Hyper Text Markup Language",
-    },
-    {
-      id: 3,
-      question: "What is the abbreviation for Cascading Style Sheets?",
-      options: ["CSS", "C++", "CSV", "C#"],
-      correct: "CSS",
-    },
-    {
-      id: 4,
-      question:
-        "Which of the following programming languages is statically typed?",
-      options: ["JavaScript", "Python", "Java", "Ruby"],
-      correct: "Java",
-    },
-    {
-      id: 5,
-      question: "What is the primary purpose of using React.js?",
-      options: [
-        "To style web pages",
-        "To build dynamic user interfaces",
-        "To manage databases",
-        "To create backend APIs",
-      ],
-      correct: "To build dynamic user interfaces",
-    },
-    {
-      id: 6,
-      question: "Introduce yourself like you're in a real job interview.",
-      options: [],
-      correct: null,
-    },
-  ];
-
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(400);
+  const [isClosed, setIsClosed] = useState(false);
   const [answeredQuestions, setAnsweredQuestions] = useState(new Set());
+  const navigate = useNavigate();
+
+  const questions = [
+    {
+      jobExamId: 1,
+      questionText:
+        "Which HTML element is used to declare the document's base URL for relative links?",
+      choices: ["<meta>", "<link>", "<base>", "<head>"],
+      correctAnswer: "<base>",
+    },
+    {
+      jobExamId: 6,
+      questionText: "Which of the following is NOT a valid Git merge strategy?",
+      choices: ["recursive", "resolve", "octopus", "squash"],
+      correctAnswer: "squash",
+    },
+    {
+      jobExamId: 7,
+      questionText: "In Git, what does git reflog do?",
+      choices: [
+        "Shows all commit history in the repository",
+        "Shows references to where HEAD and branch references have been",
+        "Deletes local branches",
+        "Lists files to be staged",
+      ],
+      correctAnswer:
+        "Shows references to where HEAD and branch references have been",
+    },
+    {
+      jobExamId: 11,
+      questionText: "How do you make a component extendable in Tailwind CSS?",
+      choices: ["@apply", "extend", "inherit", "@include"],
+      correctAnswer: "@apply",
+    },
+    {
+      jobExamId: 12,
+      questionText:
+        "Which ES6 feature is used to extract data from arrays or objects?",
+      choices: ["Destructuring", "Spread", "Rest", "Arrow Functions"],
+      correctAnswer: "Destructuring",
+    },
+    {
+      jobExamId: 17,
+      questionText:
+        "CSS Grid allows for two-dimensional layouts, unlike Flexbox.",
+      choices: ["True", "False"],
+      correctAnswer: "True",
+    },
+    {
+      jobExamId: 21,
+      questionText: "Tailwind CSS includes built-in support for dark mode.",
+      choices: ["True", "False"],
+      correctAnswer: "True",
+    },
+    {
+      jobExamId: 25,
+      questionText:
+        "git reset --hard HEAD will discard all uncommitted changes.",
+      choices: ["True", "False"],
+      correctAnswer: "True",
+    },
+    {
+      jobExamId: 32,
+      questionText: `let numbers = [1, 2, 3, 4];
+for (let i = 0; i <= numbers.length; i++) {
+  console.log(numbers[i]);
+}`,
+      wrongLine: 2,
+      correction: "for (let i = 0; i < numbers.length; i++) {",
+    },
+    {
+      jobExamId: 37,
+      questionText: "What is the result of: console.log(2 + '2');",
+      correctAnswer: "22",
+    },
+  ];
 
   const handleAnswerSelection = (option) => {
     setSelectedAnswers((prev) => ({ ...prev, [currentQuestion]: option }));
@@ -78,31 +104,39 @@ const StartAssessments = () => {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      Cookies.set("score", score, { expires: 1 });
-      Cookies.set("totalQuestions", questions.length, { expires: 1 });
-      //   navigate("/results");
+      finishExam();
       return;
     }
-    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
     return () => clearInterval(timer);
-  }, [timeLeft, navigate, score, questions.length]);
+  }, [timeLeft]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
+
   const handleNext = () => {
-    if (
-      selectedAnswers[currentQuestion] === questions[currentQuestion].correct
-    ) {
-      setScore((prevScore) => prevScore + 1);
+    const currentQ = questions[currentQuestion];
+    const selected = selectedAnswers[currentQuestion];
+
+    if (selected && selected === currentQ.correctAnswer) {
+      setScore((prev) => prev + 1);
     }
 
     if (currentQuestion === questions.length - 1) {
       setTimeout(() => {
         setIsModalOpen(true);
-      }, 1000); // Wait 1 second before opening the modal
+      }, 500);
     } else {
       setCurrentQuestion((prev) => prev + 1);
     }
@@ -113,15 +147,39 @@ const StartAssessments = () => {
       setCurrentQuestion((prev) => prev - 1);
     }
   };
-  const handleConfirmFinish = () => {
+
+  const finishExam = async () => {
+    if (isClosed) return;
+
     Cookies.set("score", score, { expires: 1 });
     Cookies.set("totalQuestions", questions.length, { expires: 1 });
 
-    setIsLoading(true); // Show the overlay
+    setIsLoading(true);
 
-    setTimeout(() => {
-      navigate("/thank-you");
-    }, 3000);
+    try {
+      const userId = JSON.parse(localStorage.getItem("user"));
+      const localUserId = userId?.userProfileId;
+      const jobIdd = localStorage.getItem("jobId");
+
+      const payload = {
+        jobId: jobIdd,
+        userProfileId: localUserId,
+        matchRatio: ((score / questions.length) * 100).toFixed(2),
+      };
+
+      await apiRequest("JobApplications", "POST", payload);
+      console.log("Application submitted:", payload);
+      setIsClosed(true);
+      navigate("/results");
+    } catch (error) {
+      console.error("Error applying for job:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleConfirmFinish = () => {
+    finishExam();
   };
 
   return (
@@ -130,7 +188,7 @@ const StartAssessments = () => {
       <div className="flex justify-center items-center min-h-[90vh] w-full">
         <div className="bg-white rounded-lg shadow-xl p-6 md:w-[60%] w-[90%] mx-auto">
           {/* Header */}
-          <div className="head flex  gap-5 justify-between items-center">
+          <div className="head flex gap-5 justify-between items-center">
             <div className="flex items-center">
               <Clock size={40} />
               <div className="flex flex-col pl-3">
@@ -156,17 +214,14 @@ const StartAssessments = () => {
                 Question {currentQuestion + 1} of {questions.length}
               </span>
 
-              <p className="text-2xl mt-2">
-                {questions[currentQuestion].question}
-              </p>
+              <pre className="text-2xl mt-2 whitespace-pre-wrap">
+                {questions[currentQuestion].questionText}
+              </pre>
 
-              {questions[currentQuestion].id === 6 ? (
-                <div className="mt-5">
-                  <CameraRecorder />
-                </div>
-              ) : (
+              {/* Render MCQ if available */}
+              {questions[currentQuestion].choices ? (
                 <div className="choices grid md:grid-cols-2 grid-cols-1 gap-4 mt-5">
-                  {questions[currentQuestion].options.map((option, index) => (
+                  {questions[currentQuestion].choices.map((option, index) => (
                     <label
                       key={index}
                       className={`flex items-center p-4 border-2 rounded-xl shadow-md cursor-pointer transition-all duration-300 ${
@@ -206,16 +261,26 @@ const StartAssessments = () => {
                     </label>
                   ))}
                 </div>
+              ) : (
+                <div className="mt-5">
+                  <input
+                    type="text"
+                    placeholder="اكتب إجابتك هنا"
+                    className="w-full p-4 border-2 rounded-xl shadow-md"
+                    value={selectedAnswers[currentQuestion] || ""}
+                    onChange={(e) => handleAnswerSelection(e.target.value)}
+                  />
+                </div>
               )}
             </div>
 
             {/* Circular Progress Bar */}
-            <div className="clock flex items-center justify-end mr-3">
+            <div className="clock flex items-center justify-between w-full ">
               <div className="w-40 h-40">
                 <CircularProgressbar
-                  value={answeredQuestions.size} // عدد الأسئلة المجاب عليها
-                  maxValue={questions.length} // إجمالي عدد الأسئلة
-                  text={`${answeredQuestions.size}/${questions.length}`} // تحديث النص ليعكس العدد الصحيح
+                  value={answeredQuestions.size}
+                  maxValue={questions.length}
+                  text={`${answeredQuestions.size}/${questions.length}`}
                   styles={buildStyles({
                     textColor: "#000",
                     pathColor: "#1971c2",
@@ -225,6 +290,7 @@ const StartAssessments = () => {
                   })}
                 />
               </div>
+              <CameraRecorder stopRecording={isClosed} />
             </div>
           </div>
 
@@ -251,18 +317,15 @@ const StartAssessments = () => {
               />
             </div>
 
-            {/* أرقام الأسئلة */}
             <div className="mt-5 flex gap-2">
               {questions.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-8 h-8 flex items-center justify-center border rounded-full text-sm font-bold 
-        ${
-          answeredQuestions.has(index) // إذا تمت الإجابة على السؤال
-            ? "bg-[#1971c2] text-white"
-            : "bg-gray-200 text-gray-700"
-        }
-      `}
+                  className={`w-8 h-8 flex items-center justify-center border rounded-full text-sm font-bold ${
+                    answeredQuestions.has(index)
+                      ? "bg-[#1971c2] text-white"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
                   onClick={() => setCurrentQuestion(index)}
                 >
                   {index + 1}
@@ -272,11 +335,13 @@ const StartAssessments = () => {
           </div>
         </div>
       </div>
+
       <ConfirmationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmFinish}
       />
+
       {isLoading && <LoadingOverlay />}
     </div>
   );

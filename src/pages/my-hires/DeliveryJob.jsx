@@ -12,6 +12,9 @@ const DeliveryJob = () => {
       duration: 3000,
       position: "top-center",
     });
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   };
 
   return (

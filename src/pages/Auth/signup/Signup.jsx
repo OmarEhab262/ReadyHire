@@ -10,7 +10,7 @@ import image from "../../../assets/images/Rectangle 21.png";
 import google from "../../../assets/images/google.svg";
 import apple from "../../../assets/images/apple.svg";
 import DefaultNav from "../../../components/nav/DefaultNav";
-// import apiRequest from "../../../utils/apiRequest";
+import apiRequest from "../../../utils/apiRequest";
 const Signup = () => {
   const typeUser = localStorage.getItem("type user");
   const navigate = useNavigate();
@@ -34,33 +34,39 @@ const Signup = () => {
       terms: false,
     },
   });
-  // const onSubmit = async (data) => {
-  //   setLoader(true);
-  //   try {
-  //     const { terms, ...payload } = data;
-  //     payload.role = typeUser;
-
-  //     console.log("terms", terms);
-  //     const response = await apiRequest("auth/signup", "POST", payload);
-
-  //     localStorage.setItem("user", JSON.stringify(response.user));
-  //     setAlertMessage({ message: "Sign up successful", type: "success" });
-  //     navigate("/verification-success");
-  //   } catch (error) {
-  //     setAlertMessage({
-  //       message: error.response?.data?.message || "Signup failed. Try again.",
-  //       type: "error",
-  //     });
-  //   } finally {
-  //     setLoader(false);
-  //   }
-  // };
-
-  const onSubmit = () => {
+  const onSubmit = async (data) => {
     setLoader(true);
-    setAlertMessage({ message: "Sign up successful", type: "success" });
-    navigate("/verification-success");
+    try {
+      const { terms, ...payload } = data;
+      // payload.role = typeUser;
+
+      console.log("terms", terms);
+      console.log("payload", payload);
+
+      const response = await apiRequest(
+        "Authentication/register",
+        "POST",
+        payload
+      );
+      console.log("response", response);
+      localStorage.setItem("user", JSON.stringify(response));
+      setAlertMessage({ message: "Sign up successful", type: "success" });
+      navigate("/verification-success");
+    } catch (error) {
+      setAlertMessage({
+        message: error.response?.data?.message || "Signup failed. Try again.",
+        type: "error",
+      });
+    } finally {
+      setLoader(false);
+    }
   };
+
+  // const onSubmit = () => {
+  //   setLoader(true);
+  //   setAlertMessage({ message: "Sign up successful", type: "success" });
+  //   navigate("/verification-success");
+  // };
   return (
     <div className="">
       <DefaultNav />
@@ -204,7 +210,10 @@ const Signup = () => {
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                     />
-                    <label htmlFor="terms" className="text-gray-600">
+                    <label
+                      htmlFor="terms"
+                      className="text-gray-600 cursor-pointer"
+                    >
                       I agree to and adhere to Ready Hire&apos;s{" "}
                       <Link
                         to="/policies"

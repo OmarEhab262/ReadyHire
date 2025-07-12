@@ -1,12 +1,15 @@
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Bell, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import image from "../../assets/images/team-01.png";
 import CustomButton from "../ui/CustomButton";
-import { Link } from "react-router-dom";
+import { replaceImageUrl } from "../../utils/helpers";
 
 const Nav = () => {
   // const [clicked, setClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const userProfile = localStorage.getItem("userProfile");
+
   const [openNotifications, setOpenNotifications] = useState(false);
   const userType = localStorage.getItem("type user");
   const links = {
@@ -16,6 +19,7 @@ const Nav = () => {
     ],
     seeker: [
       { name: "Find work", path: "/job" },
+      { name: "Job Offers", path: "/job-offers" },
       { name: "My Assessments & Proposal", path: "/my-proposals" },
       { name: "My Jobs", path: "/my-jobs" },
     ],
@@ -40,6 +44,7 @@ const Nav = () => {
     seeker: [
       { name: "Profile", path: "/profile-seeker" },
       { name: "Find work", path: "/job" },
+      { name: "Job Offers", path: "/job-offers" },
       { name: "My Assessments & Proposal", path: "/my-proposals" },
       { name: "My Jobs", path: "/my-jobs" },
     ],
@@ -47,14 +52,14 @@ const Nav = () => {
       { name: "Profile", path: "/profile-company" },
       { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
-      { name: "My Hires", path: "/my-hires" },
+      // { name: "My Hires", path: "/my-hires" },
       { name: "My Offers", path: "/my-offers" },
     ],
     client: [
       { name: "Profile", path: "/profile-company" },
       { name: "Hire Talent", path: "/talent" },
       { name: "Job Applications", path: "/job-applications" },
-      { name: "My Hires", path: "/my-hires" },
+      // { name: "My Hires", path: "/my-hires" },
       { name: "My Offers", path: "/my-offers" },
     ],
   };
@@ -124,18 +129,16 @@ const Nav = () => {
         <div className="flex gap-10 items-center">
           {userType ? (
             <div className="flex items-center gap-5">
-              <div
-                className="w-10 h-10 flex items-center justify-center cursor-pointer"
-                onClick={() => setOpenNotifications(!openNotifications)}
-              >
-                <Bell size={20} fill="#1971c2" color="#1971c2" />
-              </div>
               <Link
                 to={
                   userType === "seeker" ? "/profile-seeker" : "/profile-company"
                 }
               >
-                <img src={image} className="rounded-full w-8 h-8" alt="" />{" "}
+                <img
+                  src={userProfile ? replaceImageUrl(userProfile) : image}
+                  className="rounded-full w-8 h-8"
+                  alt=""
+                />{" "}
               </Link>
             </div>
           ) : (
@@ -170,14 +173,6 @@ const Nav = () => {
           <span className="text-black">HIRE</span>
         </Link>
         <div className="flex items-center gap-5">
-          {userType && (
-            <div
-              className="flex items-center justify-center gap-5 cursor-pointer"
-              onClick={() => setOpenNotifications(!openNotifications)}
-            >
-              <Bell size={20} fill="#1971c2" color="#1971c2" />
-            </div>
-          )}
           <div
             onClick={() => setIsOpen(!isOpen)}
             className="w-10 h-10 flex items-center justify-center cursor-pointer"
@@ -225,7 +220,7 @@ const Nav = () => {
               text="Get Started"
               type="button"
               width="100px"
-              link="/select-user"
+              link="/signup"
             />
           </div>
         )}
@@ -248,7 +243,6 @@ const Nav = () => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-center gap-5">
-            <Bell size={20} fill="#1971c2" color="#1971c2" />
             <p className="font-bold text_secondary">Notifications</p>
           </div>
 

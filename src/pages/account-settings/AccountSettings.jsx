@@ -1,29 +1,48 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import CustomAlertMessage from "../../components/ui/CustomAlertMassage";
 import CustomButton from "../../components/ui/CustomButton";
-import DeleteAccountModal from "./DeleteAccountModal";
 import CustomInput from "../../components/ui/CustomInput";
+import apiRequest from "../../utils/apiRequest";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 const AccountSettings = () => {
-  const [oldPassword, setOldPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user?.token;
+  console.log("token:", token);
+
+  const navigate = useNavigate();
+
+  const [alertMessage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
+
   const [errors, setErrors] = useState({
-    oldPassword: "",
+    email: "",
     newPassword: "",
     confirmPassword: "",
   });
 
-  const validatePassword = () => {
-    let newErrors = { oldPassword: "", newPassword: "", confirmPassword: "" };
+  const validateFields = () => {
+    let newErrors = { email: "", newPassword: "", confirmPassword: "" };
     let isValid = true;
 
-    if (!oldPassword) {
-      newErrors.oldPassword = "Old password is required";
+    if (!email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
       isValid = false;
     }
+
     if (!newPassword) {
       newErrors.newPassword = "New password is required";
       isValid = false;
@@ -31,6 +50,7 @@ const AccountSettings = () => {
       newErrors.newPassword = "New password must be at least 6 characters";
       isValid = false;
     }
+
     if (!confirmPassword) {
       newErrors.confirmPassword = "Confirm password is required";
       isValid = false;
@@ -42,14 +62,44 @@ const AccountSettings = () => {
     setErrors(newErrors);
     return isValid;
   };
+  const payload = {
+    email,
+    token,
+    newPassword,
+    confirmPassword,
+  };
 
-  const handleChangePassword = () => {
-    if (!validatePassword()) return;
-    toast.success("Password changed successfully!");
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setErrors({ oldPassword: "", newPassword: "", confirmPassword: "" });
+  const handleChangePassword = async () => {
+    if (!validateFields()) return;
+
+    try {
+      const response = await apiRequest(
+        "Authentication/ResetPassword",
+        "POST",
+        payload
+      );
+      console.log("Response:", response);
+      navigate("/");
+      setAlertMessage({
+        message: "Password changed successfully!",
+        type: "success",
+      });
+      toast.success("Password changed successfully!");
+
+      setEmail("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setErrors({ email: "", newPassword: "", confirmPassword: "" });
+
+      // optional: navigate if needed
+      // navigate("/verification-success");
+    } catch (error) {
+      setAlertMessage({
+        message:
+          error.response?.data?.message || "Password reset failed. Try again.",
+        type: "error",
+      });
+    }
   };
 
   const handleDeleteAccount = () => {
@@ -70,14 +120,14 @@ const AccountSettings = () => {
           </h2>
 
           <CustomInput
-            label="Old Password"
-            type="password"
-            name="oldPassword"
-            placeholder="Enter old password"
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
             width="100%"
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-            err={errors.oldPassword}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            err={errors.email}
           />
 
           <CustomInput
@@ -117,6 +167,11 @@ const AccountSettings = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={confirmDeleteAccount}
+      />
+
+      <CustomAlertMessage
+        message={alertMessage.message}
+        type={alertMessage.type}
       />
     </Layout>
   );

@@ -2,13 +2,19 @@ import { Building2, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import CustomButton from "../../../components/ui/CustomButton";
 import DefaultNav from "../../../components/nav/DefaultNav";
+import apiRequest from "../../../utils/apiRequest";
+import { useNavigate } from "react-router-dom";
+import CustomAlertMessage from "../../../components/ui/CustomAlertMassage";
 
 const UploadPhotoCompany = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [progress, setProgress] = useState(75);
   const fileInputRef = useRef(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [alertMessage, setAlertMessage] = useState({ message: "", type: "" });
 
+  const navigate = useNavigate();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -31,6 +37,43 @@ const UploadPhotoCompany = () => {
     };
   }, [file, preview]);
 
+  const onSubmit = async () => {
+    const userId = user?.userId || user?.UserId;
+    console.log("userId:", userId);
+
+    if (!userId) {
+      setAlertMessage({
+        message: "User ID is missing",
+        type: "error",
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("UserId", userId);
+    formData.append("Image", file);
+
+    try {
+      const response = await apiRequest(
+        "UserProfilePic/AddUserProfilePicture",
+        "POST",
+        formData
+      );
+
+      console.log("Response:", response);
+      setAlertMessage({
+        message: "Photo uploaded successfully",
+        type: "success",
+      });
+      navigate("/final-profile");
+    } catch (error) {
+      console.error(error);
+      setAlertMessage({
+        message: error.response?.data?.message || "Photo upload failed.",
+        type: "error",
+      });
+    }
+  };
   return (
     <div className="">
       <DefaultNav />
@@ -92,12 +135,16 @@ const UploadPhotoCompany = () => {
               text="Continue"
               type="button"
               width="100px"
-              link="/final-profile"
+              onClick={onSubmit}
               disabled={!file}
             />
           </div>
         </div>
-      </div>
+      </div>{" "}
+      <CustomAlertMessage
+        message={alertMessage.message}
+        type={alertMessage.type}
+      />
     </div>
   );
 };
